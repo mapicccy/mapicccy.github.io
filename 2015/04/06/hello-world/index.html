@@ -19,13 +19,23 @@ Quick">
 Quick">
   
   
+    <link rel="icon" href="/favicon.png">
+  
 
   <link rel="stylesheet" href="/css/style.css" type="text/css">
   
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/scrollLoading/style.css" type="text/css">
   
   
 
 
+  
+    <style type="text/css">
+      .logo { background-image:url(http://ppoffice.github.io/hexo-theme-hueman/css/images/logo-header.png); }
+    </style>
   
 
   
@@ -55,6 +65,12 @@ Quick">
           <a id="main-nav-toggle" class="nav-icon"></a>
           <div class="nav-container-inner">
             <ul id="main-nav">
+              
+                <li class="main-nav-list-item" ><a class="main-nav-list-link" href="/">Home</a></li>
+              
+                    
+                  
+                <li class="main-nav-list-item" ><a class="main-nav-list-link" href="/about/index.html">About</a></li>
               
             </ul>
             <nav id="sub-nav">
@@ -110,7 +126,7 @@ Quick">
 
       </div>
       <footer class="article-footer">
-        <a data-url="http://yoursite.com/2015/04/06/hello-world/" data-id="ci86ukby200007wyh69htcld7" class="article-share-link">分享到</a>
+        <a data-url="http://yoursite.com/2015/04/06/hello-world/" data-id="ci86unffq0000b8yhedxdlth3" class="article-share-link">分享到</a>
         
         
       </footer>
@@ -126,12 +142,89 @@ Quick">
     <p>关注我 :</p>
     <ul class="social-links">
       
+        <li><a class="social-tooltip" title="twitter" href="/" target="_blank"><i id="icon-twitter" class="icon"></i></a></li>
+      
+        <li><a class="social-tooltip" title="facebook" href="/" target="_blank"><i id="icon-facebook" class="icon"></i></a></li>
+      
+        <li><a class="social-tooltip" title="google_plus" href="/" target="_blank"><i id="icon-google_plus" class="icon"></i></a></li>
+      
+        <li><a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank"><i id="icon-github" class="icon"></i></a></li>
+      
+        <li><a class="social-tooltip" title="weibo" href="/" target="_blank"><i id="icon-weibo" class="icon"></i></a></li>
+      
+        <li><a class="social-tooltip" title="rss" href="/" target="_blank"><i id="icon-rss" class="icon"></i></a></li>
+      
     </ul>
   </div>
   
     
   
   <div class="widgets-container">
+    
+      
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              
+<a href="/2015/04/06/hello-world/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2015/04/06/hello-world/" class="title">Hello World</a></p>
+              <p class="item-date"><time datetime="2015-04-06T12:37:58.936Z" itemprop="datePublished">2015-04-06</time></p>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+      
+
+    
+      
+  <div class="widget-wrap widget-list">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+
+    
+      
+
+    
+      
+  <div class="widget-wrap widget-list">
+    <h3 class="widget-title">链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://hexo.io">Hexo</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
     
   </div>
 </aside>
@@ -160,7 +253,12 @@ Quick">
 
 
 
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
 
+
+
+  <script src="/scrollLoading/jquery.scrollLoading.js" type="text/javascript"></script>
+  <script src="/scrollLoading/main.js" type="text/javascript"></script>
 
 
 <script src="/js/html-patch.js" type="text/javascript"></script>
