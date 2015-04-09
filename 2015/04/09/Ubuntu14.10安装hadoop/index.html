@@ -66,7 +66,7 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-04-09T05:30:52.312Z"><a href="/2015/04/09/Ubuntu14.10安装hadoop/">2015-04-09</a></time>
+        <time datetime="2015-04-09T07:05:21.014Z"><a href="/2015/04/09/Ubuntu14.10安装hadoop/">2015-04-09</a></time>
       
       
   
@@ -81,7 +81,7 @@
 <li><p>创建hadoop组和hadoop用户,并将hadoop用户加入hadoop组</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> addgroup hadoop</span><br><span class="line"><span class="variable">$sudo</span> adduser -ingroup hadoop hadoop</span><br></pre></td></tr></table></figure>
 <p>回车后会提示输入新的UNIX密码，这是新建用户hadoop的密码。密码不回显，输入之后会要求确认一次。切记这一步不能回车跳过，否则无法登陆创建的用户。密码确认之后还要输入其他一些个人信息，这里可以一直回车跳过，最后确认所有信息正误，输入Y之后回车。</p>
-</li>
+<a id="more"></a></li>
 <li><p>为hadoop用户添加权限</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> gedit /etc/sudoers</span><br></pre></td></tr></table></figure>
 <p>在打开的sudoers文件中，给hadoop用户赋予和root用户同样的权限。在root ALL=(ALL:ALL) ALL这一行下面添加hadoop ALL=(ALL:ALL) ALL</p>
@@ -155,10 +155,10 @@
 
 <nav id="pagination" >
     
-    <a href="/2015/04/09/hadoop运行与wordcount程序测试/" class="alignleft prev" >上一页</a>
+    <a href="/2015/04/09/Ubuntu14.10下配置java环境变量/" class="alignleft prev" >上一页</a>
     
     
-    <a href="/2015/04/08/Ubuntu14.10下配置java环境变量/" class="alignright next" >下一页</a>
+    <a href="/2015/04/09/hadoop运行与wordcount程序测试/" class="alignright next" >下一页</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -198,7 +198,7 @@ var duoshuoQuery = {short_name:"zhaoguanjun"};
   <ul class="entry">
     
       <li>
-        <a href="/2015/04/09/hadoop运行与wordcount程序测试/">Hadoop安装与WordCount程序测试</a>
+        <a href="/2015/04/09/Ubuntu14.10下配置java环境变量/">Ubuntu14.10配置java环境变量</a>
       </li>
     
       <li>
@@ -206,7 +206,7 @@ var duoshuoQuery = {short_name:"zhaoguanjun"};
       </li>
     
       <li>
-        <a href="/2015/04/08/Ubuntu14.10下配置java环境变量/">Ubuntu14.10配置java环境变量</a>
+        <a href="/2015/04/09/hadoop运行与wordcount程序测试/">Hadoop安装与WordCount程序测试</a>
       </li>
     
       <li>

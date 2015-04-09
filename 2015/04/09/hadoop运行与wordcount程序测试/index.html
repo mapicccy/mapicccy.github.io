@@ -66,7 +66,7 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-04-09T06:40:25.946Z"><a href="/2015/04/09/hadoop运行与wordcount程序测试/">2015-04-09</a></time>
+        <time datetime="2015-04-09T07:03:41.551Z"><a href="/2015/04/09/hadoop运行与wordcount程序测试/">2015-04-09</a></time>
       
       
   
@@ -77,24 +77,18 @@
     <div class="entry">
       
         <ol>
-<li>首次运行hadoop前需格式化HDFS文件系统，命令如下：<br><img src="http://i.imgur.com/xoFiLlo.png" alt=""><br>格式化成功将会显示如下提示：<br><img src="http://i.imgur.com/V6FSfg9.png" alt=""></li>
-<li><p>运行hadoop，命令及运行情况如下：<br><img src="http://i.imgur.com/mPu4JD4.png" alt=""></p>
-</li>
-<li><p>测试数据说明<br>测试数据来自hadoop官网的6个网页文件（html），每一个网页文件都具有大量的英文单词。文件如下：<br><img src="http://i.imgur.com/91fKDlS.png" alt=""></p>
-</li>
-</ol>
-<ol>
-<li><p>运行WordCount程序</p>
-<blockquote>
+<li>首次运行hadoop前需格式化HDFS文件系统，命令如下：<br><img src="http://i.imgur.com/xoFiLlo.png" alt=""><br>格式化成功将会显示如下提示：<br><img src="http://i.imgur.com/V6FSfg9.png" alt=""><a id="more"></a></li>
+<li>运行hadoop，命令及运行情况如下：<br><img src="http://i.imgur.com/mPu4JD4.png" alt=""></li>
+<li>测试数据说明<br>测试数据来自hadoop官网的6个网页文件（html），每一个网页文件都具有大量的英文单词。文件如下：<br><img src="http://i.imgur.com/91fKDlS.png" alt=""></li>
+<li>运行WordCount程序<blockquote>
 <p>将本地的6个html文件拷贝进HDFS文件系统，命令如下：<br><img src="http://i.imgur.com/F5mTMu0.png" alt=""></p>
 <p>运行hadoop自带的wordcount程序，命令如下：<br><img src="http://i.imgur.com/OGBTHfP.png" alt=""></p>
 <p>运行过程如下：<br><img src="http://i.imgur.com/W8g2svF.png" alt=""></p>
 </blockquote>
 </li>
-<li><p>查看HDFS中的结果<br><img src="http://i.imgur.com/C79gW5H.png" alt=""></p>
-</li>
+<li>查看HDFS中的结果<br><img src="http://i.imgur.com/C79gW5H.png" alt=""></li>
 <li>将结果从HDFS拷贝到本地磁盘<br><img src="http://i.imgur.com/W2YYTzD.png" alt=""></li>
-<li>查看结果，test-out会产生3个文件或者文件夹，如下:<br><img src="http://i.imgur.com/eGOJ6ci.png" alt=""><br>中间一个part-r-00000的文件是我们需要的结果，它是以词与词频的形式为我们呈现的，如下所示（截取部分）：</li>
+<li>查看结果，test-out会产生3个文件或者文件夹，如下:<br><img src="http://i.imgur.com/eGOJ6ci.png" alt=""><br>中间一个part-r-00000的文件是我们需要的结果，它是以词与词频的形式为我们呈现的，如下所示（截取部分）：<br><img src="http://i.imgur.com/9g6QXE7.png" alt=""></li>
 <li>注意事项<br>在启动hadoop之后偶尔发现在HDFS中不能删除文件，提示namenode safe mode，这时候需要hadoop dfsadmin –safemode leave取消safe mode。</li>
 </ol>
 
@@ -120,8 +114,10 @@
 
 <nav id="pagination" >
     
+    <a href="/2015/04/09/Ubuntu14.10安装hadoop/" class="alignleft prev" >上一页</a>
     
-    <a href="/2015/04/09/Ubuntu14.10安装hadoop/" class="alignright next" >下一页</a>
+    
+    <a href="/2015/04/08/hello-world/" class="alignright next" >下一页</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -161,7 +157,7 @@ var duoshuoQuery = {short_name:"zhaoguanjun"};
   <ul class="entry">
     
       <li>
-        <a href="/2015/04/09/hadoop运行与wordcount程序测试/">Hadoop安装与WordCount程序测试</a>
+        <a href="/2015/04/09/Ubuntu14.10下配置java环境变量/">Ubuntu14.10配置java环境变量</a>
       </li>
     
       <li>
@@ -169,7 +165,7 @@ var duoshuoQuery = {short_name:"zhaoguanjun"};
       </li>
     
       <li>
-        <a href="/2015/04/08/Ubuntu14.10下配置java环境变量/">Ubuntu14.10配置java环境变量</a>
+        <a href="/2015/04/09/hadoop运行与wordcount程序测试/">Hadoop安装与WordCount程序测试</a>
       </li>
     
       <li>
