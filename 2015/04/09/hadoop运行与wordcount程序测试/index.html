@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | Why is Mapic</title>
+  <title>Hadoop安装与WordCount程序测试 | Why is Mapic</title>
   <meta name="author" content="mapicc">
   
   <meta name="description" content="IT">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Hello World"/>
+  <meta property="og:title" content="Hadoop安装与WordCount程序测试"/>
   <meta property="og:site_name" content="Why is Mapic"/>
 
   
@@ -66,19 +66,37 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-04-08T10:49:15.437Z"><a href="/2015/04/08/hello-world/">2015-04-08</a></time>
+        <time datetime="2015-04-09T06:40:25.946Z"><a href="/2015/04/09/hadoop运行与wordcount程序测试/">2015-04-09</a></time>
       
       
   
-    <h1 class="title">Hello World</h1>
+    <h1 class="title">Hadoop安装与WordCount程序测试</h1>
   
 
     </header>
     <div class="entry">
       
-        <p><br><br>2015/04/05-2015/04/08<br><br>博客诞生之初！</p>
-<p>这几天适逢清明节，一个人在实验室安安静静的学到了很多东西，在此感谢<a href="http://xiaoshiguang10.com/" target="_blank" rel="external">Gavin</a>。正是看到他关于<a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>的介绍，才萌生了建博客的念头。还有<a href="http://zipperary.com/" target="_blank" rel="external">Zippera</a>的不吝指导，包括他博客的教程以及通过QQ的交谈，可以说没有他的帮助我不会这么顺利。</p>
-<p>从今开始，我会尝试用博客记录我的成长历程，见证我成为大牛的点点滴滴！<br></p>
+        <ol>
+<li>首次运行hadoop前需格式化HDFS文件系统，命令如下：<br><img src="http://i.imgur.com/xoFiLlo.png" alt=""><br>格式化成功将会显示如下提示：<br><img src="http://i.imgur.com/V6FSfg9.png" alt=""></li>
+<li><p>运行hadoop，命令及运行情况如下：<br><img src="http://i.imgur.com/mPu4JD4.png" alt=""></p>
+</li>
+<li><p>测试数据说明<br>测试数据来自hadoop官网的6个网页文件（html），每一个网页文件都具有大量的英文单词。文件如下：<br><img src="http://i.imgur.com/91fKDlS.png" alt=""></p>
+</li>
+</ol>
+<ol>
+<li><p>运行WordCount程序</p>
+<blockquote>
+<p>将本地的6个html文件拷贝进HDFS文件系统，命令如下：<br><img src="http://i.imgur.com/F5mTMu0.png" alt=""></p>
+<p>运行hadoop自带的wordcount程序，命令如下：<br><img src="http://i.imgur.com/OGBTHfP.png" alt=""></p>
+<p>运行过程如下：<br><img src="http://i.imgur.com/W8g2svF.png" alt=""></p>
+</blockquote>
+</li>
+<li><p>查看HDFS中的结果<br><img src="http://i.imgur.com/C79gW5H.png" alt=""></p>
+</li>
+<li>将结果从HDFS拷贝到本地磁盘<br><img src="http://i.imgur.com/W2YYTzD.png" alt=""></li>
+<li>查看结果，test-out会产生3个文件或者文件夹，如下:<br><img src="http://i.imgur.com/eGOJ6ci.png" alt=""><br>中间一个part-r-00000的文件是我们需要的结果，它是以词与词频的形式为我们呈现的，如下所示（截取部分）：</li>
+<li>注意事项<br>在启动hadoop之后偶尔发现在HDFS中不能删除文件，提示namenode safe mode，这时候需要hadoop dfsadmin –safemode leave取消safe mode。</li>
+</ol>
 
       
     </div>
@@ -86,6 +104,11 @@
       
         
         
+  
+  <div class="tags">
+    <a href="/tags/hadoop/">hadoop</a>
+  </div>
+
         <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
 <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
       
@@ -97,8 +120,8 @@
 
 <nav id="pagination" >
     
-    <a href="/2015/04/08/Ubuntu14.10下配置java环境变量/" class="alignleft prev" >上一页</a>
     
+    <a href="/2015/04/09/Ubuntu14.10安装hadoop/" class="alignright next" >下一页</a>
     
     <div class="clearfix"></div>
 </nav>
