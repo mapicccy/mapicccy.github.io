@@ -66,7 +66,7 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-04-22T13:21:34.660Z"><a href="/2015/04/22/Linux的capabilities机制/">2015-04-22</a></time>
+        <time datetime="2015-04-22T13:23:54.885Z"><a href="/2015/04/22/Linux的capabilities机制/">2015-04-22</a></time>
       
       
   
@@ -80,7 +80,7 @@
 <ol>
 <li>CAP_CHOWN<br>In a system with the [_POSIX_CHOWN_RESTRICTED] option defined, this overrides the restriction of changing file ownership and group ownership.</li>
 <li>CAP_DAC_OVERRIDE<br>Override all DAC access, including ACL execute access if [_POSIX_ACL] is defined. Excluding DAC access covered by CAP_LINUX_IMMUTABLE.</li>
-<li>CAP_DAC_READ_SEARCH<br>Overrides all DAC restrictions regarding read and search on files and directories, including ACL restrictions if [_POSIX_ACL] is defined. Excluding DAC access covered by CAP_LINUX_IMMUTABLE.</li>
+<li>CAP_DAC_READ_SEARCH<br>Overrides all DAC restrictions regarding read and search on files and directories, including ACL restrictions if [_POSIX_ACL] is defined. Excluding DAC access covered by CAP_LINUX_IMMUTABLE.<a id="more"></a></li>
 <li>CAP_FOWNER<br>Overrides all restrictions about allowed operations on files, where file owner ID must be equal to the user ID, except where CAP_FSETID is applicable. It doesn’t override MAC and DAC restrictions.</li>
 <li>CAP_FSETID<br>Overrides the following restrictions that the effective user ID shall match the file owner ID when setting the S_ISUID and S_ISGID bits on that file; that the effective group ID (or one of the supplementary group IDs) shall match the file owner ID when setting<br>the S_ISGID bit on that file; that the S_ISUID and S_ISGID bits are cleared on successful return from chown(2) (not implemented).</li>
 <li>CAP_KILL<br>Overrides the restriction that the real or effective user ID of a process sending a signal must match the real or effective user ID of the process receiving the signal.</li>
