@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Why is Mapic</title>
+  <title>Linux的capabilities机制 | Why is Mapic</title>
   <meta name="author" content="mapicc">
   
   <meta name="description" content="IT">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="Linux的capabilities机制"/>
   <meta property="og:site_name" content="Why is Mapic"/>
 
   
@@ -66,18 +66,17 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-04-22T13:18:42.514Z"><a href="/2015/04/22/Linux的capabilities机制/">2015-04-22</a></time>
+        <time datetime="2015-04-22T13:21:34.660Z"><a href="/2015/04/22/Linux的capabilities机制/">2015-04-22</a></time>
       
       
   
-    <h1 class="title"></h1>
+    <h1 class="title">Linux的capabilities机制</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>title:Linux的capabilities机制</p>
-<h2 id="tags:Linux">tags:Linux</h2><p>Capabilities的主要思想在于分割root用户的特权，即将root的特权分割成不同的能力，每一种能力代表一定的特权操作。<br><br><br>在linux内核3.10.61中，将root的特权分割成37种，每种能力互不交叉。下面分别介绍这36中能力：<br></p>
+        <p>Capabilities的主要思想在于分割root用户的特权，即将root的特权分割成不同的能力，每一种能力代表一定的特权操作。<br><br><br>在linux内核3.10.61中，将root的特权分割成37种，每种能力互不交叉。下面分别介绍这36中能力：<br></p>
 <ol>
 <li>CAP_CHOWN<br>In a system with the [_POSIX_CHOWN_RESTRICTED] option defined, this overrides the restriction of changing file ownership and group ownership.</li>
 <li>CAP_DAC_OVERRIDE<br>Override all DAC access, including ACL execute access if [_POSIX_ACL] is defined. Excluding DAC access covered by CAP_LINUX_IMMUTABLE.</li>
@@ -125,6 +124,11 @@
       
         
         
+  
+  <div class="tags">
+    <a href="/tags/Linux/">Linux</a>
+  </div>
+
         <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
 <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
       
@@ -177,7 +181,7 @@ var duoshuoQuery = {short_name:"zhaoguanjun"};
   <ul class="entry">
     
       <li>
-        <a href="/2015/04/22/Linux的capabilities机制/"></a>
+        <a href="/2015/04/22/Linux的capabilities机制/">Linux的capabilities机制</a>
       </li>
     
       <li>
@@ -204,7 +208,7 @@ var duoshuoQuery = {short_name:"zhaoguanjun"};
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/hadoop/" style="font-size: 20px;">hadoop</a><a href="/tags/java/" style="font-size: 10px;">java</a>
+    <a href="/tags/Linux/" style="font-size: 10px;">Linux</a><a href="/tags/hadoop/" style="font-size: 20px;">hadoop</a><a href="/tags/java/" style="font-size: 10px;">java</a>
   </div>
 </div>
 
