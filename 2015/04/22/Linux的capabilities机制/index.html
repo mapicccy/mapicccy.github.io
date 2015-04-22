@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | Why is Mapic</title>
+  <title>Why is Mapic</title>
   <meta name="author" content="mapicc">
   
   <meta name="description" content="IT">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Hello World"/>
+  
   <meta property="og:site_name" content="Why is Mapic"/>
 
   
@@ -66,19 +66,58 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-04-08T10:49:15.437Z"><a href="/2015/04/08/hello-world/">2015-04-08</a></time>
+        <time datetime="2015-04-22T13:18:42.514Z"><a href="/2015/04/22/Linux的capabilities机制/">2015-04-22</a></time>
       
       
   
-    <h1 class="title">Hello World</h1>
+    <h1 class="title"></h1>
   
 
     </header>
     <div class="entry">
       
-        <p><br><br>2015/04/05-2015/04/08<br><br>博客诞生之初！</p>
-<p>这几天适逢清明节，一个人在实验室安安静静的学到了很多东西，在此感谢<a href="http://xiaoshiguang10.com/" target="_blank" rel="external">Gavin</a>。正是看到他关于<a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>的介绍，才萌生了建博客的念头。还有<a href="http://zipperary.com/" target="_blank" rel="external">Zippera</a>的不吝指导，包括他博客的教程以及通过QQ的交谈，可以说没有他的帮助我不会这么顺利。</p>
-<p>从今开始，我会尝试用博客记录我的成长历程，见证我成为大牛的点点滴滴！<br></p>
+        <p>title:Linux的capabilities机制</p>
+<h2 id="tags:Linux">tags:Linux</h2><p>Capabilities的主要思想在于分割root用户的特权，即将root的特权分割成不同的能力，每一种能力代表一定的特权操作。<br><br><br>在linux内核3.10.61中，将root的特权分割成37种，每种能力互不交叉。下面分别介绍这36中能力：<br></p>
+<ol>
+<li>CAP_CHOWN<br>In a system with the [_POSIX_CHOWN_RESTRICTED] option defined, this overrides the restriction of changing file ownership and group ownership.</li>
+<li>CAP_DAC_OVERRIDE<br>Override all DAC access, including ACL execute access if [_POSIX_ACL] is defined. Excluding DAC access covered by CAP_LINUX_IMMUTABLE.</li>
+<li>CAP_DAC_READ_SEARCH<br>Overrides all DAC restrictions regarding read and search on files and directories, including ACL restrictions if [_POSIX_ACL] is defined. Excluding DAC access covered by CAP_LINUX_IMMUTABLE.</li>
+<li>CAP_FOWNER<br>Overrides all restrictions about allowed operations on files, where file owner ID must be equal to the user ID, except where CAP_FSETID is applicable. It doesn’t override MAC and DAC restrictions.</li>
+<li>CAP_FSETID<br>Overrides the following restrictions that the effective user ID shall match the file owner ID when setting the S_ISUID and S_ISGID bits on that file; that the effective group ID (or one of the supplementary group IDs) shall match the file owner ID when setting<br>the S_ISGID bit on that file; that the S_ISUID and S_ISGID bits are cleared on successful return from chown(2) (not implemented).</li>
+<li>CAP_KILL<br>Overrides the restriction that the real or effective user ID of a process sending a signal must match the real or effective user ID of the process receiving the signal.</li>
+<li>CAP_SETGID</li>
+<li>CAP_SETUID</li>
+<li>CAP_SETPCAP</li>
+<li>CAP_LINUX_IMMUTABLE</li>
+<li>CAP_NET_BIND_SERVICE</li>
+<li>CAP_NET_BROADCAST</li>
+<li>CAP_NET_ADMIN</li>
+<li>CAP_NET_RAW</li>
+<li>CAP_IPC_LOCK</li>
+<li>CAP_IPC_OWNER</li>
+<li>CAP_SYS_MODULE</li>
+<li>CAP_SYS_RAWIO</li>
+<li>CAP_SYS_CHROOT</li>
+<li>CAP_SYS_PTRACE</li>
+<li>CAP_SYS_PACCT</li>
+<li>CAP_SYS_ADMIN</li>
+<li>CAP_SYS_BOOT</li>
+<li>CAP_SYS_NICE</li>
+<li>CAP_SYS_RESOURCE</li>
+<li>CAP_SYS_TIME</li>
+<li>CAP_SYS_TTY_CONFIG</li>
+<li>CAP_MKNOD</li>
+<li>CAP_LEASE</li>
+<li>CAP_AUDIT_WRITE</li>
+<li>CAP_AUDIT_CONTROL</li>
+<li>CAP_SETFCAP</li>
+<li>CAP_MAC_OVERRIDE</li>
+<li>CAP_MAC_ADMIN</li>
+<li>CAP_SYSLOG</li>
+<li>CAP_WAKE_ALARM</li>
+<li>CAP_BLOCK_SUSPEND</li>
+<li>CAP_LAST_CAP</li>
+</ol>
 
       
     </div>
@@ -97,8 +136,8 @@
 
 <nav id="pagination" >
     
-    <a href="/2015/04/09/hadoop运行与wordcount程序测试/" class="alignleft prev" >上一页</a>
     
+    <a href="/2015/04/09/Ubuntu14.10下配置java环境变量/" class="alignright next" >下一页</a>
     
     <div class="clearfix"></div>
 </nav>
