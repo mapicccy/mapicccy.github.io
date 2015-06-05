@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Linux的capabilities机制 | Why is Mapic</title>
+  <title>Linux下capget和capset系统调用详解 | Why is Mapic</title>
   <meta name="author" content="mapicc">
   
   <meta name="description" content="IT">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Linux的capabilities机制"/>
+  <meta property="og:title" content="Linux下capget和capset系统调用详解"/>
   <meta property="og:site_name" content="Why is Mapic"/>
 
   
@@ -66,57 +66,22 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-04-22T13:23:54.885Z"><a href="/2015/04/22/Linux的capabilities机制/">2015-04-22</a></time>
+        <time datetime="2015-06-05T11:51:53.233Z"><a href="/2015/06/05/Linux下capget与capset系统调用/">2015-06-05</a></time>
       
       
   
-    <h1 class="title">Linux的capabilities机制</h1>
+    <h1 class="title">Linux下capget和capset系统调用详解</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>Capabilities的主要思想在于分割root用户的特权，即将root的特权分割成不同的能力，每一种能力代表一定的特权操作。<br><br><br>在linux内核3.10.61中，将root的特权分割成37种，每种能力互不交叉。下面分别介绍这36中能力：<br></p>
-<ol>
-<li>CAP_CHOWN<br>In a system with the [_POSIX_CHOWN_RESTRICTED] option defined, this overrides the restriction of changing file ownership and group ownership.</li>
-<li>CAP_DAC_OVERRIDE<br>Override all DAC access, including ACL execute access if [_POSIX_ACL] is defined. Excluding DAC access covered by CAP_LINUX_IMMUTABLE.</li>
-<li>CAP_DAC_READ_SEARCH<br>Overrides all DAC restrictions regarding read and search on files and directories, including ACL restrictions if [_POSIX_ACL] is defined. Excluding DAC access covered by CAP_LINUX_IMMUTABLE.<a id="more"></a></li>
-<li>CAP_FOWNER<br>Overrides all restrictions about allowed operations on files, where file owner ID must be equal to the user ID, except where CAP_FSETID is applicable. It doesn’t override MAC and DAC restrictions.</li>
-<li>CAP_FSETID<br>Overrides the following restrictions that the effective user ID shall match the file owner ID when setting the S_ISUID and S_ISGID bits on that file; that the effective group ID (or one of the supplementary group IDs) shall match the file owner ID when setting<br>the S_ISGID bit on that file; that the S_ISUID and S_ISGID bits are cleared on successful return from chown(2) (not implemented).</li>
-<li>CAP_KILL<br>Overrides the restriction that the real or effective user ID of a process sending a signal must match the real or effective user ID of the process receiving the signal.</li>
-<li>CAP_SETGID</li>
-<li>CAP_SETUID</li>
-<li>CAP_SETPCAP</li>
-<li>CAP_LINUX_IMMUTABLE</li>
-<li>CAP_NET_BIND_SERVICE</li>
-<li>CAP_NET_BROADCAST</li>
-<li>CAP_NET_ADMIN</li>
-<li>CAP_NET_RAW</li>
-<li>CAP_IPC_LOCK</li>
-<li>CAP_IPC_OWNER</li>
-<li>CAP_SYS_MODULE</li>
-<li>CAP_SYS_RAWIO</li>
-<li>CAP_SYS_CHROOT</li>
-<li>CAP_SYS_PTRACE</li>
-<li>CAP_SYS_PACCT</li>
-<li>CAP_SYS_ADMIN</li>
-<li>CAP_SYS_BOOT</li>
-<li>CAP_SYS_NICE</li>
-<li>CAP_SYS_RESOURCE</li>
-<li>CAP_SYS_TIME</li>
-<li>CAP_SYS_TTY_CONFIG</li>
-<li>CAP_MKNOD</li>
-<li>CAP_LEASE</li>
-<li>CAP_AUDIT_WRITE</li>
-<li>CAP_AUDIT_CONTROL</li>
-<li>CAP_SETFCAP</li>
-<li>CAP_MAC_OVERRIDE</li>
-<li>CAP_MAC_ADMIN</li>
-<li>CAP_SYSLOG</li>
-<li>CAP_WAKE_ALARM</li>
-<li>CAP_BLOCK_SUSPEND</li>
-<li>CAP_LAST_CAP</li>
-</ol>
+        <h2 id="吐槽"><strong>吐槽</strong></h2><p>居然被陈某人拉进了SELinux小组，只能说郁闷<br><br></p>
+<h2 id="权能机制"><strong>权能机制</strong></h2><p>linux从2.1开始加入权能机制，从此，访问控制的时候不再是判断主体的euid（有效用户ID），而是判断主体是否具有某一个权能。3.10版本的权能已经多达37个。目前只有root用户完整的拥有这些权能，且只有root可以赋予其他进程某些权能，这就是通过capget与capset实现的。<br><br></p>
+<h2 id="原型"><strong>原型</strong></h2><p>capset与capget系统调用位于内核kernel/include/linux/syscalls.h系统调用表中，其原型为：<br><br><br><code><br>    asmlinkage long sys_capget(cap_user_header_t header,cap_user_data_t dataptr);<br></code><br><code><br>    asmlinkage long sys_capset(cap_user_header_t header,const cap_user_data_t data);<br></code><br><br></p>
+<h2 id="功能"><strong>功能</strong></h2><p>capget用来获得进程的权能，capset用来设置进程的权能。<br><br></p>
+<h2 id="相关数据结构"><strong>相关数据结构</strong></h2><p><code><br>    typedef struct <strong>user_cap_header_struct {
+        </strong>u32 version;<br>        int pid;<br>    } __user *cap_user_header_t;<br></code></p>
 
       
     </div>
@@ -181,7 +146,7 @@ var duoshuoQuery = {short_name:"zhaoguanjun"};
   <ul class="entry">
     
       <li>
-        <a href="/2015/04/22/Linux的capabilities机制/">Linux的capabilities机制</a>
+        <a href="/2015/06/05/Linux下capget与capset系统调用/">Linux下capget和capset系统调用详解</a>
       </li>
     
       <li>
