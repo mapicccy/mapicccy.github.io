@@ -66,7 +66,7 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-06-05T11:51:53.233Z"><a href="/2015/06/05/Linux下capget与capset系统调用/">2015-06-05</a></time>
+        <time datetime="2015-06-05T11:56:41.942Z"><a href="/2015/06/05/Linux下capget与capset系统调用/">2015-06-05</a></time>
       
       
   
@@ -78,11 +78,18 @@
       
         <h2 id="吐槽"><strong>吐槽</strong></h2><p>居然被陈某人拉进了SELinux小组，只能说郁闷<br><br></p>
 <h2 id="权能机制"><strong>权能机制</strong></h2><p>linux从2.1开始加入权能机制，从此，访问控制的时候不再是判断主体的euid（有效用户ID），而是判断主体是否具有某一个权能。3.10版本的权能已经多达37个。目前只有root用户完整的拥有这些权能，且只有root可以赋予其他进程某些权能，这就是通过capget与capset实现的。<br><br></p>
-<h2 id="原型"><strong>原型</strong></h2><p>capset与capget系统调用位于内核kernel/include/linux/syscalls.h系统调用表中，其原型为：<br><br><br><code><br>    asmlinkage long sys_capget(cap_user_header_t header,cap_user_data_t dataptr);<br></code><br><code><br>    asmlinkage long sys_capset(cap_user_header_t header,const cap_user_data_t data);<br></code><br><br></p>
+<h2 id="原型"><strong>原型</strong></h2><p>capset与capget系统调用位于内核kernel/include/linux/syscalls.h系统调用表中，其原型为：<br><br></p>
+<ol>
+<li>asmlinkage long sys_capget(cap_user_header_t header,cap_user_data_t dataptr);</li>
+<li>asmlinkage long sys_capset(cap_user_header_t header,const cap_user_data_t data);</li>
+</ol>
+<p><br></p>
 <h2 id="功能"><strong>功能</strong></h2><p>capget用来获得进程的权能，capset用来设置进程的权能。<br><br></p>
-<h2 id="相关数据结构"><strong>相关数据结构</strong></h2><p><code><br>    typedef struct <strong>user_cap_header_struct {
-        </strong>u32 version;<br>        int pid;<br>    } __user *cap_user_header_t;<br></code></p>
-
+<h2 id="相关数据结构"><strong>相关数据结构</strong></h2><pre><code><span class="keyword">typedef</span> <span class="keyword">struct</span> __user_cap_header_struct {
+    __u32 <span class="keyword">version</span>;
+    <span class="keyword">int</span> pid;
+} __user *cap_user_header_t;
+</code></pre>
       
     </div>
     <footer>
