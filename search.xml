@@ -30,9 +30,9 @@
 <p>最关键的函数是<code>ftrace_make_nop</code>，函数如下：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">ftrace_make_nop</span><span class="params">(<span class="keyword">struct</span> module *mod, <span class="keyword">struct</span> dyn_ftrace *rec, <span class="type">unsigned</span> <span class="type">long</span> addr)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> ip = rec-&gt;ip;</span><br><span class="line">	<span class="type">const</span> <span class="type">char</span> *new, *old;</span><br><span class="line"></span><br><span class="line">	old = ftrace_call_replace(ip, addr);</span><br><span class="line">	new = ftrace_nop_replace();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * On boot up, and when modules are loaded, the MCOUNT_ADDR</span></span><br><span class="line"><span class="comment">	 * is converted to a nop, and will never become MCOUNT_ADDR</span></span><br><span class="line"><span class="comment">	 * again. This code is either running before SMP (on boot up)</span></span><br><span class="line"><span class="comment">	 * or before the code will ever be executed (module load).</span></span><br><span class="line"><span class="comment">	 * We do not want to use the breakpoint version in this case,</span></span><br><span class="line"><span class="comment">	 * just modify the code directly.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">if</span> (addr == MCOUNT_ADDR)</span><br><span class="line">		<span class="keyword">return</span> ftrace_modify_code_direct(ip, old, new);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * x86 overrides ftrace_replace_code -- this function will never be used</span></span><br><span class="line"><span class="comment">	 * in this case.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	WARN_ONCE(<span class="number">1</span>, <span class="string">&quot;invalid use of ftrace_make_nop&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> -EINVAL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>**<code>ftrace_call_replace</code>**函数直接调用<code>text_gen_insn</code>，这里是为了拿到代码段ip地址的指令，但是实现逻辑暂时没有搞清楚，据说涉及kernel-5.10新特性<code>static calls</code>，在这里挖个坑，详情参考：<a href="https://blog.yossarian.net/2020/12/16/Static-calls-in-Linux-5-10%E3%80%82">https://blog.yossarian.net/2020/12/16/Static-calls-in-Linux-5-10。</a></p>
-<p>以x86_64为例，<code>ftrace_nop_replace</code>找到大小为5个bytes的nop指令，该指令存放在x86_nops全局数组中，直接返回x86_nops[5]即可，x86_nops[5]通过一系列的数组和宏解析，最终返回的结果0x0f 1f 44 00 00，对应的nop指令为nopl 0x00(%eax, %eax, 1)。具体实现如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/*</span><br><span class="line"> * Generic 64bit nops from GAS:</span><br><span class="line"> *</span><br><span class="line"> * 1: nop</span><br><span class="line"> * 2: osp nop</span><br><span class="line"> * 3: nopl (%eax)</span><br><span class="line"> * 4: nopl 0x00(%eax)</span><br><span class="line"> * 5: nopl 0x00(%eax,%eax,1)</span><br><span class="line"> * 6: osp nopl 0x00(%eax,%eax,1)</span><br><span class="line"> * 7: nopl 0x00000000(%eax)</span><br><span class="line"> * 8: nopl 0x00000000(%eax,%eax,1)</span><br><span class="line"> */</span><br><span class="line">#define BYTES_NOP1	0x90</span><br><span class="line">#define BYTES_NOP2	0x66,BYTES_NOP1</span><br><span class="line">#define BYTES_NOP3	0x0f,0x1f,0x00</span><br><span class="line">#define BYTES_NOP4	0x0f,0x1f,0x40,0x00</span><br><span class="line">#define BYTES_NOP5	0x0f,0x1f,0x44,0x00,0x00</span><br><span class="line">#define BYTES_NOP6	0x66,BYTES_NOP5</span><br><span class="line">#define BYTES_NOP7	0x0f,0x1f,0x80,0x00,0x00,0x00,0x00</span><br><span class="line">#define BYTES_NOP8	0x0f,0x1f,0x84,0x00,0x00,0x00,0x00,0x00</span><br><span class="line"></span><br><span class="line">const unsigned char x86nops[] =</span><br><span class="line">&#123;</span><br><span class="line">	BYTES_NOP1,</span><br><span class="line">	BYTES_NOP2,</span><br><span class="line">	BYTES_NOP3,</span><br><span class="line">	BYTES_NOP4,</span><br><span class="line">	BYTES_NOP5,</span><br><span class="line">	BYTES_NOP6,</span><br><span class="line">	BYTES_NOP7,</span><br><span class="line">	BYTES_NOP8,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const unsigned char * const x86_nops[ASM_NOP_MAX+1] =</span><br><span class="line">&#123;</span><br><span class="line">	NULL,</span><br><span class="line">	x86nops,</span><br><span class="line">	x86nops + 1,</span><br><span class="line">	x86nops + 1 + 2,</span><br><span class="line">	x86nops + 1 + 2 + 3,</span><br><span class="line">	x86nops + 1 + 2 + 3 + 4,</span><br><span class="line">	x86nops + 1 + 2 + 3 + 4 + 5,</span><br><span class="line">	x86nops + 1 + 2 + 3 + 4 + 5 + 6,</span><br><span class="line">	x86nops + 1 + 2 + 3 + 4 + 5 + 6 + 7,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>ftrace_call_replace函数直接调用text_gen_insn，这里是为了拿到代码段ip地址的指令，但是实现逻辑暂时没有搞清楚，据说涉及kernel-5.10新特性<code>static calls</code>，在这里挖个坑，详情参考：<a href="https://blog.yossarian.net/2020/12/16/Static-calls-in-Linux-5-10%E3%80%82">https://blog.yossarian.net/2020/12/16/Static-calls-in-Linux-5-10。</a></p>
+<p>以x86_64为例，ftrace_nop_replace找到大小为5个bytes的nop指令，该指令存放在x86_nops全局数组中，直接返回x86_nops[5]即可，x86_nops[5]通过一系列的数组和宏解析，最终返回的结果0x0f 1f 44 00 00，对应的nop指令为nopl 0x00(%eax, %eax, 1)。具体实现如下：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Generic 64bit nops from GAS:</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 1: nop</span></span><br><span class="line"><span class="comment"> * 2: osp nop</span></span><br><span class="line"><span class="comment"> * 3: nopl (%eax)</span></span><br><span class="line"><span class="comment"> * 4: nopl 0x00(%eax)</span></span><br><span class="line"><span class="comment"> * 5: nopl 0x00(%eax,%eax,1)</span></span><br><span class="line"><span class="comment"> * 6: osp nopl 0x00(%eax,%eax,1)</span></span><br><span class="line"><span class="comment"> * 7: nopl 0x00000000(%eax)</span></span><br><span class="line"><span class="comment"> * 8: nopl 0x00000000(%eax,%eax,1)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BYTES_NOP1	0x90</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BYTES_NOP2	0x66,BYTES_NOP1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BYTES_NOP3	0x0f,0x1f,0x00</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BYTES_NOP4	0x0f,0x1f,0x40,0x00</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BYTES_NOP5	0x0f,0x1f,0x44,0x00,0x00</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BYTES_NOP6	0x66,BYTES_NOP5</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BYTES_NOP7	0x0f,0x1f,0x80,0x00,0x00,0x00,0x00</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BYTES_NOP8	0x0f,0x1f,0x84,0x00,0x00,0x00,0x00,0x00</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">unsigned</span> <span class="type">char</span> x86nops[] =</span><br><span class="line">&#123;</span><br><span class="line">	BYTES_NOP1,</span><br><span class="line">	BYTES_NOP2,</span><br><span class="line">	BYTES_NOP3,</span><br><span class="line">	BYTES_NOP4,</span><br><span class="line">	BYTES_NOP5,</span><br><span class="line">	BYTES_NOP6,</span><br><span class="line">	BYTES_NOP7,</span><br><span class="line">	BYTES_NOP8,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">unsigned</span> <span class="type">char</span> * <span class="type">const</span> x86_nops[ASM_NOP_MAX+<span class="number">1</span>] =</span><br><span class="line">&#123;</span><br><span class="line">	<span class="literal">NULL</span>,</span><br><span class="line">	x86nops,</span><br><span class="line">	x86nops + <span class="number">1</span>,</span><br><span class="line">	x86nops + <span class="number">1</span> + <span class="number">2</span>,</span><br><span class="line">	x86nops + <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span>,</span><br><span class="line">	x86nops + <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span>,</span><br><span class="line">	x86nops + <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span>,</span><br><span class="line">	x86nops + <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + <span class="number">6</span>,</span><br><span class="line">	x86nops + <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + <span class="number">6</span> + <span class="number">7</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p><code>ftrace_modify_code_direct</code>将相应代码段地址的指令替换为新的5个bytes大小的nop指令。至此ftrace_init基本完成。</p>
 <h3 id="ftrace主要框架构成"><a href="#ftrace主要框架构成" class="headerlink" title="ftrace主要框架构成"></a>ftrace主要框架构成</h3><h4 id="ring-buffer"><a href="#ring-buffer" class="headerlink" title="ring buffer"></a>ring buffer</h4><p>ftrace可以支持多种tracer，<code>ring buffer</code>用来存放tracer触发的数据，<code>per_cpu</code>的结构。此外，还有以下特性：</p>
@@ -42,303 +42,30 @@
 <li><code>struct ring_buffer_per_cpu</code>通过<code>head_page</code>(头指针\读)、<code>tail_page</code>(尾指针\写)、<code>commit_page</code>(写确认)来管理<code>ring</code>；同理<code>buffer_page-&gt;write</code>、<code>buffer_page-&gt;read</code>、<code>buffer_data_page-&gt;commit</code>来管理page内偏移量</li>
 <li><code>ring_buffer_per_cpu-&gt;reader_page</code>还包含一个单独的<code>buffer_page</code>，用以支持<code>reader</code>方式的读方式</li>
 </ul>
-<figure class="highlight plaintext"><figcaption><span>buffer```结构如下图所示：</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">![ring_buffer](../images/ring_buffer.png)</span><br><span class="line"></span><br><span class="line">`ring buffer`初始化函数是`early_trace_init`，同样由`init/main.c`文件内`start_kernel`函数调用。详细函数调用流程如下：</span><br><span class="line"></span><br><span class="line">`start_kernel-&gt;early_trace_init-&gt;tracer_alloc_buffers-&gt;ring_buffer_alloc-&gt;__ring_buffer_alloc`:</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>&#x2F;* __ring_buffer_alloc - allocate a new ring_buffer</p>
+<p>ring buffer结构如下图所示：</p>
+<p><img src="/../images/ring_buffer.png" alt="ring_buffer"></p>
+<p><code>ring buffer</code>初始化函数是<code>early_trace_init</code>，同样由<code>init/main.c</code>文件内<code>start_kernel</code>函数调用。详细函数调用流程如下：</p>
+<p><code>start_kernel-&gt;early_trace_init-&gt;tracer_alloc_buffers-&gt;ring_buffer_alloc-&gt;__ring_buffer_alloc</code>:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* __ring_buffer_alloc - allocate a new ring_buffer</span></span><br><span class="line"><span class="comment"> * @size: the size in bytes per cpu that is needed.</span></span><br><span class="line"><span class="comment"> * @flags: attributes to set for the ring buffer.</span></span><br><span class="line"><span class="comment"> * @key: ring buffer reader_lock_key.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Currently the only flag that is available is the RB_FL_OVERWRITE</span></span><br><span class="line"><span class="comment"> * flag. This flag means that the buffer will overwrite old data</span></span><br><span class="line"><span class="comment"> * when the buffer wraps. If this flag is not set, the buffer will</span></span><br><span class="line"><span class="comment"> * drop data when the tail hits the head.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">trace_buffer</span> *__<span class="title">ring_buffer_alloc</span>(<span class="title">unsigned</span> <span class="title">long</span> <span class="title">size</span>, <span class="title">unsigned</span> <span class="title">flags</span>,</span></span><br><span class="line"><span class="class">					<span class="keyword">struct</span> <span class="title">lock_class_key</span> *<span class="title">key</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">trace_buffer</span> *<span class="title">buffer</span>;</span></span><br><span class="line">	<span class="type">long</span> nr_pages;</span><br><span class="line">	<span class="type">int</span> bsize;</span><br><span class="line">	<span class="type">int</span> cpu;</span><br><span class="line">	<span class="type">int</span> ret;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* keep it in its own cache line */</span></span><br><span class="line">	buffer = kzalloc(ALIGN(<span class="keyword">sizeof</span>(*buffer), cache_line_size()),</span><br><span class="line">			 GFP_KERNEL);</span><br><span class="line">	<span class="keyword">if</span> (!buffer)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!zalloc_cpumask_var(&amp;buffer-&gt;cpumask, GFP_KERNEL))</span><br><span class="line">		<span class="keyword">goto</span> fail_free_buffer;</span><br><span class="line"></span><br><span class="line">	nr_pages = DIV_ROUND_UP(size, BUF_PAGE_SIZE);</span><br><span class="line">	buffer-&gt;flags = flags;</span><br><span class="line">	buffer-&gt;clock = trace_clock_local;</span><br><span class="line">	buffer-&gt;reader_lock_key = key;</span><br><span class="line"></span><br><span class="line">	init_irq_work(&amp;buffer-&gt;irq_work.work, rb_wake_up_waiters);</span><br><span class="line">	init_waitqueue_head(&amp;buffer-&gt;irq_work.waiters);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* need at least two pages */</span></span><br><span class="line">	<span class="keyword">if</span> (nr_pages &lt; <span class="number">2</span>)</span><br><span class="line">		nr_pages = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">	buffer-&gt;cpus = nr_cpu_ids;</span><br><span class="line"></span><br><span class="line">	bsize = <span class="keyword">sizeof</span>(<span class="type">void</span> *) * nr_cpu_ids;</span><br><span class="line">	buffer-&gt;buffers = kzalloc(ALIGN(bsize, cache_line_size()),</span><br><span class="line">				  GFP_KERNEL);</span><br><span class="line">	<span class="keyword">if</span> (!buffer-&gt;buffers)</span><br><span class="line">		<span class="keyword">goto</span> fail_free_cpumask;</span><br><span class="line"></span><br><span class="line">	cpu = raw_smp_processor_id();</span><br><span class="line">	cpumask_set_cpu(cpu, buffer-&gt;cpumask);</span><br><span class="line">	buffer-&gt;buffers[cpu] = rb_allocate_cpu_buffer(buffer, nr_pages, cpu);</span><br><span class="line">	<span class="keyword">if</span> (!buffer-&gt;buffers[cpu])</span><br><span class="line">		<span class="keyword">goto</span> fail_free_buffers;</span><br><span class="line"></span><br><span class="line">	ret = cpuhp_state_add_instance(CPUHP_TRACE_RB_PREPARE, &amp;buffer-&gt;node);</span><br><span class="line">	<span class="keyword">if</span> (ret &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">goto</span> fail_free_buffers;</span><br><span class="line"></span><br><span class="line">	mutex_init(&amp;buffer-&gt;mutex);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> buffer;</span><br><span class="line"></span><br><span class="line"> fail_free_buffers:</span><br><span class="line">	for_each_buffer_cpu(buffer, cpu) &#123;</span><br><span class="line">		<span class="keyword">if</span> (buffer-&gt;buffers[cpu])</span><br><span class="line">			rb_free_cpu_buffer(buffer-&gt;buffers[cpu]);</span><br><span class="line">	&#125;</span><br><span class="line">	kfree(buffer-&gt;buffers);</span><br><span class="line"></span><br><span class="line"> fail_free_cpumask:</span><br><span class="line">	free_cpumask_var(buffer-&gt;cpumask);</span><br><span class="line"></span><br><span class="line"> fail_free_buffer:</span><br><span class="line">	kfree(buffer);</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line">EXPORT_SYMBOL_GPL(__ring_buffer_alloc);</span><br></pre></td></tr></table></figure>
+
+<p>其中代码流程都很常规，需要注意一些小trick:</p>
 <ul>
-<li><p>@size: the size in bytes per cpu that is needed.</p>
-</li>
-<li><p>@flags: attributes to set for the ring buffer.</p>
-</li>
-<li><p>@key: ring buffer reader_lock_key.</p>
-</li>
-<li></li>
-<li><p>Currently the only flag that is available is the RB_FL_OVERWRITE</p>
-</li>
-<li><p>flag. This flag means that the buffer will overwrite old data</p>
-</li>
-<li><p>when the buffer wraps. If this flag is not set, the buffer will</p>
-</li>
-<li><p>drop data when the tail hits the head.<br> *&#x2F;<br>struct trace_buffer *__ring_buffer_alloc(unsigned long size, unsigned flags,<br>             struct lock_class_key *key)<br>{<br> struct trace_buffer *buffer;<br> long nr_pages;<br> int bsize;<br> int cpu;<br> int ret;</p>
-<p> &#x2F;* keep it in its own cache line *&#x2F;<br> buffer &#x3D; kzalloc(ALIGN(sizeof(*buffer), cache_line_size()),<br>      GFP_KERNEL);<br> if (!buffer)<br> return NULL;<br> if (!zalloc_cpumask_var(&amp;buffer-&gt;cpumask, GFP_KERNEL))<br> goto fail_free_buffer;<br> nr_pages &#x3D; DIV_ROUND_UP(size, BUF_PAGE_SIZE);<br> buffer-&gt;flags &#x3D; flags;<br> buffer-&gt;clock &#x3D; trace_clock_local;<br> buffer-&gt;reader_lock_key &#x3D; key;</p>
-<p> init_irq_work(&amp;buffer-&gt;irq_work.work, rb_wake_up_waiters);<br> init_waitqueue_head(&amp;buffer-&gt;irq_work.waiters);</p>
-<p> &#x2F;* need at least two pages *&#x2F;<br> if (nr_pages &lt; 2)<br> nr_pages &#x3D; 2;<br> buffer-&gt;cpus &#x3D; nr_cpu_ids;</p>
-<p> bsize &#x3D; sizeof(void *) * nr_cpu_ids;<br> buffer-&gt;buffers &#x3D; kzalloc(ALIGN(bsize, cache_line_size()),<br>           GFP_KERNEL);<br> if (!buffer-&gt;buffers)<br> goto fail_free_cpumask;<br> cpu &#x3D; raw_smp_processor_id();<br> cpumask_set_cpu(cpu, buffer-&gt;cpumask);<br> buffer-&gt;buffers[cpu] &#x3D; rb_allocate_cpu_buffer(buffer, nr_pages, cpu);<br> if (!buffer-&gt;buffers[cpu])<br> goto fail_free_buffers;<br> ret &#x3D; cpuhp_state_add_instance(CPUHP_TRACE_RB_PREPARE, &amp;buffer-&gt;node);<br> if (ret &lt; 0)<br> goto fail_free_buffers;<br> mutex_init(&amp;buffer-&gt;mutex);</p>
-<p> return buffer;</p>
-</li>
+<li>很多时候分配内存都是cache_line_size对齐，这是由于涉及per_cpu类型的数据都要尤其注意，缓存行对齐防止不必要的访存。</li>
+<li>仅针对当前cpu（通过<code>raw_smp_processor_id()</code>获取）分配<code>ring buffer</code>，最初的实现是针对每一个cpu同时创建<code>ring buffer</code>，由于当前内核还没有初始化<code>sched</code>和<code>irq</code>，我认为由当前cpu为其它cpu分配<code>ring buffer</code>确实有点不太合理。最新的实现新增了一个cpu状态<code>CPUHP_TRACE_RB_PREPARE</code>，调用<code>cpuhp_setup_state_multi(CPUHP_TRACE_RB_PREPARE, &quot;trace/RB:prepare&quot;, trace_rb_cpu_prepare, NULL)</code>为该状态注册一个callback函数，然后调用<code>cpuhp_state_add_instance(CPUHP_TRACE_RB_PREPARE, &amp;buffer-&gt;node)</code>显示触发<code>CPUHP_TRACE_RB_PREPARE</code>。这一修改参见：<a href="https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg1280988.html">https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg1280988.html</a></li>
 </ul>
-<p> fail_free_buffers:<br>    for_each_buffer_cpu(buffer, cpu) {<br>        if (buffer-&gt;buffers[cpu])<br>            rb_free_cpu_buffer(buffer-&gt;buffers[cpu]);<br>    }<br>    kfree(buffer-&gt;buffers);</p>
-<p> fail_free_cpumask:<br>    free_cpumask_var(buffer-&gt;cpumask);</p>
-<p> fail_free_buffer:<br>    kfree(buffer);<br>    return NULL;<br>}<br>EXPORT_SYMBOL_GPL(__ring_buffer_alloc);</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">其中代码流程都很常规，需要注意一些小trick:</span><br><span class="line"></span><br><span class="line">- 很多时候分配内存都是cache_line_size对齐，这是由于涉及per_cpu类型的数据都要尤其注意，缓存行对齐防止不必要的访存。</span><br><span class="line">- 仅针对当前cpu（通过`raw_smp_processor_id()`获取）分配`ring buffer`，最初的实现是针对每一个cpu同时创建`ring buffer`，由于当前内核还没有初始化`sched`和`irq`，我认为由当前cpu为其它cpu分配`ring buffer`确实有点不太合理。最新的实现新增了一个cpu状态`CPUHP_TRACE_RB_PREPARE`，调用`cpuhp_setup_state_multi(CPUHP_TRACE_RB_PREPARE, &quot;trace/RB:prepare&quot;, trace_rb_cpu_prepare, NULL)`为该状态注册一个callback函数，然后调用`cpuhp_state_add_instance(CPUHP_TRACE_RB_PREPARE, &amp;buffer-&gt;node)`显示触发`CPUHP_TRACE_RB_PREPARE`。这一修改参见：https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg1280988.html</span><br><span class="line"></span><br><span class="line">`ring buffer`是trace机制的基础，用来记录tracer信息。而ftrace可能发生在不同的上下文中执行（可能是正常进程上下文、终端、NMI等），所以需要对`ring buffer`进行互斥访问。但是又由于ftrace不能给正常的内核业务带来过大的开销，引入了无锁的设计。为了支持`nested-write`嵌套写的免锁操作，引入`commit`的概念。这里是整个`ring buffer`设计的精髓。为了防止误导各位同学，这里不做解读。具体设计参加linux官方文档：https://www.kernel.org/doc/Documentation/trace/ring-buffer-design.txt</span><br><span class="line"></span><br><span class="line">#### ftracefs</span><br><span class="line"></span><br><span class="line">ftrace是内核的机制，用户需要利用该机制进行内核调试、性能分析等，所以内核提供ftracefs给用户提供定制化ftrace服务、呈现结果。</span><br><span class="line"></span><br><span class="line">ftracefs通过三大类呈现，分别是`tracer`、`filter_functions`、`event`。上文提到目前Linux 5.10支持的tracer种类有8种，分别为`hwlat`、`blk`、`function_graph`、`wakeup_dl`、`wakeup_rt`、`wakeup`、`function`、`nop`，选取function_graph为例来查看open系统调用的调用流程。</span><br><span class="line"></span><br><span class="line">通过ftracefs进入如下设置：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>echo 0 &gt; &#x2F;sys&#x2F;kernel&#x2F;debug&#x2F;tracing&#x2F;tracing_on   #关闭trace<br>echo function_graph &gt; &#x2F;sys&#x2F;kernel&#x2F;debug&#x2F;tracing&#x2F;current_tracer    #设置跟踪函数调用栈<br>echo 1 &gt; &#x2F;sys&#x2F;kernel&#x2F;debug&#x2F;tracing&#x2F;tracing_on   #打开trace<br>ls			#触发open系统调用<br>echo 0 &gt; &#x2F;sys&#x2F;kernel&#x2F;debug&#x2F;tracing&#x2F;tracing_on   #关闭trace</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">查看文件`/sys/kernel/debug/tracing/trace`，所有信息都是从`ring buffer`读取，由于是无锁的，在对function_graph做trace时需要确保没有其他的event干扰。可以显示open系统调用的调用链、执行CPU、函数耗时。如下所示，</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h1 id="tracer-function-graph"><a href="#tracer-function-graph" class="headerlink" title="tracer: function_graph"></a>tracer: function_graph</h1><h1 id=""><a href="#" class="headerlink" title=""></a></h1><h1 id="CPU-DURATION-FUNCTION-CALLS"><a href="#CPU-DURATION-FUNCTION-CALLS" class="headerlink" title="CPU  DURATION                  FUNCTION CALLS"></a>CPU  DURATION                  FUNCTION CALLS</h1><h1 id="-1"><a href="#-1" class="headerlink" title="|     |   |                     |   |   |   |"></a>|     |   |                     |   |   |   |</h1><ol start="0">
-<li><pre><code>          |  __x64_sys_openat() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |    do_sys_openat2() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |      getname() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |        getname_flags.part.0() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |          kmem_cache_alloc() &#123;
-</code></pre>
-</li>
-<li>0.181 us    |            should_failslab();</li>
-<li>0.530 us    |          }</li>
-<li><pre><code>          |          __check_object_size() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |            __check_object_size.part.0() &#123;
-</code></pre>
-</li>
-<li>0.198 us    |              check_stack_object();</li>
-<li>0.181 us    |              __virt_addr_valid();</li>
-<li>0.186 us    |              __check_heap_object();</li>
-<li>1.234 us    |            }</li>
-<li>1.553 us    |          }</li>
-<li>2.630 us    |        }</li>
-<li>2.954 us    |      }</li>
-<li><pre><code>          |      get_unused_fd_flags() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |        __alloc_fd() &#123;
-</code></pre>
-</li>
-<li>0.380 us    |          _raw_spin_lock();</li>
-<li>0.177 us    |          expand_files();</li>
-<li>1.397 us    |        }</li>
-<li>1.802 us    |      }</li>
-<li><pre><code>          |      do_filp_open() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |        path_openat() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |          alloc_empty_file() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |            __alloc_file() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |              kmem_cache_alloc() &#123;
-</code></pre>
-</li>
-<li>0.177 us    |                should_failslab();</li>
-<li>0.866 us    |              }</li>
-<li><pre><code>          |              security_file_alloc() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |                kmem_cache_alloc() &#123;
-</code></pre>
-</li>
-<li>0.177 us    |                  should_failslab();</li>
-<li>0.962 us    |                }</li>
-<li>1.310 us    |              }</li>
-<li>0.176 us    |              __mutex_init();</li>
-<li>3.432 us    |            }</li>
-<li>3.932 us    |          }</li>
-<li><pre><code>          |          path_init() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |            nd_jump_root() &#123;
-</code></pre>
-</li>
-<li>0.176 us    |              set_root();</li>
-<li>0.511 us    |            }</li>
-<li>0.868 us    |          }</li>
-<li><pre><code>          |          link_path_walk.part.0() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |            inode_permission.part.0() &#123;
-</code></pre>
-</li>
-<li>0.204 us    |              generic_permission();</li>
-<li>0.179 us    |              security_inode_permission();</li>
-<li>0.883 us    |            }</li>
-<li><pre><code>          |            walk_component() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |              lookup_fast() &#123;
-</code></pre>
-</li>
-<li>0.236 us    |                __d_lookup_rcu();</li>
-<li>0.859 us    |              }</li>
-<li><pre><code>          |              step_into() &#123;
-</code></pre>
-</li>
-<li>0.180 us    |                __follow_mount_rcu();</li>
-<li>0.521 us    |              }</li>
-<li>1.952 us    |            }</li>
-<li><pre><code>          |            inode_permission.part.0() &#123;
-</code></pre>
-</li>
-<li>0.177 us    |              generic_permission();</li>
-<li>0.180 us    |              security_inode_permission();</li>
-<li>1.010 us    |            }</li>
-<li><pre><code>          |            walk_component() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |              lookup_fast() &#123;
-</code></pre>
-</li>
-<li>0.376 us    |                __d_lookup_rcu();</li>
-<li>0.738 us    |              }</li>
-<li><pre><code>          |              step_into() &#123;
-</code></pre>
-</li>
-<li>0.182 us    |                __follow_mount_rcu();</li>
-<li>0.521 us    |              }</li>
-<li>1.768 us    |            }</li>
-<li><pre><code>          |            inode_permission.part.0() &#123;
-</code></pre>
-</li>
-<li>0.182 us    |              generic_permission();</li>
-<li>0.176 us    |              security_inode_permission();</li>
-<li>0.846 us    |            }</li>
-<li>7.724 us    |          }</li>
-<li><pre><code>          |          open_last_lookups() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |            lookup_fast() &#123;
-</code></pre>
-</li>
-<li>0.184 us    |              __d_lookup_rcu();</li>
-<li>0.518 us    |            }</li>
-<li><pre><code>          |            step_into() &#123;
-</code></pre>
-</li>
-<li>0.179 us    |              __follow_mount_rcu();</li>
-<li>0.513 us    |            }</li>
-<li>1.525 us    |          }</li>
-<li><pre><code>          |          do_open() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |            complete_walk() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |              try_to_unlazy() &#123;
-</code></pre>
-</li>
-<li>0.181 us    |                legitimize_links();</li>
-<li><pre><code>          |                __legitimize_path() &#123;
-</code></pre>
-</li>
-<li>0.184 us    |                  __legitimize_mnt();</li>
-<li>0.527 us    |                }</li>
-<li>0.179 us    |                legitimize_root();</li>
-<li>0.179 us    |                rcu_read_unlock_strict();</li>
-<li>1.883 us    |              }</li>
-<li>2.212 us    |            }</li>
-<li><pre><code>          |            may_open() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |              inode_permission() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |                inode_permission.part.0() &#123;
-</code></pre>
-</li>
-<li>0.199 us    |                  generic_permission();</li>
-<li>0.179 us    |                  security_inode_permission();</li>
-<li>0.856 us    |                }</li>
-<li>1.174 us    |              }</li>
-<li>1.543 us    |            }</li>
-<li><pre><code>          |            vfs_open() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |              do_dentry_open() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |                path_get() &#123;
-</code></pre>
-</li>
-<li>0.180 us    |                  mntget();</li>
-<li>0.512 us    |                }</li>
-<li>0.180 us    |                try_module_get();</li>
-<li><pre><code>          |                security_file_open() &#123;
-</code></pre>
-</li>
-<li>0.327 us    |                  __fsnotify_parent();</li>
-<li>0.722 us    |                }</li>
-<li><pre><code>          |                ext4_file_open [ext4]() &#123;
-</code></pre>
-</li>
-<li>0.249 us    |                  ext4_sample_last_mounted <a href="">ext4</a>;</li>
-<li><pre><code>          |                  dquot_file_open() &#123;
-</code></pre>
-</li>
-<li>0.239 us    |                    generic_file_open();</li>
-<li>0.707 us    |                  }</li>
-<li>1.597 us    |                }</li>
-<li>0.744 us    |                file_ra_state_init();</li>
-<li>5.942 us    |              }</li>
-<li>6.365 us    |            }</li>
-<li><pre><code>          |            ima_file_check() &#123;
-</code></pre>
-</li>
-<li>0.326 us    |              security_task_getsecid();</li>
-<li>0.216 us    |              process_measurement();</li>
-<li>1.161 us    |            }</li>
-<li><ul>
-<li>12.117 us   |          }</li>
-</ul>
-</li>
-<li><pre><code>          |          terminate_walk() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |            dput() &#123;
-</code></pre>
-</li>
-<li>0.182 us    |              rcu_read_unlock_strict();</li>
-<li>0.525 us    |            }</li>
-<li><pre><code>          |            mntput() &#123;
-</code></pre>
-</li>
-<li><pre><code>          |              mntput_no_expire() &#123;
-</code></pre>
-</li>
-<li>0.179 us    |                rcu_read_unlock_strict();</li>
-<li>0.518 us    |              }</li>
-<li>0.843 us    |            }</li>
-<li>1.851 us    |          }</li>
-<li><ul>
-<li>29.215 us   |        }</li>
-</ul>
-</li>
-<li><ul>
-<li>29.607 us   |      }</li>
-</ul>
-</li>
-<li>0.198 us    |      __fsnotify_parent();</li>
-<li><pre><code>          |      fd_install() &#123;
-</code></pre>
-</li>
-<li>0.178 us    |        __fd_install();</li>
-<li>0.569 us    |      }</li>
-<li><pre><code>          |      putname() &#123;
-</code></pre>
-</li>
-<li>0.187 us    |        kmem_cache_free();</li>
-<li>0.593 us    |      }</li>
-<li><ul>
-<li>37.556 us   |    }</li>
-</ul>
-</li>
-<li><ul>
-<li>38.021 us   |  }</li>
-</ul>
-</li>
-</ol>
-<pre><code>
+<p><code>ring buffer</code>是trace机制的基础，用来记录tracer信息。而ftrace可能发生在不同的上下文中执行（可能是正常进程上下文、终端、NMI等），所以需要对<code>ring buffer</code>进行互斥访问。但是又由于ftrace不能给正常的内核业务带来过大的开销，引入了无锁的设计。为了支持<code>nested-write</code>嵌套写的免锁操作，引入<code>commit</code>的概念。这里是整个<code>ring buffer</code>设计的精髓。为了防止误导各位同学，这里不做解读。具体设计参加linux官方文档：<a href="https://www.kernel.org/doc/Documentation/trace/ring-buffer-design.txt">https://www.kernel.org/doc/Documentation/trace/ring-buffer-design.txt</a></p>
+<h4 id="ftracefs"><a href="#ftracefs" class="headerlink" title="ftracefs"></a>ftracefs</h4><p>ftrace是内核的机制，用户需要利用该机制进行内核调试、性能分析等，所以内核提供ftracefs给用户提供定制化ftrace服务、呈现结果。</p>
+<p>ftracefs通过三大类呈现，分别是<code>tracer</code>、<code>filter_functions</code>、<code>event</code>。上文提到目前Linux 5.10支持的tracer种类有8种，分别为<code>hwlat</code>、<code>blk</code>、<code>function_graph</code>、<code>wakeup_dl</code>、<code>wakeup_rt</code>、<code>wakeup</code>、<code>function</code>、<code>nop</code>，选取function_graph为例来查看open系统调用的调用流程。</p>
+<p>通过ftracefs进入如下设置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 0 &gt; /sys/kernel/debug/tracing/tracing_on   #关闭trace</span><br><span class="line">echo function_graph &gt; /sys/kernel/debug/tracing/current_tracer    #设置跟踪函数调用栈</span><br><span class="line">echo 1 &gt; /sys/kernel/debug/tracing/tracing_on   #打开trace</span><br><span class="line">ls			#触发open系统调用</span><br><span class="line">echo 0 &gt; /sys/kernel/debug/tracing/tracing_on   #关闭trace</span><br></pre></td></tr></table></figure>
+
+<p>查看文件<code>/sys/kernel/debug/tracing/trace</code>，所有信息都是从<code>ring buffer</code>读取，由于是无锁的，在对function_graph做trace时需要确保没有其他的event干扰。可以显示open系统调用的调用链、执行CPU、函数耗时。如下所示，</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># tracer: function_graph</span><br><span class="line">#</span><br><span class="line"># CPU  DURATION                  FUNCTION CALLS</span><br><span class="line"># |     |   |                     |   |   |   |</span><br><span class="line"> 0)               |  __x64_sys_openat() &#123;</span><br><span class="line"> 0)               |    do_sys_openat2() &#123;</span><br><span class="line"> 0)               |      getname() &#123;</span><br><span class="line"> 0)               |        getname_flags.part.0() &#123;</span><br><span class="line"> 0)               |          kmem_cache_alloc() &#123;</span><br><span class="line"> 0)   0.181 us    |            should_failslab();</span><br><span class="line"> 0)   0.530 us    |          &#125;</span><br><span class="line"> 0)               |          __check_object_size() &#123;</span><br><span class="line"> 0)               |            __check_object_size.part.0() &#123;</span><br><span class="line"> 0)   0.198 us    |              check_stack_object();</span><br><span class="line"> 0)   0.181 us    |              __virt_addr_valid();</span><br><span class="line"> 0)   0.186 us    |              __check_heap_object();</span><br><span class="line"> 0)   1.234 us    |            &#125;</span><br><span class="line"> 0)   1.553 us    |          &#125;</span><br><span class="line"> 0)   2.630 us    |        &#125;</span><br><span class="line"> 0)   2.954 us    |      &#125;</span><br><span class="line"> 0)               |      get_unused_fd_flags() &#123;</span><br><span class="line"> 0)               |        __alloc_fd() &#123;</span><br><span class="line"> 0)   0.380 us    |          _raw_spin_lock();</span><br><span class="line"> 0)   0.177 us    |          expand_files();</span><br><span class="line"> 0)   1.397 us    |        &#125;</span><br><span class="line"> 0)   1.802 us    |      &#125;</span><br><span class="line"> 0)               |      do_filp_open() &#123;</span><br><span class="line"> 0)               |        path_openat() &#123;</span><br><span class="line"> 0)               |          alloc_empty_file() &#123;</span><br><span class="line"> 0)               |            __alloc_file() &#123;</span><br><span class="line"> 0)               |              kmem_cache_alloc() &#123;</span><br><span class="line"> 0)   0.177 us    |                should_failslab();</span><br><span class="line"> 0)   0.866 us    |              &#125;</span><br><span class="line"> 0)               |              security_file_alloc() &#123;</span><br><span class="line"> 0)               |                kmem_cache_alloc() &#123;</span><br><span class="line"> 0)   0.177 us    |                  should_failslab();</span><br><span class="line"> 0)   0.962 us    |                &#125;</span><br><span class="line"> 0)   1.310 us    |              &#125;</span><br><span class="line"> 0)   0.176 us    |              __mutex_init();</span><br><span class="line"> 0)   3.432 us    |            &#125;</span><br><span class="line"> 0)   3.932 us    |          &#125;</span><br><span class="line"> 0)               |          path_init() &#123;</span><br><span class="line"> 0)               |            nd_jump_root() &#123;</span><br><span class="line"> 0)   0.176 us    |              set_root();</span><br><span class="line"> 0)   0.511 us    |            &#125;</span><br><span class="line"> 0)   0.868 us    |          &#125;</span><br><span class="line"> 0)               |          link_path_walk.part.0() &#123;</span><br><span class="line"> 0)               |            inode_permission.part.0() &#123;</span><br><span class="line"> 0)   0.204 us    |              generic_permission();</span><br><span class="line"> 0)   0.179 us    |              security_inode_permission();</span><br><span class="line"> 0)   0.883 us    |            &#125;</span><br><span class="line"> 0)               |            walk_component() &#123;</span><br><span class="line"> 0)               |              lookup_fast() &#123;</span><br><span class="line"> 0)   0.236 us    |                __d_lookup_rcu();</span><br><span class="line"> 0)   0.859 us    |              &#125;</span><br><span class="line"> 0)               |              step_into() &#123;</span><br><span class="line"> 0)   0.180 us    |                __follow_mount_rcu();</span><br><span class="line"> 0)   0.521 us    |              &#125;</span><br><span class="line"> 0)   1.952 us    |            &#125;</span><br><span class="line"> 0)               |            inode_permission.part.0() &#123;</span><br><span class="line"> 0)   0.177 us    |              generic_permission();</span><br><span class="line"> 0)   0.180 us    |              security_inode_permission();</span><br><span class="line"> 0)   1.010 us    |            &#125;</span><br><span class="line"> 0)               |            walk_component() &#123;</span><br><span class="line"> 0)               |              lookup_fast() &#123;</span><br><span class="line"> 0)   0.376 us    |                __d_lookup_rcu();</span><br><span class="line"> 0)   0.738 us    |              &#125;</span><br><span class="line"> 0)               |              step_into() &#123;</span><br><span class="line"> 0)   0.182 us    |                __follow_mount_rcu();</span><br><span class="line"> 0)   0.521 us    |              &#125;</span><br><span class="line"> 0)   1.768 us    |            &#125;</span><br><span class="line"> 0)               |            inode_permission.part.0() &#123;</span><br><span class="line"> 0)   0.182 us    |              generic_permission();</span><br><span class="line"> 0)   0.176 us    |              security_inode_permission();</span><br><span class="line"> 0)   0.846 us    |            &#125;</span><br><span class="line"> 0)   7.724 us    |          &#125;</span><br><span class="line"> 0)               |          open_last_lookups() &#123;</span><br><span class="line"> 0)               |            lookup_fast() &#123;</span><br><span class="line"> 0)   0.184 us    |              __d_lookup_rcu();</span><br><span class="line"> 0)   0.518 us    |            &#125;</span><br><span class="line"> 0)               |            step_into() &#123;</span><br><span class="line"> 0)   0.179 us    |              __follow_mount_rcu();</span><br><span class="line"> 0)   0.513 us    |            &#125;</span><br><span class="line"> 0)   1.525 us    |          &#125;</span><br><span class="line"> 0)               |          do_open() &#123;</span><br><span class="line"> 0)               |            complete_walk() &#123;</span><br><span class="line"> 0)               |              try_to_unlazy() &#123;</span><br><span class="line"> 0)   0.181 us    |                legitimize_links();</span><br><span class="line"> 0)               |                __legitimize_path() &#123;</span><br><span class="line"> 0)   0.184 us    |                  __legitimize_mnt();</span><br><span class="line"> 0)   0.527 us    |                &#125;</span><br><span class="line"> 0)   0.179 us    |                legitimize_root();</span><br><span class="line"> 0)   0.179 us    |                rcu_read_unlock_strict();</span><br><span class="line"> 0)   1.883 us    |              &#125;</span><br><span class="line"> 0)   2.212 us    |            &#125;</span><br><span class="line"> 0)               |            may_open() &#123;</span><br><span class="line"> 0)               |              inode_permission() &#123;</span><br><span class="line"> 0)               |                inode_permission.part.0() &#123;</span><br><span class="line"> 0)   0.199 us    |                  generic_permission();</span><br><span class="line"> 0)   0.179 us    |                  security_inode_permission();</span><br><span class="line"> 0)   0.856 us    |                &#125;</span><br><span class="line"> 0)   1.174 us    |              &#125;</span><br><span class="line"> 0)   1.543 us    |            &#125;</span><br><span class="line"> 0)               |            vfs_open() &#123;</span><br><span class="line"> 0)               |              do_dentry_open() &#123;</span><br><span class="line"> 0)               |                path_get() &#123;</span><br><span class="line"> 0)   0.180 us    |                  mntget();</span><br><span class="line"> 0)   0.512 us    |                &#125;</span><br><span class="line"> 0)   0.180 us    |                try_module_get();</span><br><span class="line"> 0)               |                security_file_open() &#123;</span><br><span class="line"> 0)   0.327 us    |                  __fsnotify_parent();</span><br><span class="line"> 0)   0.722 us    |                &#125;</span><br><span class="line"> 0)               |                ext4_file_open [ext4]() &#123;</span><br><span class="line"> 0)   0.249 us    |                  ext4_sample_last_mounted [ext4]();</span><br><span class="line"> 0)               |                  dquot_file_open() &#123;</span><br><span class="line"> 0)   0.239 us    |                    generic_file_open();</span><br><span class="line"> 0)   0.707 us    |                  &#125;</span><br><span class="line"> 0)   1.597 us    |                &#125;</span><br><span class="line"> 0)   0.744 us    |                file_ra_state_init();</span><br><span class="line"> 0)   5.942 us    |              &#125;</span><br><span class="line"> 0)   6.365 us    |            &#125;</span><br><span class="line"> 0)               |            ima_file_check() &#123;</span><br><span class="line"> 0)   0.326 us    |              security_task_getsecid();</span><br><span class="line"> 0)   0.216 us    |              process_measurement();</span><br><span class="line"> 0)   1.161 us    |            &#125;</span><br><span class="line"> 0) + 12.117 us   |          &#125;</span><br><span class="line"> 0)               |          terminate_walk() &#123;</span><br><span class="line"> 0)               |            dput() &#123;</span><br><span class="line"> 0)   0.182 us    |              rcu_read_unlock_strict();</span><br><span class="line"> 0)   0.525 us    |            &#125;</span><br><span class="line"> 0)               |            mntput() &#123;</span><br><span class="line"> 0)               |              mntput_no_expire() &#123;</span><br><span class="line"> 0)   0.179 us    |                rcu_read_unlock_strict();</span><br><span class="line"> 0)   0.518 us    |              &#125;</span><br><span class="line"> 0)   0.843 us    |            &#125;</span><br><span class="line"> 0)   1.851 us    |          &#125;</span><br><span class="line"> 0) + 29.215 us   |        &#125;</span><br><span class="line"> 0) + 29.607 us   |      &#125;</span><br><span class="line"> 0)   0.198 us    |      __fsnotify_parent();</span><br><span class="line"> 0)               |      fd_install() &#123;</span><br><span class="line"> 0)   0.178 us    |        __fd_install();</span><br><span class="line"> 0)   0.569 us    |      &#125;</span><br><span class="line"> 0)               |      putname() &#123;</span><br><span class="line"> 0)   0.187 us    |        kmem_cache_free();</span><br><span class="line"> 0)   0.593 us    |      &#125;</span><br><span class="line"> 0) + 37.556 us   |    &#125;</span><br><span class="line"> 0) + 38.021 us   |  &#125;</span><br></pre></td></tr></table></figure>
 
 
 
-</code></pre>
+
+
 ]]></content>
       <tags>
         <tag>linux</tag>
