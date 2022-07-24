@@ -1,7 +1,8 @@
+http://example.com/posts/152cd35c/
 http://example.com/posts/b7ee8ec8/
 http://example.com/404/index.html
 http://example.com/categories/index.html
 http://example.com/tags/index.html
-http://example.com/posts/152cd35c/
 http://example.com/
 http://example.com/tags/linux/
+http://example.com/tags/easy/

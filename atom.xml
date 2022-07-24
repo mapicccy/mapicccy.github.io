@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-07-24T10:46:10.951Z</updated>
+  <updated>2022-07-24T13:30:38.509Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,14 +17,14 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>ftrace探析</title>
+    <title>Ftrace探析</title>
     <link href="http://example.com/posts/b7ee8ec8/"/>
     <id>http://example.com/posts/b7ee8ec8/</id>
     <published>2022-07-24T09:59:11.000Z</published>
-    <updated>2022-07-24T10:46:10.951Z</updated>
+    <updated>2022-07-24T13:30:38.509Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;Ftrace探析&quot;&gt;&lt;a href=&quot;#Ftrace探析&quot; class=&quot;headerlink&quot; title=&quot;Ftrace探析&quot;&gt;&lt;/a&gt;Ftrace探析&lt;/h1&gt;&lt;h2 id=&quot;Ftrace原理&quot;&gt;&lt;a href=&quot;#Ftrace原理&quot; class=&quot;headerlink&quot; title=&quot;Ftrace原理&quot;&gt;&lt;/a&gt;Ftrace原理&lt;/h2&gt;&lt;p&gt;ftrace（function tracer）支持全局trace，可以对内核和模块全局函数进行跟踪。tracer为编译器在编译时自动插入代码段的一条指令，程序在运行时能够利用这条指令实现跳转。目前Linux 5.10支持的tracer种类有8种，分别为&lt;code&gt;hwlat&lt;/code&gt;、&lt;code&gt;blk&lt;/code&gt;、&lt;code&gt;function_graph&lt;/code&gt;、&lt;code&gt;wakeup_dl&lt;/code&gt;、&lt;code&gt;wakeup_rt&lt;/code&gt;、&lt;code&gt;wakeup&lt;/code&gt;、&lt;code&gt;function&lt;/code&gt;、&lt;code&gt;nop&lt;/code&gt;，可以通过&lt;code&gt;/sys/kernel/debug/tracing/available_tracers&lt;/code&gt;查看。&lt;/p&gt;</summary>
+    <summary type="html">&lt;h2 id=&quot;Ftrace原理&quot;&gt;&lt;a href=&quot;#Ftrace原理&quot; class=&quot;headerlink&quot; title=&quot;Ftrace原理&quot;&gt;&lt;/a&gt;Ftrace原理&lt;/h2&gt;&lt;p&gt;ftrace（function tracer）支持全局trace，可以对内核和模块全局函数进行跟踪。tracer为编译器在编译时自动插入代码段的一条指令，程序在运行时能够利用这条指令实现跳转。目前Linux 5.10支持的tracer种类有8种，分别为&lt;code&gt;hwlat&lt;/code&gt;、&lt;code&gt;blk&lt;/code&gt;、&lt;code&gt;function_graph&lt;/code&gt;、&lt;code&gt;wakeup_dl&lt;/code&gt;、&lt;code&gt;wakeup_rt&lt;/code&gt;、&lt;code&gt;wakeup&lt;/code&gt;、&lt;code&gt;function&lt;/code&gt;、&lt;code&gt;nop&lt;/code&gt;，可以通过&lt;code&gt;/sys/kernel/debug/tracing/available_tracers&lt;/code&gt;查看。&lt;/p&gt;</summary>
     
     
     
@@ -38,11 +38,22 @@
     <link href="http://example.com/posts/152cd35c/"/>
     <id>http://example.com/posts/152cd35c/</id>
     <published>2022-07-24T08:17:12.000Z</published>
-    <updated>2022-07-24T08:18:48.243Z</updated>
+    <updated>2022-07-24T13:37:37.058Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;2022年7月份，阿里云开始了裁员计划，虽然名单没有我，但我的心态也发生了一些转变，&lt;br&gt;都是打工人，个人就不要讲什么情怀了，希望公司也不要灌输价值观，说白了都是资本家奴役的手段而已&lt;/p&gt;
+&lt;p&gt;之前还经常在语雀或者内网ATA发一些技术贴，想想如果自己未来离开这里，啥都</summary>
+        
+      
     
     
     
     
+    <category term="easy" scheme="http://example.com/tags/easy/"/>
     
   </entry>
   
