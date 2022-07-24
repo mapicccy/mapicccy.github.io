@@ -9,6 +9,8 @@
     <title>ftrace探析</title>
     <url>/posts/b7ee8ec8/</url>
     <content><![CDATA[<h1 id="Ftrace探析"><a href="#Ftrace探析" class="headerlink" title="Ftrace探析"></a>Ftrace探析</h1><h2 id="Ftrace原理"><a href="#Ftrace原理" class="headerlink" title="Ftrace原理"></a>Ftrace原理</h2><p>ftrace（function tracer）支持全局trace，可以对内核和模块全局函数进行跟踪。tracer为编译器在编译时自动插入代码段的一条指令，程序在运行时能够利用这条指令实现跳转。目前Linux 5.10支持的tracer种类有8种，分别为<code>hwlat</code>、<code>blk</code>、<code>function_graph</code>、<code>wakeup_dl</code>、<code>wakeup_rt</code>、<code>wakeup</code>、<code>function</code>、<code>nop</code>，可以通过<code>/sys/kernel/debug/tracing/available_tracers</code>查看。</p>
+<span id="more"></span>
+
 <p>GCC允许在编译程序时添加<code>-pg</code>在每一个函数起始处自动插入5个字节的<code>call mcount</code>（ARM64为<code>push rbp</code>）指令，<code>mcount</code>的实现依赖于GLIBC。由于<code>mcount</code>不能记录参数，所以从GCC 4.6开始通过<code>-pg -mfentry</code>将<code>mcount</code>替换为<code>fentry</code>，但是内核中依然使用宏MCOUNT_ADDR来代表GLIBC实现的<code>fentry</code>。如今，内核已经废弃<code>mcount</code>（抱歉，不记得从哪个版本废弃的了）。</p>
 <p>编写一个简单程序<code>hello.c</code>做实验：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
