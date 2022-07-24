@@ -1,2 +1,2 @@
-http://example.com/posts/undefined/
+http://example.com/posts/4a17b156/
 http://example.com/
