@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-07-24T08:18:48.243Z</updated>
+  <updated>2022-07-24T10:15:12.510Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,33 +17,35 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>ftrace探析.md</title>
+    <link href="http://example.com/posts/b7ee8ec8/"/>
+    <id>http://example.com/posts/b7ee8ec8/</id>
+    <published>2022-07-24T09:59:11.000Z</published>
+    <updated>2022-07-24T10:15:12.510Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Ftrace探析&quot;&gt;&lt;a href=&quot;#Ftrace探析&quot; class=&quot;headerlink&quot; title=&quot;Ftrace探析&quot;&gt;&lt;/a&gt;Ftrace探析&lt;/h1&gt;&lt;h2 id=&quot;Ftrace原理&quot;&gt;&lt;a href=&quot;#Ftrace原理&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="linux" scheme="http://example.com/tags/linux/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Blog重生于2022/07/24</title>
     <link href="http://example.com/posts/152cd35c/"/>
     <id>http://example.com/posts/152cd35c/</id>
     <published>2022-07-24T08:17:12.000Z</published>
     <updated>2022-07-24T08:18:48.243Z</updated>
     
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://example.com/posts/4a17b156/"/>
-    <id>http://example.com/posts/4a17b156/</id>
-    <published>2022-07-24T05:02:59.136Z</published>
-    <updated>2022-07-24T08:13:46.222Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt;</summary>
-        
-      
     
     
     
