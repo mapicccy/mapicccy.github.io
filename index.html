@@ -19,7 +19,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="website">
@@ -184,26 +184,18 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-07-24 09:59:11 / 修改时间：13:30:38" itemprop="dateCreated datePublished" datetime="2022-07-24T09:59:11+00:00">2022-07-24</time>
+              <time title="创建时间：2022-07-24 09:59:11" itemprop="dateCreated datePublished" datetime="2022-07-24T09:59:11+00:00">2022-07-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-25 04:23:26" itemprop="dateModified" datetime="2022-07-25T04:23:26+00:00">2022-07-25</time>
+              </span>
 
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/posts/b7ee8ec8/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/b7ee8ec8/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
+          <br>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
@@ -228,7 +220,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Ftrace原理"><a href="#Ftrace原理" class="headerlink" title="Ftrace原理"></a>Ftrace原理</h2><p>ftrace（function tracer）支持全局trace，可以对内核和模块全局函数进行跟踪。tracer为编译器在编译时自动插入代码段的一条指令，程序在运行时能够利用这条指令实现跳转。目前Linux 5.10支持的tracer种类有8种，分别为<code>hwlat</code>、<code>blk</code>、<code>function_graph</code>、<code>wakeup_dl</code>、<code>wakeup_rt</code>、<code>wakeup</code>、<code>function</code>、<code>nop</code>，可以通过<code>/sys/kernel/debug/tracing/available_tracers</code>查看。</p>
+          <p>ftrace（function tracer）支持全局trace，可以对内核和模块全局函数进行跟踪。tracer为编译器在编译时自动插入代码段的一条指令，程序在运行时能够利用这条指令实现跳转。目前Linux 5.10支持的tracer种类有8种，分别为<code>hwlat</code>、<code>blk</code>、<code>function_graph</code>、<code>wakeup_dl</code>、<code>wakeup_rt</code>、<code>wakeup</code>、<code>function</code>、<code>nop</code>，可以通过<code>/sys/kernel/debug/tracing/available_tracers</code>查看。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/posts/b7ee8ec8/#more" rel="contents">
@@ -278,26 +270,18 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-07-24 08:17:12 / 修改时间：13:37:37" itemprop="dateCreated datePublished" datetime="2022-07-24T08:17:12+00:00">2022-07-24</time>
+              <time title="创建时间：2022-07-24 08:17:12" itemprop="dateCreated datePublished" datetime="2022-07-24T08:17:12+00:00">2022-07-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-25 04:23:36" itemprop="dateModified" datetime="2022-07-25T04:23:36+00:00">2022-07-25</time>
+              </span>
 
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/posts/152cd35c/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/152cd35c/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
+          <br>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
@@ -323,7 +307,8 @@
 
       
           <p>2022年7月份，阿里云开始了裁员计划，虽然名单没有我，但我的心态也发生了一些转变，<br>都是打工人，个人就不要讲什么情怀了，希望公司也不要灌输价值观，说白了都是资本家奴役的手段而已</p>
-<p>之前还经常在语雀或者内网ATA发一些技术贴，想想如果自己未来离开这里，啥都带不走也是蛮可惜的。<br>所以，很久不用的技术博客就复活吧。</p>
+<p>之前还经常在语雀或者内网ATA发一些技术贴，想想如果自己未来离开这里，啥都带不走也是蛮可惜的。</p>
+<p>所以，很久不用的技术博客就复活吧。</p>
 
       
     </div>
@@ -541,16 +526,6 @@
 
   
 
-<script>
-  function loadCount() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://mapicccy.disqus.com/count.js';
-    s.id = 'dsq-count-scr';
-    (d.head || d.body).appendChild(s);
-  }
-  // defer loading until the whole page loading is completed
-  window.addEventListener('load', loadCount, false);
-</script>
 
 
 <script type="text/javascript" src="/js/src/love.js"></script>
