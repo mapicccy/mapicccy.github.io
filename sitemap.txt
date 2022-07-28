@@ -1,3 +1,4 @@
+http://example.com/posts/9e0ab315/
 http://example.com/posts/152cd35c/
 http://example.com/posts/b7ee8ec8/
 http://example.com/404/index.html
@@ -6,3 +7,4 @@ http://example.com/tags/index.html
 http://example.com/
 http://example.com/tags/linux/
 http://example.com/tags/easy/
+http://example.com/tags/vim/

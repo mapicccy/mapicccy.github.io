@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-07-25T04:23:26.502Z</updated>
+  <updated>2022-07-28T08:18:19.519Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>vim个性化主题配置</title>
+    <link href="http://example.com/posts/9e0ab315/"/>
+    <id>http://example.com/posts/9e0ab315/</id>
+    <published>2022-07-28T08:11:50.000Z</published>
+    <updated>2022-07-28T08:18:19.519Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;以molokai主题为例，新建文件&lt;code&gt;~/.vim/colors/molokai.vim&lt;/code&gt;，文件内容如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
+        
+      
+    
+    
+    
+    
+    <category term="vim" scheme="http://example.com/tags/vim/"/>
+    
+  </entry>
   
   <entry>
     <title>Ftrace探析</title>

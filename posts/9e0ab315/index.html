@@ -22,28 +22,33 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="mapicccy">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="以molokai主题为例，新建文件~&#x2F;.vim&#x2F;colors&#x2F;molokai.vim，文件内容如下： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim个性化主题配置">
+<meta property="og:url" content="http://example.com/posts/9e0ab315/index.html">
 <meta property="og:site_name" content="mapicccy">
+<meta property="og:description" content="以molokai主题为例，新建文件~&#x2F;.vim&#x2F;colors&#x2F;molokai.vim，文件内容如下： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-28T08:11:50.000Z">
+<meta property="article:modified_time" content="2022-07-28T08:18:19.519Z">
 <meta property="article:author" content="mapicccy">
+<meta property="article:tag" content="vim">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/posts/9e0ab315/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>mapicccy</title>
+  <title>vim个性化主题配置 | mapicccy</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JBNFVGV93B"></script>
     <script>
@@ -164,9 +169,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -182,10 +188,9 @@
       <meta itemprop="name" content="mapicccy">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/9e0ab315/" class="post-title-link" itemprop="url">vim个性化主题配置</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          vim个性化主题配置
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -198,7 +203,14 @@
               <time title="创建时间：2022-07-28 08:11:50 / 修改时间：08:18:19" itemprop="dateCreated datePublished" datetime="2022-07-28T08:11:50+00:00">2022-07-28</time>
             </span>
 
-          <br>
+          
+            <span class="post-meta-item" title="阅读数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
@@ -223,200 +235,77 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>以molokai主题为例，新建文件<code>~/.vim/colors/molokai.vim</code>，文件内容如下：</p>
+        <p>以molokai主题为例，新建文件<code>~/.vim/colors/molokai.vim</code>，文件内容如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br></pre></td><td class="code"><pre><span class="line">&quot; Vim color file</span><br><span class="line">&quot;</span><br><span class="line">&quot; Author: Tomas Restrepo &lt;tomas@winterdom.com&gt;</span><br><span class="line">&quot; https://github.com/tomasr/molokai</span><br><span class="line">&quot;</span><br><span class="line">&quot; Note: Based on the Monokai theme for TextMate</span><br><span class="line">&quot; by Wimer Hazenberg and its darker variant</span><br><span class="line">&quot; by Hamish Stuart Macpherson</span><br><span class="line">&quot;</span><br><span class="line"></span><br><span class="line">hi clear</span><br><span class="line">if version &gt; 580</span><br><span class="line">    &quot; no guarantees for version 5.8 and below, but this makes it stop</span><br><span class="line">    &quot; complaining</span><br><span class="line">    hi clear</span><br><span class="line">    if exists(&quot;syntax_on&quot;)</span><br><span class="line">        syntax reset</span><br><span class="line">    endif</span><br><span class="line">endif</span><br><span class="line">let g:colors_name=&quot;molokai&quot;</span><br><span class="line"></span><br><span class="line">if exists(&quot;g:molokai_original&quot;)</span><br><span class="line">    let s:molokai_original = g:molokai_original</span><br><span class="line">else</span><br><span class="line">    let s:molokai_original = 0</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">hi Boolean         guifg=#AE81FF</span><br><span class="line">hi Character       guifg=#E6DB74</span><br><span class="line">hi Number          guifg=#AE81FF</span><br><span class="line">hi String          guifg=#E6DB74</span><br><span class="line">hi Conditional     guifg=#F92672               gui=bold</span><br><span class="line">hi Constant        guifg=#AE81FF               gui=bold</span><br><span class="line">hi Cursor          guifg=#000000 guibg=#F8F8F0</span><br><span class="line">hi iCursor         guifg=#000000 guibg=#F8F8F0</span><br><span class="line">hi Debug           guifg=#BCA3A3               gui=bold</span><br><span class="line">hi Define          guifg=#66D9EF</span><br><span class="line">hi Delimiter       guifg=#8F8F8F</span><br><span class="line">hi DiffAdd                       guibg=#13354A</span><br><span class="line">hi DiffChange      guifg=#89807D guibg=#4C4745</span><br><span class="line">hi DiffDelete      guifg=#960050 guibg=#1E0010</span><br><span class="line">hi DiffText                      guibg=#4C4745 gui=italic,bold</span><br><span class="line"></span><br><span class="line">hi Directory       guifg=#A6E22E               gui=bold</span><br><span class="line">hi Error           guifg=#E6DB74 guibg=#1E0010</span><br><span class="line">hi ErrorMsg        guifg=#F92672 guibg=#232526 gui=bold</span><br><span class="line">hi Exception       guifg=#A6E22E               gui=bold</span><br><span class="line">hi Float           guifg=#AE81FF</span><br><span class="line">hi FoldColumn      guifg=#465457 guibg=#000000</span><br><span class="line">hi Folded          guifg=#465457 guibg=#000000</span><br><span class="line">hi Function        guifg=#A6E22E</span><br><span class="line">hi Identifier      guifg=#FD971F</span><br><span class="line">hi Ignore          guifg=#808080 guibg=bg</span><br><span class="line">hi IncSearch       guifg=#C4BE89 guibg=#000000</span><br><span class="line"></span><br><span class="line">hi Keyword         guifg=#F92672               gui=bold</span><br><span class="line">hi Label           guifg=#E6DB74               gui=none</span><br><span class="line">hi Macro           guifg=#C4BE89               gui=italic</span><br><span class="line">hi SpecialKey      guifg=#66D9EF               gui=italic</span><br><span class="line"></span><br><span class="line">hi MatchParen      guifg=#000000 guibg=#FD971F gui=bold</span><br><span class="line">hi ModeMsg         guifg=#E6DB74</span><br><span class="line">hi MoreMsg         guifg=#E6DB74</span><br><span class="line">hi Operator        guifg=#F92672</span><br><span class="line"></span><br><span class="line">&quot; complete menu</span><br><span class="line">hi Pmenu           guifg=#66D9EF guibg=#000000</span><br><span class="line">hi PmenuSel                      guibg=#808080</span><br><span class="line">hi PmenuSbar                     guibg=#080808</span><br><span class="line">hi PmenuThumb      guifg=#66D9EF</span><br><span class="line"></span><br><span class="line">hi PreCondit       guifg=#A6E22E               gui=bold</span><br><span class="line">hi PreProc         guifg=#A6E22E</span><br><span class="line">hi Question        guifg=#66D9EF</span><br><span class="line">hi Repeat          guifg=#F92672               gui=bold</span><br><span class="line">hi Search          guifg=#000000 guibg=#FFE792</span><br><span class="line">&quot; marks</span><br><span class="line">hi SignColumn      guifg=#A6E22E guibg=#232526</span><br><span class="line">hi SpecialChar     guifg=#F92672               gui=bold</span><br><span class="line">hi SpecialComment  guifg=#7E8E91               gui=bold</span><br><span class="line">hi Special         guifg=#66D9EF guibg=bg      gui=italic</span><br><span class="line">if has(&quot;spell&quot;)</span><br><span class="line">    hi SpellBad    guisp=#FF0000 gui=undercurl</span><br><span class="line">    hi SpellCap    guisp=#7070F0 gui=undercurl</span><br><span class="line">    hi SpellLocal  guisp=#70F0F0 gui=undercurl</span><br><span class="line">    hi SpellRare   guisp=#FFFFFF gui=undercurl</span><br><span class="line">endif</span><br><span class="line">hi Statement       guifg=#F92672               gui=bold</span><br><span class="line">hi StatusLine      guifg=#455354 guibg=fg</span><br><span class="line">hi StatusLineNC    guifg=#808080 guibg=#080808</span><br><span class="line">hi StorageClass    guifg=#FD971F               gui=italic</span><br><span class="line">hi Structure       guifg=#66D9EF</span><br><span class="line">hi Tag             guifg=#F92672               gui=italic</span><br><span class="line">hi Title           guifg=#ef5939</span><br><span class="line">hi Todo            guifg=#FFFFFF guibg=bg      gui=bold</span><br><span class="line"></span><br><span class="line">hi Typedef         guifg=#66D9EF</span><br><span class="line">hi Type            guifg=#66D9EF               gui=none</span><br><span class="line">hi Underlined      guifg=#808080               gui=underline</span><br><span class="line"></span><br><span class="line">hi VertSplit       guifg=#808080 guibg=#080808 gui=bold</span><br><span class="line">hi VisualNOS                     guibg=#403D3D</span><br><span class="line">hi Visual                        guibg=#403D3D</span><br><span class="line">hi WarningMsg      guifg=#FFFFFF guibg=#333333 gui=bold</span><br><span class="line">hi WildMenu        guifg=#66D9EF guibg=#000000</span><br><span class="line"></span><br><span class="line">hi TabLineFill     guifg=#1B1D1E guibg=#1B1D1E</span><br><span class="line">hi TabLine         guibg=#1B1D1E guifg=#808080 gui=none</span><br><span class="line"></span><br><span class="line">if s:molokai_original == 1</span><br><span class="line">   hi Normal          guifg=#F8F8F2 guibg=#272822</span><br><span class="line">   hi Comment         guifg=#75715E</span><br><span class="line">   hi CursorLine                    guibg=#3E3D32</span><br><span class="line">   hi CursorLineNr    guifg=#FD971F               gui=none</span><br><span class="line">   hi CursorColumn                  guibg=#3E3D32</span><br><span class="line">   hi ColorColumn                   guibg=#3B3A32</span><br><span class="line">   hi LineNr          guifg=#BCBCBC guibg=#3B3A32</span><br><span class="line">   hi NonText         guifg=#75715E</span><br><span class="line">   hi SpecialKey      guifg=#75715E</span><br><span class="line">else</span><br><span class="line">   hi Normal          guifg=#F8F8F2 guibg=#1B1D1E</span><br><span class="line">   hi Comment         guifg=#7E8E91</span><br><span class="line">   hi CursorLine                    guibg=#293739</span><br><span class="line">   hi CursorLineNr    guifg=#FD971F               gui=none</span><br><span class="line">   hi CursorColumn                  guibg=#293739</span><br><span class="line">   hi ColorColumn                   guibg=#232526</span><br><span class="line">   hi LineNr          guifg=#465457 guibg=#232526</span><br><span class="line">   hi NonText         guifg=#465457</span><br><span class="line">   hi SpecialKey      guifg=#465457</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">&quot;</span><br><span class="line">&quot; Support for 256-color terminal</span><br><span class="line">&quot;</span><br><span class="line">if &amp;t_Co &gt; 255</span><br><span class="line">   if s:molokai_original == 1</span><br><span class="line">      hi Normal                   ctermbg=234</span><br><span class="line">      hi CursorLine               ctermbg=235   cterm=none</span><br><span class="line">      hi CursorLineNr ctermfg=208               cterm=none</span><br><span class="line">   else</span><br><span class="line">      hi Normal       ctermfg=252 ctermbg=233</span><br><span class="line">      hi CursorLine               ctermbg=234   cterm=none</span><br><span class="line">      hi CursorLineNr ctermfg=208               cterm=none</span><br><span class="line">   endif</span><br><span class="line">   hi Boolean         ctermfg=135</span><br><span class="line">   hi Character       ctermfg=144</span><br><span class="line">   hi Number          ctermfg=135</span><br><span class="line">   hi String          ctermfg=144</span><br><span class="line">   hi Conditional     ctermfg=161               cterm=bold</span><br><span class="line">   hi Constant        ctermfg=135               cterm=bold</span><br><span class="line">   hi Cursor          ctermfg=16  ctermbg=253</span><br><span class="line">   hi Debug           ctermfg=225               cterm=bold</span><br><span class="line">   hi Define          ctermfg=81</span><br><span class="line">   hi Delimiter       ctermfg=241</span><br><span class="line"></span><br><span class="line">   hi DiffAdd                     ctermbg=24</span><br><span class="line">   hi DiffChange      ctermfg=181 ctermbg=239</span><br><span class="line">   hi DiffDelete      ctermfg=162 ctermbg=53</span><br><span class="line">   hi DiffText                    ctermbg=102 cterm=bold</span><br><span class="line"></span><br><span class="line">   hi Directory       ctermfg=118               cterm=bold</span><br><span class="line">   hi Error           ctermfg=219 ctermbg=89</span><br><span class="line">   hi ErrorMsg        ctermfg=199 ctermbg=16    cterm=bold</span><br><span class="line">   hi Exception       ctermfg=118               cterm=bold</span><br><span class="line">   hi Float           ctermfg=135</span><br><span class="line">   hi FoldColumn      ctermfg=67  ctermbg=16</span><br><span class="line">   hi Folded          ctermfg=67  ctermbg=16</span><br><span class="line">   hi Function        ctermfg=118</span><br><span class="line">   hi Identifier      ctermfg=208               cterm=none</span><br><span class="line">   hi Ignore          ctermfg=244 ctermbg=232</span><br><span class="line">   hi IncSearch       ctermfg=193 ctermbg=16</span><br><span class="line"></span><br><span class="line">   hi keyword         ctermfg=161               cterm=bold</span><br><span class="line">   hi Label           ctermfg=229               cterm=none</span><br><span class="line">   hi Macro           ctermfg=193</span><br><span class="line">   hi SpecialKey      ctermfg=81</span><br><span class="line"></span><br><span class="line">   hi MatchParen      ctermfg=233  ctermbg=208 cterm=bold</span><br><span class="line">   hi ModeMsg         ctermfg=229</span><br><span class="line">   hi MoreMsg         ctermfg=229</span><br><span class="line">   hi Operator        ctermfg=161</span><br><span class="line"></span><br><span class="line">   &quot; complete menu</span><br><span class="line">   hi Pmenu           ctermfg=81  ctermbg=16</span><br><span class="line">   hi PmenuSel        ctermfg=255 ctermbg=242</span><br><span class="line">   hi PmenuSbar                   ctermbg=232</span><br><span class="line">   hi PmenuThumb      ctermfg=81</span><br><span class="line"></span><br><span class="line">   hi PreCondit       ctermfg=118               cterm=bold</span><br><span class="line">   hi PreProc         ctermfg=118</span><br><span class="line">   hi Question        ctermfg=81</span><br><span class="line">   hi Repeat          ctermfg=161               cterm=bold</span><br><span class="line">   hi Search          ctermfg=0   ctermbg=222   cterm=NONE</span><br><span class="line"></span><br><span class="line">   &quot; marks column</span><br><span class="line">   hi SignColumn      ctermfg=118 ctermbg=235</span><br><span class="line">   hi SpecialChar     ctermfg=161               cterm=bold</span><br><span class="line">   hi SpecialComment  ctermfg=245               cterm=bold</span><br><span class="line">   hi Special         ctermfg=81</span><br><span class="line">   if has(&quot;spell&quot;)</span><br><span class="line">       hi SpellBad                ctermbg=52 cterm=underline</span><br><span class="line">       hi SpellCap                ctermbg=17 cterm=underline</span><br><span class="line">       hi SpellLocal              ctermbg=17 cterm=underline</span><br><span class="line">       hi SpellRare  ctermfg=none ctermbg=none  cterm=reverse</span><br><span class="line">   endif</span><br><span class="line">   hi Statement       ctermfg=161               cterm=bold</span><br><span class="line">   hi StatusLine      ctermfg=238 ctermbg=253</span><br><span class="line">   hi StatusLineNC    ctermfg=244 ctermbg=232</span><br><span class="line">   hi StorageClass    ctermfg=208</span><br><span class="line">   hi Structure       ctermfg=81</span><br><span class="line">   hi Tag             ctermfg=161</span><br><span class="line">   hi Title           ctermfg=166</span><br><span class="line">   hi Todo            ctermfg=231 ctermbg=232   cterm=bold</span><br><span class="line"></span><br><span class="line">   hi Typedef         ctermfg=81</span><br><span class="line">   hi Type            ctermfg=81                cterm=none</span><br><span class="line">   hi Underlined      ctermfg=244               cterm=underline</span><br><span class="line"></span><br><span class="line">   hi VertSplit       ctermfg=244 ctermbg=232   cterm=bold</span><br><span class="line">   hi VisualNOS                   ctermbg=238</span><br><span class="line">   hi Visual                      ctermbg=235</span><br><span class="line">   hi WarningMsg      ctermfg=231 ctermbg=238   cterm=bold</span><br><span class="line">   hi WildMenu        ctermfg=81  ctermbg=16</span><br><span class="line"></span><br><span class="line">   hi Comment         ctermfg=59</span><br><span class="line">   hi CursorColumn                ctermbg=236</span><br><span class="line">   hi ColorColumn                 ctermbg=236</span><br><span class="line">   hi LineNr          ctermfg=250 ctermbg=236</span><br><span class="line">   hi NonText         ctermfg=59</span><br><span class="line"></span><br><span class="line">   hi SpecialKey      ctermfg=59</span><br><span class="line"></span><br><span class="line">   if exists(&quot;g:rehash256&quot;) &amp;&amp; g:rehash256 == 1</span><br><span class="line">       hi Normal       ctermfg=252 ctermbg=234</span><br><span class="line">       hi CursorLine               ctermbg=236   cterm=none</span><br><span class="line">       hi CursorLineNr ctermfg=208               cterm=none</span><br><span class="line"></span><br><span class="line">       hi Boolean         ctermfg=141</span><br><span class="line">       hi Character       ctermfg=222</span><br><span class="line">       hi Number          ctermfg=141</span><br><span class="line">       hi String          ctermfg=222</span><br><span class="line">       hi Conditional     ctermfg=197               cterm=bold</span><br><span class="line">       hi Constant        ctermfg=141               cterm=bold</span><br><span class="line"></span><br><span class="line">       hi DiffDelete      ctermfg=125 ctermbg=233</span><br><span class="line"></span><br><span class="line">       hi Directory       ctermfg=154               cterm=bold</span><br><span class="line">       hi Error           ctermfg=222 ctermbg=233</span><br><span class="line">       hi Exception       ctermfg=154               cterm=bold</span><br><span class="line">       hi Float           ctermfg=141</span><br><span class="line">       hi Function        ctermfg=154</span><br><span class="line">       hi Identifier      ctermfg=208</span><br><span class="line"></span><br><span class="line">       hi Keyword         ctermfg=197               cterm=bold</span><br><span class="line">       hi Operator        ctermfg=197</span><br><span class="line">       hi PreCondit       ctermfg=154               cterm=bold</span><br><span class="line">       hi PreProc         ctermfg=154</span><br><span class="line">       hi Repeat          ctermfg=197               cterm=bold</span><br><span class="line"></span><br><span class="line">       hi Statement       ctermfg=197               cterm=bold</span><br><span class="line">       hi Tag             ctermfg=197</span><br><span class="line">       hi Title           ctermfg=203</span><br><span class="line">       hi Visual                      ctermbg=238</span><br><span class="line"></span><br><span class="line">       hi Comment         ctermfg=244</span><br><span class="line">       hi LineNr          ctermfg=239 ctermbg=235</span><br><span class="line">       hi NonText         ctermfg=239</span><br><span class="line">       hi SpecialKey      ctermfg=239</span><br><span class="line">   endif</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">&quot; Must be at the end, because of ctermbg=234 bug.</span><br><span class="line">&quot; https://groups.google.com/forum/#!msg/vim_dev/afPqwAFNdrU/nqh6tOM87QUJ</span><br><span class="line">set background=dark</span><br></pre></td></tr></table></figure>
 
 <p>修改<code>~/.vimrc</code>，增加如下内容：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br></pre></td><td class="code"><pre><span class="line">set nocompatible              &quot; be iMproved, required</span><br><span class="line">filetype off                  &quot; required</span><br><span class="line"></span><br><span class="line">syntax enable</span><br><span class="line">let g:solarized_termcolors=256</span><br><span class="line">set background=dark</span><br><span class="line">&quot; colorscheme solarized</span><br><span class="line">colorscheme molokai</span><br><span class="line"></span><br><span class="line">filetype on</span><br><span class="line">&quot; 针对不同的文件类型采用不同的缩进格式</span><br><span class="line">filetype indent on</span><br><span class="line">&quot; 允许插件</span><br><span class="line">filetype plugin on</span><br><span class="line">&quot; 启动自动补全</span><br><span class="line">filetype plugin indent on</span><br><span class="line"></span><br><span class="line">set listchars=tab:&gt;-,trail:-</span><br><span class="line">set list</span><br><span class="line"></span><br><span class="line">set nu</span><br><span class="line">set mouse=a</span><br><span class="line"></span><br><span class="line">set autoread</span><br><span class="line">set wildignore=*.swp,*.bak,*.pyc,*.class,.svn</span><br><span class="line">set showmatch</span><br><span class="line">set incsearch</span><br><span class="line">set smartcase</span><br><span class="line">set tabstop=8</span><br><span class="line">set hidden</span><br><span class="line">set wildmode=list:longest</span><br><span class="line">set ttyfast</span><br><span class="line"></span><br><span class="line">set encoding=utf-8</span><br><span class="line">set ffs=unix,dos,mac</span><br><span class="line">set completeopt=longest,menu</span><br><span class="line"></span><br><span class="line">let t_Co = 256</span><br><span class="line"></span><br><span class="line">let g:molokai_original = 1</span><br><span class="line">let g:rehash256 = 1</span><br><span class="line">set background=dark</span><br><span class="line"></span><br><span class="line">hi Comment	guifg=#ffff00 ctermfg=226 cterm=none</span><br><span class="line"></span><br><span class="line">&quot; Spell-checker for emails</span><br><span class="line">autocmd FileType mail set nopaste tw=72 spell</span><br><span class="line"></span><br><span class="line">highlight clear SpellBad</span><br><span class="line">highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline</span><br><span class="line">highlight clear SpellCap</span><br><span class="line">highlight SpellCap term=underline cterm=underline</span><br><span class="line">highlight clear SpellRare</span><br><span class="line">highlight SpellRare term=underline cterm=underline</span><br><span class="line">highlight clear SpellLocal</span><br><span class="line">highlight SpellLocal term=underline cterm=underline</span><br><span class="line"></span><br><span class="line">if v:lang =~ &quot;utf8$&quot; || v:lang =~ &quot;UTF-8$&quot;</span><br><span class="line">   set fileencodings=ucs-bom,utf-8,latin1</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">set nocompatible	&quot; Use Vim defaults (much better!)</span><br><span class="line">set bs=indent,eol,start		&quot; allow backspacing over everything in insert mode</span><br><span class="line">&quot;set ai			&quot; always set autoindenting on</span><br><span class="line">&quot;set backup		&quot; keep a backup file</span><br><span class="line">set viminfo=&#x27;20,\&quot;50	&quot; read/write a .viminfo file, don&#x27;t store more</span><br><span class="line">			&quot; than 50 lines of registers</span><br><span class="line">set history=100</span><br><span class="line">set ruler		&quot; show the cursor position all the time</span><br><span class="line">set nu</span><br><span class="line">set hlsearch</span><br><span class="line"></span><br><span class="line">set colorcolumn=81</span><br><span class="line">set mouse=a</span><br><span class="line">set listchars=tab:&gt;-,trail:-</span><br><span class="line">set list</span><br><span class="line">&quot; 取消备份。 视情况自己改</span><br><span class="line">set nobackup</span><br><span class="line">&quot; 关闭交换文件</span><br><span class="line">set noswapfile</span><br><span class="line"></span><br><span class="line">set wildignore=*.swp,*.bak,*.pyc,*.class,.svn</span><br><span class="line"></span><br><span class="line">&quot; 突出显示当前列</span><br><span class="line">set cursorcolumn</span><br><span class="line">&quot; 突出显示当前行</span><br><span class="line">set cursorline</span><br><span class="line"></span><br><span class="line">&quot; 设置 退出vim后，内容显示在终端屏幕, 可以用于查看和复制, 不需要可以去掉</span><br><span class="line">&quot; 好处：误删什么的，如果以前屏幕打开，可以找回</span><br><span class="line">set t_ti= t_te=</span><br><span class="line"></span><br><span class="line">&quot; change the terminal&#x27;s title</span><br><span class="line">set title</span><br><span class="line">&quot; 去掉输入错误的提示声音</span><br><span class="line">set novisualbell</span><br><span class="line">set noerrorbells</span><br><span class="line">set t_vb=</span><br><span class="line">set tm=500</span><br><span class="line"></span><br><span class="line">&quot; Remember info about open buffers on close</span><br><span class="line">set viminfo^=%</span><br><span class="line">&quot; 显示当前的行号列号</span><br><span class="line">set ruler</span><br><span class="line">&quot; 在状态栏显示正在输入的命令</span><br><span class="line">set showcmd</span><br><span class="line">&quot; 左下角显示当前vim模式</span><br><span class="line">set showmode</span><br><span class="line"></span><br><span class="line">&quot; 在上下移动光标时，光标的上方或下方至少会保留显示的行数</span><br><span class="line">set scrolloff=3</span><br><span class="line"></span><br><span class="line">&quot; set winwidth=79</span><br><span class="line"></span><br><span class="line">&quot; 命令行（在状态行下）的高度，默认为1，这里是2</span><br><span class="line">set statusline=%&lt;%f\ %h%m%r%=%k[%&#123;(&amp;fenc==\&quot;\&quot;)?&amp;enc:&amp;fenc&#125;%&#123;(&amp;bomb?\&quot;,BOM\&quot;:\&quot;\&quot;)&#125;]\ %-14.(%l,%c%V%)\ %P</span><br><span class="line">&quot; Always show the status line - use 2 lines for the status bar</span><br><span class="line">set laststatus=2</span><br><span class="line">&quot; Only do this part when compiled with support for autocommands</span><br><span class="line">if has(&quot;autocmd&quot;)</span><br><span class="line">  augroup redhat</span><br><span class="line">  autocmd!</span><br><span class="line">  &quot; In text files, always limit the width of text to 78 characters</span><br><span class="line">  &quot; autocmd BufRead *.txt set tw=78</span><br><span class="line">  &quot; When editing a file, always jump to the last cursor position</span><br><span class="line">  autocmd BufReadPost *</span><br><span class="line">  \ if line(&quot;&#x27;\&quot;&quot;) &gt; 0 &amp;&amp; line (&quot;&#x27;\&quot;&quot;) &lt;= line(&quot;$&quot;) |</span><br><span class="line">  \   exe &quot;normal! g&#x27;\&quot;&quot; |</span><br><span class="line">  \ endif</span><br><span class="line">  &quot; don&#x27;t write swapfile on most commonly used directories for NFS mounts or USB sticks</span><br><span class="line">  autocmd BufNewFile,BufReadPre /media/*,/run/media/*,/mnt/* set directory=~/tmp,/var/tmp,/tmp</span><br><span class="line">  &quot; start with spec file template</span><br><span class="line">  autocmd BufNewFile *.spec 0r /usr/share/vim/vimfiles/template.spec</span><br><span class="line">  augroup END</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; Switch syntax highlighting on, when the terminal has colors</span><br><span class="line">&quot; Also switch on highlighting the last used search pattern.</span><br><span class="line">if &amp;t_Co &gt; 2 || has(&quot;gui_running&quot;)</span><br><span class="line">  syntax on</span><br><span class="line">  set hlsearch</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">filetype plugin on</span><br><span class="line"></span><br><span class="line">if &amp;term==&quot;xterm&quot;</span><br><span class="line">     set t_Co=8</span><br><span class="line">     set t_Sb=m</span><br><span class="line">     set t_Sf=m</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; Don&#x27;t wake up system with blinking cursor:</span><br><span class="line">&quot; http://www.linuxpowertop.org/known.php</span><br><span class="line">let &amp;guicursor = &amp;guicursor . &quot;,a:blinkon0&quot;</span><br><span class="line">set nomodeline</span><br></pre></td></tr></table></figure>
 
-      
     </div>
 
     
     
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+    <script src="//sdk.jinrishici.com/v2/browser/jinrishici.js"></script>
+<script>
+  jinrishici.load((result) => {
+    let jrsc = document.getElementById('jrsc');
+    const data = result.data;
+    let author = data.origin.author;
+    let title = '《' + data.origin.title + '》';
+    let content = data.content.substr(0, data.content.length - 1);
+    let dynasty = data.origin.dynasty.substr(0, data.origin.dynasty.length - 1);
+    jrsc.innerText = content + ' @ ' + dynasty + '·' + author + title;
+  });
+</script>
+<div style="text-align: center"><span id="jrsc" >正在加载今日诗词....</span></div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/posts/b7ee8ec8/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/meizi.jpg">
-      <meta itemprop="name" content="mapicccy">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mapicccy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/b7ee8ec8/" class="post-title-link" itemprop="url">Ftrace探析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-24 09:59:11" itemprop="dateCreated datePublished" datetime="2022-07-24T09:59:11+00:00">2022-07-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-25 04:23:26" itemprop="dateModified" datetime="2022-07-25T04:23:26+00:00">2022-07-25</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>13k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>22 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>ftrace（function tracer）支持全局trace，可以对内核和模块全局函数进行跟踪。tracer为编译器在编译时自动插入代码段的一条指令，程序在运行时能够利用这条指令实现跳转。目前Linux 5.10支持的tracer种类有8种，分别为<code>hwlat</code>、<code>blk</code>、<code>function_graph</code>、<code>wakeup_dl</code>、<code>wakeup_rt</code>、<code>wakeup</code>、<code>function</code>、<code>nop</code>，可以通过<code>/sys/kernel/debug/tracing/available_tracers</code>查看。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/b7ee8ec8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>mapicccy
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/posts/9e0ab315/" title="vim个性化主题配置">http://example.com/posts/9e0ab315/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-mapicccy/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-MAPICCCY</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+          <div class="post-tags">
+              <a href="/tags/vim/" rel="tag"># vim</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/b7ee8ec8/" rel="prev" title="Ftrace探析">
+      <i class="fa fa-chevron-left"></i> Ftrace探析
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/posts/152cd35c/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/meizi.jpg">
-      <meta itemprop="name" content="mapicccy">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mapicccy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/152cd35c/" class="post-title-link" itemprop="url">Blog重生于2022/07/24</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-24 08:17:12" itemprop="dateCreated datePublished" datetime="2022-07-24T08:17:12+00:00">2022-07-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-26 12:15:49" itemprop="dateModified" datetime="2022-07-26T12:15:49+00:00">2022-07-26</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>151</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>2022年7月份, 公司开始了裁员计划，虽然名单没有我，但我的心态也发生了一些转变，都是打工人，个人就不要讲什么情怀了，希望公司也不要灌输价值观，说白了都是资本家奴役的手段而已</p>
-<p>之前还经常在语雀或者内网ATA发一些技术贴，想想如果自己未来离开这里，啥都带不走也是蛮可惜的。</p>
-<p>所以，很久不用的技术博客就复活吧。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -612,6 +501,25 @@
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '8ec0558d573a795f94f7',
+      clientSecret: '796322758985b8b2732442b8ce2dfef6a96465bc',
+      repo        : 'mapicccy.github.io',
+      owner       : 'mapicccy',
+      admin       : ['mapicccy'],
+      id          : '6e272c92bb586cc38a94ddfe1fb6d97b',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 
 <script type="text/javascript" src="/js/src/love.js"></script>
