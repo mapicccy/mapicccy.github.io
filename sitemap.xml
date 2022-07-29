@@ -4,7 +4,7 @@
   <url>
     <loc>http://example.com/posts/9e0ab315/</loc>
     
-    <lastmod>2022-07-28</lastmod>
+    <lastmod>2022-07-29</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -58,7 +58,7 @@
 
   <url>
     <loc>http://example.com/</loc>
-    <lastmod>2022-07-28</lastmod>
+    <lastmod>2022-07-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -66,21 +66,21 @@
   
   <url>
     <loc>http://example.com/tags/linux/</loc>
-    <lastmod>2022-07-28</lastmod>
+    <lastmod>2022-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/easy/</loc>
-    <lastmod>2022-07-28</lastmod>
+    <lastmod>2022-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/vim/</loc>
-    <lastmod>2022-07-28</lastmod>
+    <lastmod>2022-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
