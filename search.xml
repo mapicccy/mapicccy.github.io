@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Blog重生于2022/07/24</title>
-    <url>/project/posts/152cd35c/</url>
+    <url>/posts/152cd35c/</url>
     <content><![CDATA[<p>2022年7月份, 公司开始了裁员计划，虽然名单没有我，但我的心态也发生了一些转变，都是打工人，个人就不要讲什么情怀了，希望公司也不要灌输价值观，说白了都是资本家奴役的手段而已</p>
 <p>之前还经常在语雀或者内网ATA发一些技术贴，想想如果自己未来离开这里，啥都带不走也是蛮可惜的。</p>
 <p>所以，很久不用的技术博客就复活吧。</p>
@@ -13,7 +13,7 @@
   </entry>
   <entry>
     <title>Ftrace探析</title>
-    <url>/project/posts/b7ee8ec8/</url>
+    <url>/posts/b7ee8ec8/</url>
     <content><![CDATA[<p>ftrace（function tracer）支持全局trace，可以对内核和模块全局函数进行跟踪。tracer为编译器在编译时自动插入代码段的一条指令，程序在运行时能够利用这条指令实现跳转。目前Linux 5.10支持的tracer种类有8种，分别为<code>hwlat</code>、<code>blk</code>、<code>function_graph</code>、<code>wakeup_dl</code>、<code>wakeup_rt</code>、<code>wakeup</code>、<code>function</code>、<code>nop</code>，可以通过<code>/sys/kernel/debug/tracing/available_tracers</code>查看。</p>
 <span id="more"></span>
 
@@ -81,7 +81,7 @@
   </entry>
   <entry>
     <title>vim个性化主题配置</title>
-    <url>/project/posts/9e0ab315/</url>
+    <url>/posts/9e0ab315/</url>
     <content><![CDATA[<p>以molokai主题为例，新建文件<code>~/.vim/colors/molokai.vim</code>，文件内容如下：</p>
 <span id="more"></span>
 
