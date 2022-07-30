@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>mapicccy</title>
-  <icon>http://example.com/icon.png</icon>
+  <icon>https://mapicccy.github.io/project/icon.png</icon>
   <subtitle>男人有实力，才有魅力</subtitle>
-  <link href="http://example.com/atom.xml" rel="self"/>
+  <link href="https://mapicccy.github.io/project/atom.xml" rel="self"/>
   
-  <link href="http://example.com/"/>
+  <link href="https://mapicccy.github.io/project/"/>
   <updated>2022-07-30T02:24:39.723Z</updated>
-  <id>http://example.com/</id>
+  <id>https://mapicccy.github.io/project/</id>
   
   <author>
     <name>mapicccy</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>vim个性化主题配置</title>
-    <link href="http://example.com/posts/9e0ab315/"/>
-    <id>http://example.com/posts/9e0ab315/</id>
+    <link href="https://mapicccy.github.io/project/posts/9e0ab315/"/>
+    <id>https://mapicccy.github.io/project/posts/9e0ab315/</id>
     <published>2022-07-28T08:11:50.000Z</published>
     <updated>2022-07-30T02:24:39.723Z</updated>
     
@@ -29,14 +29,14 @@
     
     
     
-    <category term="vim" scheme="http://example.com/tags/vim/"/>
+    <category term="vim" scheme="https://mapicccy.github.io/project/tags/vim/"/>
     
   </entry>
   
   <entry>
     <title>Ftrace探析</title>
-    <link href="http://example.com/posts/b7ee8ec8/"/>
-    <id>http://example.com/posts/b7ee8ec8/</id>
+    <link href="https://mapicccy.github.io/project/posts/b7ee8ec8/"/>
+    <id>https://mapicccy.github.io/project/posts/b7ee8ec8/</id>
     <published>2022-07-24T09:59:11.000Z</published>
     <updated>2022-07-25T04:23:26.502Z</updated>
     
@@ -46,14 +46,14 @@
     
     
     
-    <category term="linux" scheme="http://example.com/tags/linux/"/>
+    <category term="linux" scheme="https://mapicccy.github.io/project/tags/linux/"/>
     
   </entry>
   
   <entry>
     <title>Blog重生于2022/07/24</title>
-    <link href="http://example.com/posts/152cd35c/"/>
-    <id>http://example.com/posts/152cd35c/</id>
+    <link href="https://mapicccy.github.io/project/posts/152cd35c/"/>
+    <id>https://mapicccy.github.io/project/posts/152cd35c/</id>
     <published>2022-07-24T08:17:12.000Z</published>
     <updated>2022-07-26T12:15:49.728Z</updated>
     
@@ -69,7 +69,7 @@
     
     
     
-    <category term="easy" scheme="http://example.com/tags/easy/"/>
+    <category term="easy" scheme="https://mapicccy.github.io/project/tags/easy/"/>
     
   </entry>
   

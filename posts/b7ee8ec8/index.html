@@ -5,40 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 6.2.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/project/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/project/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/project/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/project/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IuBNKxWYReEztWCHo-65FPRKh6hr4eEu2OdizQdEg0c">
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/project/css/main.css">
 
 <link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|EB Garamond:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
+<link rel="stylesheet" href="/project/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/project/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/project/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"mapicccy.github.io","root":"/project/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="ftrace（function tracer）支持全局trace，可以对内核和模块全局函数进行跟踪。tracer为编译器在编译时自动插入代码段的一条指令，程序在运行时能够利用这条指令实现跳转。目前Linux 5.10支持的tracer种类有8种，分别为hwlat、blk、function_graph、wakeup_dl、wakeup_rt、wakeup、function、nop，可以通过&#x2F;sys&#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ftrace探析">
-<meta property="og:url" content="http://example.com/posts/b7ee8ec8/index.html">
+<meta property="og:url" content="https://mapicccy.github.io/project/posts/b7ee8ec8/index.html">
 <meta property="og:site_name" content="mapicccy">
 <meta property="og:description" content="ftrace（function tracer）支持全局trace，可以对内核和模块全局函数进行跟踪。tracer为编译器在编译时自动插入代码段的一条指令，程序在运行时能够利用这条指令实现跳转。目前Linux 5.10支持的tracer种类有8种，分别为hwlat、blk、function_graph、wakeup_dl、wakeup_rt、wakeup、function、nop，可以通过&#x2F;sys&#x2F;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/ftrace.png">
-<meta property="og:image" content="http://example.com/images/ring_buffer.png">
+<meta property="og:image" content="https://mapicccy.github.io/images/ftrace.png">
+<meta property="og:image" content="https://mapicccy.github.io/images/ring_buffer.png">
 <meta property="article:published_time" content="2022-07-24T09:59:11.000Z">
 <meta property="article:modified_time" content="2022-07-25T04:23:26.502Z">
 <meta property="article:author" content="mapicccy">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/ftrace.png">
+<meta name="twitter:image" content="https://mapicccy.github.io/images/ftrace.png">
 
-<link rel="canonical" href="http://example.com/posts/b7ee8ec8/">
+<link rel="canonical" href="https://mapicccy.github.io/project/posts/b7ee8ec8/">
 
 
 <script id="page-configurations">
@@ -91,7 +92,7 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="mapicccy" type="application/atom+xml">
+<link rel="alternate" href="/project/atom.xml" title="mapicccy" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -110,7 +111,7 @@
 
   <div class="site-meta">
 
-    <a href="/" class="brand" rel="start">
+    <a href="/project/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <h1 class="site-title">mapicccy</h1>
       <span class="logo-line-after"><i></i></span>
@@ -131,22 +132,22 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+    <a href="/project/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/project/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+    <a href="/project/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/project/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
 
   </li>
   </ul>
@@ -179,10 +180,10 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/posts/b7ee8ec8/">
+    <link itemprop="mainEntityOfPage" href="https://mapicccy.github.io/project/posts/b7ee8ec8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/meizi.jpg">
+      <meta itemprop="image" content="/project/images/meizi.jpg">
       <meta itemprop="name" content="mapicccy">
       <meta itemprop="description" content="">
     </span>
@@ -263,7 +264,7 @@
 
 <p>上述代码将将对<code>__start_mcount_loc</code>和<code>__stop_mcount_loc</code>(由内核链接脚本<code>include/asm-generic/vmlinux.lds.h</code>定义的段，放置所有段名为<code>__mcount_loc</code>、<code>__patchable_function_entries</code>的代码）中间的代码段进行特殊处理。有测试数据显示，给函数增加callq\retq指令会带来13%的性能损耗，所以，ftrace初始化时的“特殊处理”就是将插入的指令替换为5 bytes的nop指令，以x86_64为例，大小5个bytes的nop指令为0x0f 1f 44 00 00，同时将这些代码段地址记录下来。</p>
 <p>内核记录插入指令的数据结构为<code>struct dyn_ftrace</code>，其中ip存放代码段地址，flags存放标志位（unsigned long，低23位存放该函数注册callback的数量，23位以上存放该函数是否被trace、是否需要保存寄存器等标志位），arch存放不同架构所需的额外数据。整体结构如下入所示：</p>
-<p><img src="/../images/ftrace.png" alt="image-20210619185753069"></p>
+<p><img src="/project/../images/ftrace.png" alt="image-20210619185753069"></p>
 <p>一个page能够存放的ftrace entry计算方式为<code>PAGE_SIZE / sizeof(struct dyn_ftrace)</code>，所需要的ftrace entry的数目为<code>__stop_mcount_loc - __start_mcount_loc</code>，所以总共需要的物理页数量为<code>(__stop_mcount_loc - start_mcount_loc) / (PAGE_SIZE / sizeof(struct dyn_ftrace))</code>向上取整。由于Linux系统内存分配采取伙伴系统，存在order的概念，描述伙伴系统中不同大小的连续物理内存集簇（MAX_ORDER通常为11，所以kmalloc能够分配的最大内存为<code>2^(MAX_ORDER - 1) * PAGE_SIZE = 4MB</code>），ftrace希望能够最大可能占用连续的物理页，所以根据<code>order=tls(page) - 1</code>来尝试从尽可能大的order分配。然而事情有时候不尽如人意，如果分配<code>2^order</code>连续物理页失败，则<code>order = order&gt;&gt;1</code>继续分配，并将拿到的物理页放入下一个ftrace_page group。</p>
 <p>最关键的函数是<code>ftrace_make_nop</code>，函数如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">ftrace_make_nop</span><span class="params">(<span class="keyword">struct</span> module *mod, <span class="keyword">struct</span> dyn_ftrace *rec, <span class="type">unsigned</span> <span class="type">long</span> addr)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> ip = rec-&gt;ip;</span><br><span class="line">	<span class="type">const</span> <span class="type">char</span> *new, *old;</span><br><span class="line"></span><br><span class="line">	old = ftrace_call_replace(ip, addr);</span><br><span class="line">	new = ftrace_nop_replace();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * On boot up, and when modules are loaded, the MCOUNT_ADDR</span></span><br><span class="line"><span class="comment">	 * is converted to a nop, and will never become MCOUNT_ADDR</span></span><br><span class="line"><span class="comment">	 * again. This code is either running before SMP (on boot up)</span></span><br><span class="line"><span class="comment">	 * or before the code will ever be executed (module load).</span></span><br><span class="line"><span class="comment">	 * We do not want to use the breakpoint version in this case,</span></span><br><span class="line"><span class="comment">	 * just modify the code directly.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">if</span> (addr == MCOUNT_ADDR)</span><br><span class="line">		<span class="keyword">return</span> ftrace_modify_code_direct(ip, old, new);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * x86 overrides ftrace_replace_code -- this function will never be used</span></span><br><span class="line"><span class="comment">	 * in this case.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	WARN_ONCE(<span class="number">1</span>, <span class="string">&quot;invalid use of ftrace_make_nop&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> -EINVAL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -281,7 +282,7 @@
 <li><code>ring_buffer_per_cpu-&gt;reader_page</code>还包含一个单独的<code>buffer_page</code>，用以支持<code>reader</code>方式的读方式</li>
 </ul>
 <p><code>ring buffer</code>结构如下图所示：</p>
-<p><img src="/../images/ring_buffer.png" alt="ring_buffer"></p>
+<p><img src="/project/../images/ring_buffer.png" alt="ring_buffer"></p>
 <p><code>ring buffer</code>初始化函数是<code>early_trace_init</code>，同样由<code>init/main.c</code>文件内<code>start_kernel</code>函数调用。详细函数调用流程如下：</p>
 <p><code>start_kernel-&gt;early_trace_init-&gt;tracer_alloc_buffers-&gt;ring_buffer_alloc-&gt;__ring_buffer_alloc</code>:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* __ring_buffer_alloc - allocate a new ring_buffer</span></span><br><span class="line"><span class="comment"> * @size: the size in bytes per cpu that is needed.</span></span><br><span class="line"><span class="comment"> * @flags: attributes to set for the ring buffer.</span></span><br><span class="line"><span class="comment"> * @key: ring buffer reader_lock_key.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Currently the only flag that is available is the RB_FL_OVERWRITE</span></span><br><span class="line"><span class="comment"> * flag. This flag means that the buffer will overwrite old data</span></span><br><span class="line"><span class="comment"> * when the buffer wraps. If this flag is not set, the buffer will</span></span><br><span class="line"><span class="comment"> * drop data when the tail hits the head.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">trace_buffer</span> *__<span class="title">ring_buffer_alloc</span>(<span class="title">unsigned</span> <span class="title">long</span> <span class="title">size</span>, <span class="title">unsigned</span> <span class="title">flags</span>,</span></span><br><span class="line"><span class="class">					<span class="keyword">struct</span> <span class="title">lock_class_key</span> *<span class="title">key</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">trace_buffer</span> *<span class="title">buffer</span>;</span></span><br><span class="line">	<span class="type">long</span> nr_pages;</span><br><span class="line">	<span class="type">int</span> bsize;</span><br><span class="line">	<span class="type">int</span> cpu;</span><br><span class="line">	<span class="type">int</span> ret;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* keep it in its own cache line */</span></span><br><span class="line">	buffer = kzalloc(ALIGN(<span class="keyword">sizeof</span>(*buffer), cache_line_size()),</span><br><span class="line">			 GFP_KERNEL);</span><br><span class="line">	<span class="keyword">if</span> (!buffer)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!zalloc_cpumask_var(&amp;buffer-&gt;cpumask, GFP_KERNEL))</span><br><span class="line">		<span class="keyword">goto</span> fail_free_buffer;</span><br><span class="line"></span><br><span class="line">	nr_pages = DIV_ROUND_UP(size, BUF_PAGE_SIZE);</span><br><span class="line">	buffer-&gt;flags = flags;</span><br><span class="line">	buffer-&gt;clock = trace_clock_local;</span><br><span class="line">	buffer-&gt;reader_lock_key = key;</span><br><span class="line"></span><br><span class="line">	init_irq_work(&amp;buffer-&gt;irq_work.work, rb_wake_up_waiters);</span><br><span class="line">	init_waitqueue_head(&amp;buffer-&gt;irq_work.waiters);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* need at least two pages */</span></span><br><span class="line">	<span class="keyword">if</span> (nr_pages &lt; <span class="number">2</span>)</span><br><span class="line">		nr_pages = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">	buffer-&gt;cpus = nr_cpu_ids;</span><br><span class="line"></span><br><span class="line">	bsize = <span class="keyword">sizeof</span>(<span class="type">void</span> *) * nr_cpu_ids;</span><br><span class="line">	buffer-&gt;buffers = kzalloc(ALIGN(bsize, cache_line_size()),</span><br><span class="line">				  GFP_KERNEL);</span><br><span class="line">	<span class="keyword">if</span> (!buffer-&gt;buffers)</span><br><span class="line">		<span class="keyword">goto</span> fail_free_cpumask;</span><br><span class="line"></span><br><span class="line">	cpu = raw_smp_processor_id();</span><br><span class="line">	cpumask_set_cpu(cpu, buffer-&gt;cpumask);</span><br><span class="line">	buffer-&gt;buffers[cpu] = rb_allocate_cpu_buffer(buffer, nr_pages, cpu);</span><br><span class="line">	<span class="keyword">if</span> (!buffer-&gt;buffers[cpu])</span><br><span class="line">		<span class="keyword">goto</span> fail_free_buffers;</span><br><span class="line"></span><br><span class="line">	ret = cpuhp_state_add_instance(CPUHP_TRACE_RB_PREPARE, &amp;buffer-&gt;node);</span><br><span class="line">	<span class="keyword">if</span> (ret &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">goto</span> fail_free_buffers;</span><br><span class="line"></span><br><span class="line">	mutex_init(&amp;buffer-&gt;mutex);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> buffer;</span><br><span class="line"></span><br><span class="line"> fail_free_buffers:</span><br><span class="line">	for_each_buffer_cpu(buffer, cpu) &#123;</span><br><span class="line">		<span class="keyword">if</span> (buffer-&gt;buffers[cpu])</span><br><span class="line">			rb_free_cpu_buffer(buffer-&gt;buffers[cpu]);</span><br><span class="line">	&#125;</span><br><span class="line">	kfree(buffer-&gt;buffers);</span><br><span class="line"></span><br><span class="line"> fail_free_cpumask:</span><br><span class="line">	free_cpumask_var(buffer-&gt;cpumask);</span><br><span class="line"></span><br><span class="line"> fail_free_buffer:</span><br><span class="line">	kfree(buffer);</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line">EXPORT_SYMBOL_GPL(__ring_buffer_alloc);</span><br></pre></td></tr></table></figure>
@@ -333,7 +334,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/posts/b7ee8ec8/" title="Ftrace探析">http://example.com/posts/b7ee8ec8/</a>
+    <a href="https://mapicccy.github.io/project/posts/b7ee8ec8/" title="Ftrace探析">https://mapicccy.github.io/project/posts/b7ee8ec8/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-mapicccy/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-MAPICCCY</a> 许可协议。转载请注明出处！
@@ -344,7 +345,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/project/tags/linux/" rel="tag"># linux</a>
           </div>
 
         
@@ -353,11 +354,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/152cd35c/" rel="prev" title="Blog重生于2022/07/24">
+    <a href="/project/posts/152cd35c/" rel="prev" title="Blog重生于2022/07/24">
       <i class="fa fa-chevron-left"></i> Blog重生于2022/07/24
     </a></div>
       <div class="post-nav-item">
-    <a href="/posts/9e0ab315/" rel="next" title="vim个性化主题配置">
+    <a href="/project/posts/9e0ab315/" rel="next" title="vim个性化主题配置">
       vim个性化主题配置 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -426,21 +427,21 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="mapicccy"
-      src="/images/meizi.jpg">
+      src="/project/images/meizi.jpg">
   <p class="site-author-name" itemprop="name">mapicccy</p>
   <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
+          <a href="/project/archives/">
         
           <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
+            <a href="/project/tags/">
           
         <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">标签</span></a>
@@ -492,7 +493,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     <span title="站点阅读时长">38 分钟</span>
-</div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://lib.baomitu.com/canvas-nest.js/1.0.1/canvas-nest.js"></script>
+</div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
         
@@ -529,22 +530,23 @@
   </div>
 
   
-  <script src="/lib/anime.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="/project/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/project/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
+  <script src="/project/lib/velocity/velocity.min.js"></script>
+  <script src="/project/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/js/utils.js"></script>
+<script src="/project/js/utils.js"></script>
 
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
+<script src="/project/js/motion.js"></script>
 
 
-<script src="/js/next-boot.js"></script>
+<script src="/project/js/schemes/pisces.js"></script>
 
-<script src="/js/bookmark.js"></script>
+
+<script src="/project/js/next-boot.js"></script>
+
+<script src="/project/js/bookmark.js"></script>
 
 
 
@@ -580,7 +582,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'mapicccy.github.io',
       owner       : 'mapicccy',
       admin       : ['mapicccy'],
-      id          : '79c7325095f1229560c088921b107958',
+      id          : '2707c9eacc85dc7d56caf370221185e9',
         language: 'zh-CN',
       distractionFreeMode: true
     });
@@ -591,5 +593,5 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
 
 
 <script type="text/javascript" src="/js/src/love.js"></script>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":200,"height":400},"mobile":{"show":true}});</script></body>
+<script src="/project/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/project/live2dw/assets/miku.model.json"},"display":{"position":"left","width":200,"height":400},"mobile":{"show":true}});</script></body>
 </html>
