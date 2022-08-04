@@ -6,7 +6,7 @@
   <link href="https://mapicccy.github.io/atom.xml" rel="self"/>
   
   <link href="https://mapicccy.github.io/"/>
-  <updated>2022-07-30T02:24:39.723Z</updated>
+  <updated>2022-08-04T14:07:29.592Z</updated>
   <id>https://mapicccy.github.io/</id>
   
   <author>
@@ -15,6 +15,24 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>20220801一个奇怪的梦</title>
+    <link href="https://mapicccy.github.io/posts/9ff025e4/"/>
+    <id>https://mapicccy.github.io/posts/9ff025e4/</id>
+    <published>2022-08-04T14:03:54.000Z</published>
+    <updated>2022-08-04T14:07:29.592Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;做梦我也被公司干掉了，不像其他人收到HRG正式谈话通知，只有小智（化名）口头说他记得也有我。&lt;/p&gt;
+&lt;p&gt;一开始没有当回事，因为觉得不可能自己不可能被C，晚一些的时候发现内网权限突然消失。于是联系小丁（化名）和师兄，他们都觉得非常震惊。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="easy" scheme="https://mapicccy.github.io/tags/easy/"/>
+    
+  </entry>
   
   <entry>
     <title>vim个性化主题配置</title>
