@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>20220801一个奇怪的梦</title>
+    <url>/posts/9ff025e4/</url>
+    <content><![CDATA[<p>做梦我也被公司干掉了，不像其他人收到HRG正式谈话通知，只有小智（化名）口头说他记得也有我。</p>
+<p>一开始没有当回事，因为觉得不可能自己不可能被C，晚一些的时候发现内网权限突然消失。于是联系小丁（化名）和师兄，他们都觉得非常震惊。</p>
+<span id="more"></span>
+
+<p>后面不知道咋回事，又和小智、师兄一起散步，小智问到师兄最近在干嘛，师兄毫不犹豫的回答“在找工作”。小智脸色瞬间变了。</p>
+<p>在后面的事情就比较魔幻了，师兄、小雨以及我不知道怎么出现在我的徐州老家，一起围观一群人在二楼平台打羽毛球。还有人把球打到一楼去了，有人嚷嚷着去捡。我对师兄说太阳太大了，好热，于是一屁股坐在了阴凉的地方。突然发现脚上有一只巨大无比的蚂蚁，我直接把它按死在脚面上，结果蚂蚁瞬间分裂成一些不知名的昆虫，有些一根巨长的口器，一下子扎在了肉里。师兄大惊失色，说这玩意不好弄，也不要用手扣出来，会死的，唯一的办法是用火烧出来。我拿的打火机烧脚面，把口器从肉里烧出来。</p>
+<p>再然后，突然就醒了。</p>
+]]></content>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Blog重生于2022/07/24</title>
     <url>/posts/152cd35c/</url>
     <content><![CDATA[<p>2022年7月份, 公司开始了裁员计划，虽然名单没有我，但我的心态也发生了一些转变，都是打工人，个人就不要讲什么情怀了，希望公司也不要灌输价值观，说白了都是资本家奴役的手段而已</p>
@@ -34,7 +49,7 @@
 
 <p>上述代码将将对<code>__start_mcount_loc</code>和<code>__stop_mcount_loc</code>(由内核链接脚本<code>include/asm-generic/vmlinux.lds.h</code>定义的段，放置所有段名为<code>__mcount_loc</code>、<code>__patchable_function_entries</code>的代码）中间的代码段进行特殊处理。有测试数据显示，给函数增加callq\retq指令会带来13%的性能损耗，所以，ftrace初始化时的“特殊处理”就是将插入的指令替换为5 bytes的nop指令，以x86_64为例，大小5个bytes的nop指令为0x0f 1f 44 00 00，同时将这些代码段地址记录下来。</p>
 <p>内核记录插入指令的数据结构为<code>struct dyn_ftrace</code>，其中ip存放代码段地址，flags存放标志位（unsigned long，低23位存放该函数注册callback的数量，23位以上存放该函数是否被trace、是否需要保存寄存器等标志位），arch存放不同架构所需的额外数据。整体结构如下入所示：</p>
-<p><img src="/project/../images/ftrace.png" alt="image-20210619185753069"></p>
+<p><img data-src="/../images/ftrace.png" alt="image-20210619185753069"></p>
 <p>一个page能够存放的ftrace entry计算方式为<code>PAGE_SIZE / sizeof(struct dyn_ftrace)</code>，所需要的ftrace entry的数目为<code>__stop_mcount_loc - __start_mcount_loc</code>，所以总共需要的物理页数量为<code>(__stop_mcount_loc - start_mcount_loc) / (PAGE_SIZE / sizeof(struct dyn_ftrace))</code>向上取整。由于Linux系统内存分配采取伙伴系统，存在order的概念，描述伙伴系统中不同大小的连续物理内存集簇（MAX_ORDER通常为11，所以kmalloc能够分配的最大内存为<code>2^(MAX_ORDER - 1) * PAGE_SIZE = 4MB</code>），ftrace希望能够最大可能占用连续的物理页，所以根据<code>order=tls(page) - 1</code>来尝试从尽可能大的order分配。然而事情有时候不尽如人意，如果分配<code>2^order</code>连续物理页失败，则<code>order = order&gt;&gt;1</code>继续分配，并将拿到的物理页放入下一个ftrace_page group。</p>
 <p>最关键的函数是<code>ftrace_make_nop</code>，函数如下：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">ftrace_make_nop</span><span class="params">(<span class="keyword">struct</span> module *mod, <span class="keyword">struct</span> dyn_ftrace *rec, <span class="type">unsigned</span> <span class="type">long</span> addr)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> ip = rec-&gt;ip;</span><br><span class="line">	<span class="type">const</span> <span class="type">char</span> *new, *old;</span><br><span class="line"></span><br><span class="line">	old = ftrace_call_replace(ip, addr);</span><br><span class="line">	new = ftrace_nop_replace();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * On boot up, and when modules are loaded, the MCOUNT_ADDR</span></span><br><span class="line"><span class="comment">	 * is converted to a nop, and will never become MCOUNT_ADDR</span></span><br><span class="line"><span class="comment">	 * again. This code is either running before SMP (on boot up)</span></span><br><span class="line"><span class="comment">	 * or before the code will ever be executed (module load).</span></span><br><span class="line"><span class="comment">	 * We do not want to use the breakpoint version in this case,</span></span><br><span class="line"><span class="comment">	 * just modify the code directly.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">if</span> (addr == MCOUNT_ADDR)</span><br><span class="line">		<span class="keyword">return</span> ftrace_modify_code_direct(ip, old, new);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * x86 overrides ftrace_replace_code -- this function will never be used</span></span><br><span class="line"><span class="comment">	 * in this case.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	WARN_ONCE(<span class="number">1</span>, <span class="string">&quot;invalid use of ftrace_make_nop&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> -EINVAL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -52,7 +67,7 @@
 <li><code>ring_buffer_per_cpu-&gt;reader_page</code>还包含一个单独的<code>buffer_page</code>，用以支持<code>reader</code>方式的读方式</li>
 </ul>
 <p><code>ring buffer</code>结构如下图所示：</p>
-<p><img src="/project/../images/ring_buffer.png" alt="ring_buffer"></p>
+<p><img data-src="/../images/ring_buffer.png" alt="ring_buffer"></p>
 <p><code>ring buffer</code>初始化函数是<code>early_trace_init</code>，同样由<code>init/main.c</code>文件内<code>start_kernel</code>函数调用。详细函数调用流程如下：</p>
 <p><code>start_kernel-&gt;early_trace_init-&gt;tracer_alloc_buffers-&gt;ring_buffer_alloc-&gt;__ring_buffer_alloc</code>:</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* __ring_buffer_alloc - allocate a new ring_buffer</span></span><br><span class="line"><span class="comment"> * @size: the size in bytes per cpu that is needed.</span></span><br><span class="line"><span class="comment"> * @flags: attributes to set for the ring buffer.</span></span><br><span class="line"><span class="comment"> * @key: ring buffer reader_lock_key.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Currently the only flag that is available is the RB_FL_OVERWRITE</span></span><br><span class="line"><span class="comment"> * flag. This flag means that the buffer will overwrite old data</span></span><br><span class="line"><span class="comment"> * when the buffer wraps. If this flag is not set, the buffer will</span></span><br><span class="line"><span class="comment"> * drop data when the tail hits the head.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">trace_buffer</span> *__<span class="title">ring_buffer_alloc</span>(<span class="title">unsigned</span> <span class="title">long</span> <span class="title">size</span>, <span class="title">unsigned</span> <span class="title">flags</span>,</span></span><br><span class="line"><span class="class">					<span class="keyword">struct</span> <span class="title">lock_class_key</span> *<span class="title">key</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">trace_buffer</span> *<span class="title">buffer</span>;</span></span><br><span class="line">	<span class="type">long</span> nr_pages;</span><br><span class="line">	<span class="type">int</span> bsize;</span><br><span class="line">	<span class="type">int</span> cpu;</span><br><span class="line">	<span class="type">int</span> ret;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* keep it in its own cache line */</span></span><br><span class="line">	buffer = kzalloc(ALIGN(<span class="keyword">sizeof</span>(*buffer), cache_line_size()),</span><br><span class="line">			 GFP_KERNEL);</span><br><span class="line">	<span class="keyword">if</span> (!buffer)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!zalloc_cpumask_var(&amp;buffer-&gt;cpumask, GFP_KERNEL))</span><br><span class="line">		<span class="keyword">goto</span> fail_free_buffer;</span><br><span class="line"></span><br><span class="line">	nr_pages = DIV_ROUND_UP(size, BUF_PAGE_SIZE);</span><br><span class="line">	buffer-&gt;flags = flags;</span><br><span class="line">	buffer-&gt;clock = trace_clock_local;</span><br><span class="line">	buffer-&gt;reader_lock_key = key;</span><br><span class="line"></span><br><span class="line">	init_irq_work(&amp;buffer-&gt;irq_work.work, rb_wake_up_waiters);</span><br><span class="line">	init_waitqueue_head(&amp;buffer-&gt;irq_work.waiters);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* need at least two pages */</span></span><br><span class="line">	<span class="keyword">if</span> (nr_pages &lt; <span class="number">2</span>)</span><br><span class="line">		nr_pages = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">	buffer-&gt;cpus = nr_cpu_ids;</span><br><span class="line"></span><br><span class="line">	bsize = <span class="keyword">sizeof</span>(<span class="type">void</span> *) * nr_cpu_ids;</span><br><span class="line">	buffer-&gt;buffers = kzalloc(ALIGN(bsize, cache_line_size()),</span><br><span class="line">				  GFP_KERNEL);</span><br><span class="line">	<span class="keyword">if</span> (!buffer-&gt;buffers)</span><br><span class="line">		<span class="keyword">goto</span> fail_free_cpumask;</span><br><span class="line"></span><br><span class="line">	cpu = raw_smp_processor_id();</span><br><span class="line">	cpumask_set_cpu(cpu, buffer-&gt;cpumask);</span><br><span class="line">	buffer-&gt;buffers[cpu] = rb_allocate_cpu_buffer(buffer, nr_pages, cpu);</span><br><span class="line">	<span class="keyword">if</span> (!buffer-&gt;buffers[cpu])</span><br><span class="line">		<span class="keyword">goto</span> fail_free_buffers;</span><br><span class="line"></span><br><span class="line">	ret = cpuhp_state_add_instance(CPUHP_TRACE_RB_PREPARE, &amp;buffer-&gt;node);</span><br><span class="line">	<span class="keyword">if</span> (ret &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">goto</span> fail_free_buffers;</span><br><span class="line"></span><br><span class="line">	mutex_init(&amp;buffer-&gt;mutex);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> buffer;</span><br><span class="line"></span><br><span class="line"> fail_free_buffers:</span><br><span class="line">	for_each_buffer_cpu(buffer, cpu) &#123;</span><br><span class="line">		<span class="keyword">if</span> (buffer-&gt;buffers[cpu])</span><br><span class="line">			rb_free_cpu_buffer(buffer-&gt;buffers[cpu]);</span><br><span class="line">	&#125;</span><br><span class="line">	kfree(buffer-&gt;buffers);</span><br><span class="line"></span><br><span class="line"> fail_free_cpumask:</span><br><span class="line">	free_cpumask_var(buffer-&gt;cpumask);</span><br><span class="line"></span><br><span class="line"> fail_free_buffer:</span><br><span class="line">	kfree(buffer);</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line">EXPORT_SYMBOL_GPL(__ring_buffer_alloc);</span><br></pre></td></tr></table></figure>
@@ -93,21 +108,6 @@
 ]]></content>
       <tags>
         <tag>vim</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>20220801一个奇怪的梦</title>
-    <url>/posts/9ff025e4/</url>
-    <content><![CDATA[<p>做梦我也被公司干掉了，不像其他人收到HRG正式谈话通知，只有小智（化名）口头说他记得也有我。</p>
-<p>一开始没有当回事，因为觉得不可能自己不可能被C，晚一些的时候发现内网权限突然消失。于是联系小丁（化名）和师兄，他们都觉得非常震惊。</p>
-<span id="more"></span>
-
-<p>后面不知道咋回事，又和小智、师兄一起散步，小智问到师兄最近在干嘛，师兄毫不犹豫的回答“在找工作”。小智脸色瞬间变了。</p>
-<p>在后面的事情就比较魔幻了，师兄、小雨以及我不知道怎么出现在我的徐州老家，一起围观一群人在二楼平台打羽毛球。还有人把球打到一楼去了，有人嚷嚷着去捡。我对师兄说太阳太大了，好热，于是一屁股坐在了阴凉的地方。突然发现脚上有一只巨大无比的蚂蚁，我直接把它按死在脚面上，结果蚂蚁瞬间分裂成一些不知名的昆虫，有些一根巨长的口器，一下子扎在了肉里。师兄大惊失色，说这玩意不好弄，也不要用手扣出来，会死的，唯一的办法是用火烧出来。我拿的打火机烧脚面，把口器从肉里烧出来。</p>
-<p>再然后，突然就醒了。</p>
-]]></content>
-      <tags>
-        <tag>easy</tag>
       </tags>
   </entry>
 </search>
