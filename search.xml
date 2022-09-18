@@ -110,4 +110,23 @@
         <tag>vim</tag>
       </tags>
   </entry>
+  <entry>
+    <title>回复妹子的告白</title>
+    <url>/posts/a9be727d/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="抱歉，您输入的密码错误，请检查后重新输入。" data-whm="抱歉, 当前文章不能被校验, 不过您还是可以看看解密后的内容。">
+  <script id="hbeData" type="hbeData" data-hmacdigest="ee7377988c5a83fbe12b856f3f1d2836a613215ffe5014459f5f773fe7b5758c">4acf1acd5f14f870a242a2ef35ee6c9439ca4cf56d88d43f38d9692a1a976262cc984da8b39ef8a9d35d4f5f8a997036</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">当前文章暂不对外可见，请输入密码后查看！</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <tags>
+        <tag>private</tag>
+      </tags>
+  </entry>
 </search>
