@@ -6,7 +6,7 @@
   <link href="https://mapicccy.github.io/atom.xml" rel="self"/>
   
   <link href="https://mapicccy.github.io/"/>
-  <updated>2022-09-19T09:10:24.257Z</updated>
+  <updated>2023-03-10T11:54:21.227Z</updated>
   <id>https://mapicccy.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>How to use docker to run your task</title>
+    <link href="https://mapicccy.github.io/posts/1aa54f31/"/>
+    <id>https://mapicccy.github.io/posts/1aa54f31/</id>
+    <published>2023-03-10T11:42:16.000Z</published>
+    <updated>2023-03-10T11:54:21.227Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;A example about how to use docker to run your task. That is:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Pull the images or repository from registry&lt;br&gt;docker pull</summary>
+        
+      
+    
+    
+    
+    
+    <category term="docker" scheme="https://mapicccy.github.io/tags/docker/"/>
+    
+  </entry>
   
   <entry>
     <title>20220918回复妹子</title>

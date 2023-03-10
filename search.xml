@@ -148,4 +148,26 @@
         <tag>vim</tag>
       </tags>
   </entry>
+  <entry>
+    <title>How to use docker to run your task</title>
+    <url>/posts/1aa54f31/</url>
+    <content><![CDATA[<p>A example about how to use docker to run your task. That is:</p>
+<ol>
+<li><p>Pull the images or repository from registry<br>docker pull reg.docker.alibaba-inc.com&#x2F;alinux&#x2F;kdevel-x64:3.230303.1</p>
+</li>
+<li><p>List the images<br>docker images</p>
+</li>
+<li><p>Start the container and interact through terminal<br>docker run -itd –net host -v &#x2F;mnt&#x2F;sdb&#x2F;zhaoguanjun.zgj&#x2F;:&#x2F;root&#x2F;workspace reg.docker.alibaba-inc.com&#x2F;alinux&#x2F;kdevel-x64 bash</p>
+</li>
+<li><p>List all the containers<br>docker ps</p>
+</li>
+<li><p>Execute the container<br>docker exec -it [container-id] bash</p>
+</li>
+</ol>
+<p>This document will be continuously improved.</p>
+]]></content>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
 </search>
