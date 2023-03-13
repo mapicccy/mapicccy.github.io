@@ -159,7 +159,7 @@
 </li>
 <li><p>Start the container and interact through terminal<br>docker run -itd –net host -v &#x2F;mnt&#x2F;sdb&#x2F;zhaoguanjun.zgj&#x2F;:&#x2F;root&#x2F;workspace reg.docker.alibaba-inc.com&#x2F;alinux&#x2F;kdevel-x64 bash</p>
 </li>
-<li><p>List all the containers<br>docker ps</p>
+<li><p>List all the containers<br>docker ps -a</p>
 </li>
 <li><p>Execute the container<br>docker exec -it [container-id] bash</p>
 </li>
