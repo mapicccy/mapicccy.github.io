@@ -176,13 +176,17 @@
     <content><![CDATA[<p>We can lauch vm through qemu quickly. These steps are:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">qemu-system-x86_64 -nographic -enable-kvm -cpu host,+x2apic,pmu=on -smp 32,sockets=2,cores=16,threads=1 -m 64G -device virtio-net-pci,netdev=n1 -netdev user,id=n1,hostfwd=tcp::1688-:22 -drive file=/home/zhaoguanjun.zgj/aliyun_3_x64_20G_nocloud_alibase_20211025.qcow2,if=none,id=virtio-disk0 -device virtio-blk-pci,drive=virtio-disk0 -monitor pty -cpu host -machine q35 -drive file=/dev/sdb1,if=none,id=drive-virtio-disk2,format=raw,cache=none,aio=native -device virtio-blk-pci,scsi=off,num-queues=4,config-wce=off,drive=drive-virtio-disk2,id=virtio-disk1 -gdb tcp::1111</span><br></pre></td></tr></table></figure>
 
-<p>Some params and the related meaning:</p>
+<p>Some params and the related meanings:</p>
 <ul>
-<li>-nographic, Allow print log into current pty</li>
+<li>-nographic, Disable graphical output and redirect serial I&#x2F;Os to console</li>
 <li>-daemonize, Daemonize the qemu thread</li>
 </ul>
 <p>If you want to add a mdev device, you should:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. uuid # For example, a6613d90-c944-11ed-a67e-00e04c84d2c4</span><br><span class="line">2. echo &quot;a6613d90-c944-11ed-a67e-00e04c84d2c4&quot; &gt; /sys/bus/pci/devices/0000:6d:00.0/mdev_supported_types/dlb2-dlb/create</span><br><span class="line">3. add &quot;-device vfio-pci,sysfsdev=/sys/bus/pci/devices/0000:6d:00.0/a6613d90-c944-11ed-a67e-00e04c84d2c4/&quot; to the qemu boot line</span><br></pre></td></tr></table></figure>
+
+<p>Live migration from A to B:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A: Launch VM, source</span><br><span class="line">- qemu-system-x86_64 -nographic -enable-kvm -cpu host,+x2apic,pmu=on -smp 32,sockets=2,cores=16,threads=1 -m 64G -device virtio-net-pci,netdev=n1 -netdev user,id=n1,hostfwd=tcp::1688-:22 -drive file=/home/zhaoguanjun.zgj/aliyun_3_x64_20G_nocloud_alibase_20211025.qcow2,if=none,id=virtio-disk0 -device virtio-blk-pci,drive=virtio-disk0 -monitor pty -cpu host -machine q35 -drive file=/dev/sdb1,if=none,id=drive-virtio-disk2,format=raw,cache=none,aio=native -device virtio-blk-pci,scsi=off,num-queues=4,config-wce=off,drive=drive-virtio-disk2,id=virtio-disk1 -gdb tcp::1111</span><br><span class="line"></span><br><span class="line">B: Migrate to, destination</span><br><span class="line">- qemu-system-x86_64 -nographic -enable-kvm -cpu host,+x2apic,pmu=on -smp 32,sockets=2,cores=16,threads=1 -m 64G -device virtio-net-pci,netdev=n1 -netdev user,id=n1,hostfwd=tcp::1688-:22 -drive file=/home/zhaoguanjun.zgj/aliyun_3_x64_20G_nocloud_alibase_20211025.qcow2,if=none,id=virtio-disk0 -device virtio-blk-pci,drive=virtio-disk0 -monitor pty -cpu host -machine q35 -drive file=/dev/sdb1,if=none,id=drive-virtio-disk2,format=raw,cache=none,aio=native -device virtio-blk-pci,scsi=off,num-queues=4,config-wce=off,drive=drive-virtio-disk2,id=virtio-disk1 -gdb tcp::1111 -incoming tcp:(A IP):(A PORT)</span><br><span class="line">- ./qemu-system-x86_64 -monitor stdio</span><br><span class="line">  (qemu) migrate tcp:(A IP):(A PORT)</span><br><span class="line">  (qemu) info migrate</span><br></pre></td></tr></table></figure>
+<p>Then, if migration status echo ‘completed’, the VM migrate from A to B successfully.</p>
 ]]></content>
       <tags>
         <tag>qemu</tag>
