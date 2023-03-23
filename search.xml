@@ -173,7 +173,16 @@
   <entry>
     <title>Launch VM through QEMU</title>
     <url>/posts/6eda6b08/</url>
-    <content><![CDATA[<p>We can lauch vm through qemu quickly. These steps are:<br> qemu-system-x86_64 -enable-kvm -cpu host,+x2apic,pmu&#x3D;on -smp 32,sockets&#x3D;2,cores&#x3D;16,threads&#x3D;1 -m 64G -device virtio-net-pci,netdev&#x3D;n1 -netdev user,id&#x3D;n1,hostfwd&#x3D;tcp::1688-:22 -drive file&#x3D;&#x2F;home&#x2F;zhaoguanjun.zgj&#x2F;aliyun_3_x64_20G_nocloud_alibase_20211025.qcow2,if&#x3D;none,id&#x3D;virtio-disk0 -device virtio-blk-pci,drive&#x3D;virtio-disk0 -monitor pty -cpu host -machine q35 -drive file&#x3D;&#x2F;dev&#x2F;sdb1,if&#x3D;none,id&#x3D;drive-virtio-disk2,format&#x3D;raw,cache&#x3D;none,aio&#x3D;native -device virtio-blk-pci,scsi&#x3D;off,num-queues&#x3D;4,config-wce&#x3D;off,drive&#x3D;drive-virtio-disk2,id&#x3D;virtio-disk1 -gdb tcp::1111 -daemonize</p>
+    <content><![CDATA[<p>We can lauch vm through qemu quickly. These steps are:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">qemu-system-x86_64 -nographic -enable-kvm -cpu host,+x2apic,pmu=on -smp 32,sockets=2,cores=16,threads=1 -m 64G -device virtio-net-pci,netdev=n1 -netdev user,id=n1,hostfwd=tcp::1688-:22 -drive file=/home/zhaoguanjun.zgj/aliyun_3_x64_20G_nocloud_alibase_20211025.qcow2,if=none,id=virtio-disk0 -device virtio-blk-pci,drive=virtio-disk0 -monitor pty -cpu host -machine q35 -drive file=/dev/sdb1,if=none,id=drive-virtio-disk2,format=raw,cache=none,aio=native -device virtio-blk-pci,scsi=off,num-queues=4,config-wce=off,drive=drive-virtio-disk2,id=virtio-disk1 -gdb tcp::1111</span><br></pre></td></tr></table></figure>
+
+<p>Some params and the related meaning:</p>
+<ul>
+<li>-nographic, Allow print log into current pty</li>
+<li>-daemonize, Daemonize the qemu thread</li>
+</ul>
+<p>If you want to add a mdev device, you should:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. uuid # For example, a6613d90-c944-11ed-a67e-00e04c84d2c4</span><br><span class="line">2. echo &quot;a6613d90-c944-11ed-a67e-00e04c84d2c4&quot; &gt; /sys/bus/pci/devices/0000:6d:00.0/mdev_supported_types/dlb2-dlb/create</span><br><span class="line">3. add &quot;-device vfio-pci,sysfsdev=/sys/bus/pci/devices/0000:6d:00.0/a6613d90-c944-11ed-a67e-00e04c84d2c4/&quot; to the qemu boot line</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
         <tag>qemu</tag>

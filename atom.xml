@@ -6,7 +6,7 @@
   <link href="https://mapicccy.github.io/atom.xml" rel="self"/>
   
   <link href="https://mapicccy.github.io/"/>
-  <updated>2023-03-21T02:23:54.064Z</updated>
+  <updated>2023-03-23T07:14:09.430Z</updated>
   <id>https://mapicccy.github.io/</id>
   
   <author>
@@ -21,14 +21,15 @@
     <link href="https://mapicccy.github.io/posts/6eda6b08/"/>
     <id>https://mapicccy.github.io/posts/6eda6b08/</id>
     <published>2023-03-21T02:15:51.000Z</published>
-    <updated>2023-03-21T02:23:54.064Z</updated>
+    <updated>2023-03-23T07:14:09.430Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;We can lauch vm through qemu quickly. These steps are:&lt;br&gt; qemu-system-x86_64 -enable-kvm -cpu host,+x2apic,pmu&amp;#x3D;on -smp</summary>
+    <summary type="html">&lt;p&gt;We can lauch vm through qemu quickly. These steps are:&lt;/p&gt;
+&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span</summary>
         
       
     
