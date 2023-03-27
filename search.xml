@@ -163,6 +163,8 @@
 </li>
 <li><p>Execute the container<br>docker exec -it [container-id] bash</p>
 </li>
+<li><p>Exit the container<br>Execute ‘exit’ in docker terminal</p>
+</li>
 </ol>
 <p>This document will be continuously improved.</p>
 ]]></content>
