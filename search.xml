@@ -165,6 +165,10 @@
 </li>
 <li><p>Exit the container<br>Execute ‘exit’ in docker terminal</p>
 </li>
+<li><p>Kill the container<br>docker kill [container-id]</p>
+</li>
+<li><p>Remove the container or images<br>docker rm [container-id]</p>
+</li>
 </ol>
 <p>This document will be continuously improved.</p>
 ]]></content>
