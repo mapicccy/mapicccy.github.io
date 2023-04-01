@@ -45,7 +45,7 @@
     <link href="https://mapicccy.github.io/posts/1aa54f31/"/>
     <id>https://mapicccy.github.io/posts/1aa54f31/</id>
     <published>2023-03-10T11:42:16.000Z</published>
-    <updated>2023-03-27T08:17:43.244Z</updated>
+    <updated>2023-04-01T02:02:04.765Z</updated>
     
     
       
@@ -53,8 +53,7 @@
         
         
     <summary type="html">&lt;p&gt;A example about how to use docker to run your task. That is:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Pull the images or repository from registry&lt;br&gt;docker pull</summary>
+&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
         
       
     

@@ -152,24 +152,9 @@
     <title>How to use docker to run your task</title>
     <url>/posts/1aa54f31/</url>
     <content><![CDATA[<p>A example about how to use docker to run your task. That is:</p>
-<ol>
-<li><p>Pull the images or repository from registry<br>docker pull reg.docker.alibaba-inc.com&#x2F;alinux&#x2F;kdevel-x64:3.230303.1</p>
-</li>
-<li><p>List the images<br>docker images</p>
-</li>
-<li><p>Start the container and interact through terminal<br>docker run -itd –net host -v &#x2F;mnt&#x2F;sdb&#x2F;zhaoguanjun.zgj&#x2F;:&#x2F;root&#x2F;workspace reg.docker.alibaba-inc.com&#x2F;alinux&#x2F;kdevel-x64 bash</p>
-</li>
-<li><p>List all the containers<br>docker ps -a</p>
-</li>
-<li><p>Execute the container<br>docker exec -it [container-id] bash</p>
-</li>
-<li><p>Exit the container<br>Execute ‘exit’ in docker terminal</p>
-</li>
-<li><p>Kill the container<br>docker kill [container-id]</p>
-</li>
-<li><p>Remove the container or images<br>docker rm [container-id]</p>
-</li>
-</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. Pull the images or repository from registry</span><br><span class="line">   docker pull reg.docker.alibaba-inc.com/alinux/kdevel-x64:3.230303.1</span><br><span class="line"></span><br><span class="line">2. List the images</span><br><span class="line">   docker images</span><br><span class="line"></span><br><span class="line">3. Start the container and interact through terminal</span><br><span class="line">   docker run -itd --net host -v /mnt/sdb/zhaoguanjun.zgj/:/root/workspace reg.docker.alibaba-inc.com/alinux/kdevel-x64 bash</span><br><span class="line"></span><br><span class="line">4. List all the containers</span><br><span class="line">   docker ps -a</span><br><span class="line"></span><br><span class="line">5. Execute the container</span><br><span class="line">   docker exec -it [container-id] bash</span><br><span class="line"></span><br><span class="line">6. Exit the container</span><br><span class="line">   Execute &#x27;exit&#x27; in docker terminal</span><br><span class="line"></span><br><span class="line">7. Kill the container</span><br><span class="line">   docker kill [container-id]</span><br><span class="line"></span><br><span class="line">8. Remove the container or images</span><br><span class="line">   docker rm [container-id]</span><br></pre></td></tr></table></figure>
+
+
 <p>This document will be continuously improved.</p>
 ]]></content>
       <tags>
