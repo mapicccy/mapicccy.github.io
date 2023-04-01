@@ -6,7 +6,7 @@
   <link href="https://mapicccy.github.io/atom.xml" rel="self"/>
   
   <link href="https://mapicccy.github.io/"/>
-  <updated>2023-03-23T09:56:54.111Z</updated>
+  <updated>2023-04-01T05:30:36.801Z</updated>
   <id>https://mapicccy.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Understand kprobe through talking with ChatGPT4</title>
+    <link href="https://mapicccy.github.io/posts/7c673635/"/>
+    <id>https://mapicccy.github.io/posts/7c673635/</id>
+    <published>2023-04-01T05:30:03.000Z</published>
+    <updated>2023-04-01T05:30:36.801Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Kprobes-in-Linux-Kernel&quot;&gt;&lt;a href=&quot;#Kprobes-in-Linux-Kernel&quot; class=&quot;headerlink&quot; title=&quot;Kprobes in Linux Kernel&quot;&gt;&lt;/a&gt;Kprobes in Linux</summary>
+        
+      
+    
+    
+    
+    
+    <category term="chatgpt4" scheme="https://mapicccy.github.io/tags/chatgpt4/"/>
+    
+  </entry>
   
   <entry>
     <title>Launch VM through QEMU</title>

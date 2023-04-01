@@ -220,6 +220,92 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mapicccy.github.io/posts/7c673635/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/meizi.jpg">
+      <meta itemprop="name" content="mapicccy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mapicccy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/7c673635/" class="post-title-link" itemprop="url">Understand kprobe through talking with ChatGPT4</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-04-01 05:30:03 / 修改时间：05:30:36" itemprop="dateCreated datePublished" datetime="2023-04-01T05:30:03+00:00">2023-04-01</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Kprobes-in-Linux-Kernel"><a href="#Kprobes-in-Linux-Kernel" class="headerlink" title="Kprobes in Linux Kernel"></a>Kprobes in Linux Kernel</h1><p>Kprobes is a dynamic tracing and analysis tool in the Linux kernel, which allows developers to insert breakpoints into running kernel code without stopping or recompiling the kernel. Kprobes is designed to minimize its impact on the performance of the target code.</p>
+<h2 id="kprobe-insn-page"><a href="#kprobe-insn-page" class="headerlink" title="kprobe_insn_page"></a>kprobe_insn_page</h2><p><code>kprobe_insn_page</code> is a memory page used to store copies of the original instructions that are replaced by Kprobes breakpoints. It serves as a cache for these instructions so that they can be executed without affecting the original code location.</p>
+<h2 id="ModR-x2F-M-Byte"><a href="#ModR-x2F-M-Byte" class="headerlink" title="ModR&#x2F;M Byte"></a>ModR&#x2F;M Byte</h2><p>The ModR&#x2F;M byte is part of the x86 instruction set architecture, providing a compact way to encode certain instructions that involve registers and memory operands. The ModR&#x2F;M byte is used in combination with other bytes to specify the complete behavior of an instruction.</p>
+<h2 id="Kprobes-Event-Handling"><a href="#Kprobes-Event-Handling" class="headerlink" title="Kprobes Event Handling"></a>Kprobes Event Handling</h2><p>Kprobes inserts a breakpoint (e.g., INT3 instruction) at the target code address. When the breakpoint is triggered, the processor transfers the execution to a predefined Kprobes handler function. The handler function modifies the instruction pointer register (<code>regs-&gt;ip</code>) to point to the memory location containing the copy of the original instruction. The CPU executes the original instruction copy, triggering the INT3 breakpoint again, allowing Kprobes to take control once more before resuming execution.</p>
+<h2 id="kprobe-ctlblk"><a href="#kprobe-ctlblk" class="headerlink" title="kprobe_ctlblk"></a>kprobe_ctlblk</h2><p><code>kprobe_ctlblk</code> (Kprobe Control Block) is a kernel data structure used to store control information for each CPU during Kprobes event handling. Each CPU has an instance of <code>kprobe_ctlblk</code>, which contains temporary state and information such as:</p>
+<ul>
+<li>Status flags indicating the current state of Kprobes event handling.</li>
+<li>Saved register values, such as the instruction pointer register (<code>ip</code>).</li>
+<li>Other temporary data related to the Kprobes handler function.</li>
+</ul>
+<p>The main purpose of <code>kprobe_ctlblk</code> is to save and restore CPU register values and other context information during Kprobes event handling.</p>
+<h2 id="KPROBE-HIT-SS"><a href="#KPROBE-HIT-SS" class="headerlink" title="KPROBE_HIT_SS"></a>KPROBE_HIT_SS</h2><p><code>KPROBE_HIT_SS</code> is a Kprobes status flag that indicates a Single Step Trap was triggered during Kprobe event handling on x86 architecture. This flag is used to signify this situation so that the Kprobes handler function can correctly handle the single step trap.</p>
+<p>When a single step trap is detected during Kprobes event handling, the <code>KPROBE_HIT_SS</code> flag is set to <code>true</code>. The Kprobes handler function can then use this flag to determine how to handle the single step trap, such as whether specific actions need to be performed or how to resume execution after event handling is complete.</p>
+<p>In summary, the <code>KPROBE_HIT_SS</code> flag is used during Kprobes event handling to indicate a triggered single step trap so that the Kprobes handler function can correctly handle the situation. This helps ensure that target code execution can continue without being affected by Kprobes after the handler function is complete.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mapicccy.github.io/posts/6eda6b08/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -966,14 +1052,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1017,12 +1103,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">27k</span>
+    <span title="站点总字数">30k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">45 分钟</span>
+    <span title="站点阅读时长">49 分钟</span>
 </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
