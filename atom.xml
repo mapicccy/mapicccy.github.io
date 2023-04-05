@@ -6,7 +6,7 @@
   <link href="https://mapicccy.github.io/atom.xml" rel="self"/>
   
   <link href="https://mapicccy.github.io/"/>
-  <updated>2023-04-01T05:30:41.653Z</updated>
+  <updated>2023-04-05T13:24:59.852Z</updated>
   <id>https://mapicccy.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Prompts used with stable diffusion</title>
+    <link href="https://mapicccy.github.io/posts/72968cc7/"/>
+    <id>https://mapicccy.github.io/posts/72968cc7/</id>
+    <published>2023-04-05T13:14:36.000Z</published>
+    <updated>2023-04-05T13:24:59.852Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;This article collects prompts for Stable Diffusion’s automatic drawing tool.&lt;/p&gt;
+&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
+        
+      
+    
+    
+    
+    
+    <category term="AIGC" scheme="https://mapicccy.github.io/tags/AIGC/"/>
+    
+  </entry>
   
   <entry>
     <title>Understand kprobe through talking with ChatGPT4</title>
