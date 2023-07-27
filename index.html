@@ -220,6 +220,80 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mapicccy.github.io/posts/4b2d89b0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/meizi.jpg">
+      <meta itemprop="name" content="mapicccy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mapicccy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/4b2d89b0/" class="post-title-link" itemprop="url">dummy syscall test in linux kernel</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-07-27 06:39:18 / 修改时间：06:40:16" itemprop="dateCreated datePublished" datetime="2023-07-27T06:39:18+00:00">2023-07-27</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>This is an example about dummy syscall test in linux kernel</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;sys/utsname.h&gt;</span><br><span class="line">#include &lt;errno.h&gt;</span><br><span class="line">#include &lt;time.h&gt;</span><br><span class="line">#include &lt;sched.h&gt;</span><br><span class="line">#include &lt;stdalign.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;syscall.h&gt;</span><br><span class="line">#include &lt;signal.h&gt;</span><br><span class="line">#include &lt;stdint.h&gt;</span><br><span class="line">#include &lt;errno.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;sys/wait.h&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned long i = 0;</span><br><span class="line">	int nr_mysyscall;</span><br><span class="line">	struct utsname buffer;</span><br><span class="line">	struct timespec tstart=&#123;0,0&#125;, tend=&#123;0,0&#125;;</span><br><span class="line"></span><br><span class="line">	errno = 0;</span><br><span class="line">	if (uname(&amp;buffer) != 0) &#123;</span><br><span class="line">		perror(&quot;uname&quot;);</span><br><span class="line">		exit(EXIT_FAILURE);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	if (buffer.release[0] == &#x27;5&#x27;) &#123;</span><br><span class="line">		printf(&quot;5.10 kernel\n&quot;);</span><br><span class="line">		clock_gettime(CLOCK_MONOTONIC, &amp;tstart);</span><br><span class="line">		for (i=0; i&lt;30000000; i++)</span><br><span class="line">			syscall(335);</span><br><span class="line">		clock_gettime(CLOCK_MONOTONIC, &amp;tend);</span><br><span class="line">		printf(&quot;took about %.5f seconds\n&quot;,</span><br><span class="line">				((double)tend.tv_sec + 1.0e-9*tend.tv_nsec) -</span><br><span class="line">				((double)tstart.tv_sec + 1.0e-9*tstart.tv_nsec));</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		printf(&quot;4.19 kernel\n&quot;);</span><br><span class="line">		clock_gettime(CLOCK_MONOTONIC, &amp;tstart);</span><br><span class="line">		for (i=0; i&lt;30000000; i++)</span><br><span class="line">			syscall(438);</span><br><span class="line">		clock_gettime(CLOCK_MONOTONIC, &amp;tend);</span><br><span class="line">		printf(&quot;took about %.5f seconds\n&quot;,</span><br><span class="line">				((double)tend.tv_sec + 1.0e-9*tend.tv_nsec) -</span><br><span class="line">				((double)tstart.tv_sec + 1.0e-9*tstart.tv_nsec));</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mapicccy.github.io/posts/72968cc7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -976,90 +1050,11 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mapicccy.github.io/posts/152cd35c/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/meizi.jpg">
-      <meta itemprop="name" content="mapicccy">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mapicccy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/152cd35c/" class="post-title-link" itemprop="url">Blog重生于2022/07/24</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-24 08:17:12" itemprop="dateCreated datePublished" datetime="2022-07-24T08:17:12+00:00">2022-07-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-03 09:45:47" itemprop="dateModified" datetime="2022-08-03T09:45:47+00:00">2022-08-03</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>198</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>2022年7月份, 公司开始了裁员计划，虽然名单没有我，但我的心态也发生了一些转变，都是打工人，个人就不要讲什么情怀了，希望公司也不要灌输价值观，说白了都是资本家奴役的手段而已</p>
-<p>之前还经常在语雀或者内网ATA发一些技术贴，想想如果自己未来离开这里，啥都带不走也是蛮可惜的。</p>
-<p>所以，很久不用的技术博客就复活吧。</p>
-<p>[更新：一个朋友被裁了，拿了N+5，然后转头入职B站，base涨幅接近50%，我想说我也想要]</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -1126,7 +1121,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1177,12 +1172,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">33k</span>
+    <span title="站点总字数">35k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">55 分钟</span>
+    <span title="站点阅读时长">58 分钟</span>
 </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 

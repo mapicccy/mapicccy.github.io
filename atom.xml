@@ -6,7 +6,7 @@
   <link href="https://mapicccy.github.io/atom.xml" rel="self"/>
   
   <link href="https://mapicccy.github.io/"/>
-  <updated>2023-04-05T13:25:47.060Z</updated>
+  <updated>2023-07-27T06:40:16.239Z</updated>
   <id>https://mapicccy.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>dummy syscall test in linux kernel</title>
+    <link href="https://mapicccy.github.io/posts/4b2d89b0/"/>
+    <id>https://mapicccy.github.io/posts/4b2d89b0/</id>
+    <published>2023-07-27T06:39:18.000Z</published>
+    <updated>2023-07-27T06:40:16.239Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;This is an example about dummy syscall test in linux kernel&lt;/p&gt;
+&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Prompts used with stable diffusion</title>
