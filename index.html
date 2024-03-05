@@ -220,6 +220,86 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mapicccy.github.io/posts/db9f248e/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/meizi.jpg">
+      <meta itemprop="name" content="mapicccy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mapicccy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/db9f248e/" class="post-title-link" itemprop="url">ARM64使用kernel 6.6.7启动日志</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-03-05 04:54:01 / 修改时间：04:55:54" itemprop="dateCreated datePublished" datetime="2024-03-05T04:54:01+00:00">2024-03-05</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>46k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1:17</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>– BIOS boot done –<br>[    0.000000] Booting Linux on physical CPU 0x0100000000 [0x410fd8e0]<br>[    0.000000] Linux version 6.6.7+ (<a href="mailto:&#114;&#x6f;&#111;&#x74;&#x40;&#106;&#x36;&#54;&#x65;&#48;&#x31;&#x32;&#57;&#x31;&#46;&#x73;&#x71;&#x61;&#x2e;&#x65;&#117;&#x39;&#x35;">&#114;&#x6f;&#111;&#x74;&#x40;&#106;&#x36;&#54;&#x65;&#48;&#x31;&#x32;&#57;&#x31;&#46;&#x73;&#x71;&#x61;&#x2e;&#x65;&#117;&#x39;&#x35;</a>) (gcc (GCC) 10.2.1 20200825 (Alibaba 10.2.1-3 2.17), GNU ld version 2.35-12.2.alios7) #13 SMP Wed Feb 21 15:11:08 CST 2024<br>[    0.000000] KASLR disabled due to lack of seed<br>[    0.000000] earlycon: pl11 at MMIO 0x000000002a401000 (options ‘’)<br>[    0.000000] printk: bootconsole [pl11] enabled<br>[    0.000000] efi: need at least one option<br>[    0.000000] Malformed early option ‘efi’<br>[    0.000000] efi: EFI v2.7 by EDK II<br>[    0.000000] efi: SMBIOS 3.0&#x3D;0xf9810000 ACPI 2.0&#x3D;0xf4530018 MEMATTR&#x3D;0xf7ca7018 INITRD&#x3D;0xf40f7f18 MEMRESERVE&#x3D;0xf40f7f98<br>[    0.000000] ACPI: Early table checksum verification disabled<br>[    0.000000] ACPI: RSDP 0x00000000F4530018 000024 (v02 PTG   )<br>[    0.000000] ACPI: XSDT 0x00000000F453FE98 000094 (v01 PTG    PTG01    00000000 “ “  01000013)<br>[    0.000000] ACPI: FACP 0x00000000F453FB98 000114 (v06 PTG    PTG01    00000000 PTG  20200717)<br>[    0.000000] ACPI: DSDT 0x00000000F4537518 006A14 (v02 PTG    PTG01    00000000 INTL 20230331)<br>[    0.000000] ACPI: AGDI 0x00000000F453FF98 000030 (v00 PTG    PTG01    00000000 PTG  20200717)<br>[    0.000000] ACPI: DBG2 0x00000000F453FA98 00005E (v00 PTG    PTG01    00000000 PTG  20200717)<br>[    0.000000] ACPI: GTDT 0x00000000F453E998 000104 (v03 PTG    PTG01    00000000 PTG  20200717)<br>[    0.000000] ACPI: MCFG 0x00000000F453FE18 00003C (v01 PTG    PTG01    00000000 PTG  20200717)<br>[    0.000000] ACPI: SLIT 0x00000000F453F998 00003C (v01 PTG    PTG01    00000000 PTG  20200717)<br>[    0.000000] ACPI: SPCR 0x00000000F453FA18 000050 (v02 PTG    PTG01    00000000 PTG  20200717)<br>[    0.000000] ACPI: SDEI 0x00000000F453FD18 000024 (v01 PTG    PTG01    00000000 INTL 20230331)<br>[    0.000000] ACPI: APIC 0x00000000F453F598 000334 (v05 PTG    PTG01    00000000 PTG  20200717)<br>[    0.000000] ACPI: SRAT 0x00000000F453EB18 000140 (v03 PTG    PTG01    00000000 PTG  20200717)<br>[    0.000000] ACPI: IORT 0x00000000F453F318 00012C (v00 PTG    PTG01    00000000 PTG  20200717)<br>[    0.000000] ACPI: PPTT 0x00000000F453EC98 0003E6 (v02 PTG    PTG01    00000000 PTG  20200717)<br>[    0.000000] ACPI: MPAM 0x00000000F4530098 0004A4 (v00 PTG    PTG01    00000000 PTG  20200717)<br>[    0.000000] ACPI: SPMI 0x00000000F453FD98 000041 (v05 PTG    PTG01    00000000 PTG  20200717)<br>[    0.000000] ACPI: SPCR: console: pl011,mmio32,0x2a400000,115200<br>[    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x80000000-0xffffffff]<br>[    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x900000000-0x187fffffff]<br>[    0.000000] NUMA: NODE_DATA [mem 0x1877fc1b00-0x1877fc6fff]</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/db9f248e/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mapicccy.github.io/posts/4b2d89b0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -964,92 +1044,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mapicccy.github.io/posts/b7ee8ec8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/meizi.jpg">
-      <meta itemprop="name" content="mapicccy">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mapicccy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/b7ee8ec8/" class="post-title-link" itemprop="url">Ftrace探析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-24 09:59:11" itemprop="dateCreated datePublished" datetime="2022-07-24T09:59:11+00:00">2022-07-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-25 04:23:26" itemprop="dateModified" datetime="2022-07-25T04:23:26+00:00">2022-07-25</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>13k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>22 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>ftrace（function tracer）支持全局trace，可以对内核和模块全局函数进行跟踪。tracer为编译器在编译时自动插入代码段的一条指令，程序在运行时能够利用这条指令实现跳转。目前Linux 5.10支持的tracer种类有8种，分别为<code>hwlat</code>、<code>blk</code>、<code>function_graph</code>、<code>wakeup_dl</code>、<code>wakeup_rt</code>、<code>wakeup</code>、<code>function</code>、<code>nop</code>，可以通过<code>/sys/kernel/debug/tracing/available_tracers</code>查看。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/b7ee8ec8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1121,7 +1115,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1172,12 +1166,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">35k</span>
+    <span title="站点总字数">81k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">58 分钟</span>
+    <span title="站点阅读时长">2:14</span>
 </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 

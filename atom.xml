@@ -6,7 +6,7 @@
   <link href="https://mapicccy.github.io/atom.xml" rel="self"/>
   
   <link href="https://mapicccy.github.io/"/>
-  <updated>2023-07-27T15:40:04.042Z</updated>
+  <updated>2024-03-05T04:55:54.450Z</updated>
   <id>https://mapicccy.github.io/</id>
   
   <author>
@@ -15,6 +15,21 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ARM64使用kernel 6.6.7启动日志</title>
+    <link href="https://mapicccy.github.io/posts/db9f248e/"/>
+    <id>https://mapicccy.github.io/posts/db9f248e/</id>
+    <published>2024-03-05T04:54:01.000Z</published>
+    <updated>2024-03-05T04:55:54.450Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;– BIOS boot done –&lt;br&gt;[    0.000000] Booting Linux on physical CPU 0x0100000000 [0x410fd8e0]&lt;br&gt;[    0.000000] Linux version 6.6.7+ (&lt;a href=&quot;mailto:&amp;#114;&amp;#x6f;&amp;#111;&amp;#x74;&amp;#x40;&amp;#106;&amp;#x36;&amp;#54;&amp;#x65;&amp;#48;&amp;#x31;&amp;#x32;&amp;#57;&amp;#x31;&amp;#46;&amp;#x73;&amp;#x71;&amp;#x61;&amp;#x2e;&amp;#x65;&amp;#117;&amp;#x39;&amp;#x35;&quot;&gt;&amp;#114;&amp;#x6f;&amp;#111;&amp;#x74;&amp;#x40;&amp;#106;&amp;#x36;&amp;#54;&amp;#x65;&amp;#48;&amp;#x31;&amp;#x32;&amp;#57;&amp;#x31;&amp;#46;&amp;#x73;&amp;#x71;&amp;#x61;&amp;#x2e;&amp;#x65;&amp;#117;&amp;#x39;&amp;#x35;&lt;/a&gt;) (gcc (GCC) 10.2.1 20200825 (Alibaba 10.2.1-3 2.17), GNU ld version 2.35-12.2.alios7) #13 SMP Wed Feb 21 15:11:08 CST 2024&lt;br&gt;[    0.000000] KASLR disabled due to lack of seed&lt;br&gt;[    0.000000] earlycon: pl11 at MMIO 0x000000002a401000 (options ‘’)&lt;br&gt;[    0.000000] printk: bootconsole [pl11] enabled&lt;br&gt;[    0.000000] efi: need at least one option&lt;br&gt;[    0.000000] Malformed early option ‘efi’&lt;br&gt;[    0.000000] efi: EFI v2.7 by EDK II&lt;br&gt;[    0.000000] efi: SMBIOS 3.0&amp;#x3D;0xf9810000 ACPI 2.0&amp;#x3D;0xf4530018 MEMATTR&amp;#x3D;0xf7ca7018 INITRD&amp;#x3D;0xf40f7f18 MEMRESERVE&amp;#x3D;0xf40f7f98&lt;br&gt;[    0.000000] ACPI: Early table checksum verification disabled&lt;br&gt;[    0.000000] ACPI: RSDP 0x00000000F4530018 000024 (v02 PTG   )&lt;br&gt;[    0.000000] ACPI: XSDT 0x00000000F453FE98 000094 (v01 PTG    PTG01    00000000 “ “  01000013)&lt;br&gt;[    0.000000] ACPI: FACP 0x00000000F453FB98 000114 (v06 PTG    PTG01    00000000 PTG  20200717)&lt;br&gt;[    0.000000] ACPI: DSDT 0x00000000F4537518 006A14 (v02 PTG    PTG01    00000000 INTL 20230331)&lt;br&gt;[    0.000000] ACPI: AGDI 0x00000000F453FF98 000030 (v00 PTG    PTG01    00000000 PTG  20200717)&lt;br&gt;[    0.000000] ACPI: DBG2 0x00000000F453FA98 00005E (v00 PTG    PTG01    00000000 PTG  20200717)&lt;br&gt;[    0.000000] ACPI: GTDT 0x00000000F453E998 000104 (v03 PTG    PTG01    00000000 PTG  20200717)&lt;br&gt;[    0.000000] ACPI: MCFG 0x00000000F453FE18 00003C (v01 PTG    PTG01    00000000 PTG  20200717)&lt;br&gt;[    0.000000] ACPI: SLIT 0x00000000F453F998 00003C (v01 PTG    PTG01    00000000 PTG  20200717)&lt;br&gt;[    0.000000] ACPI: SPCR 0x00000000F453FA18 000050 (v02 PTG    PTG01    00000000 PTG  20200717)&lt;br&gt;[    0.000000] ACPI: SDEI 0x00000000F453FD18 000024 (v01 PTG    PTG01    00000000 INTL 20230331)&lt;br&gt;[    0.000000] ACPI: APIC 0x00000000F453F598 000334 (v05 PTG    PTG01    00000000 PTG  20200717)&lt;br&gt;[    0.000000] ACPI: SRAT 0x00000000F453EB18 000140 (v03 PTG    PTG01    00000000 PTG  20200717)&lt;br&gt;[    0.000000] ACPI: IORT 0x00000000F453F318 00012C (v00 PTG    PTG01    00000000 PTG  20200717)&lt;br&gt;[    0.000000] ACPI: PPTT 0x00000000F453EC98 0003E6 (v02 PTG    PTG01    00000000 PTG  20200717)&lt;br&gt;[    0.000000] ACPI: MPAM 0x00000000F4530098 0004A4 (v00 PTG    PTG01    00000000 PTG  20200717)&lt;br&gt;[    0.000000] ACPI: SPMI 0x00000000F453FD98 000041 (v05 PTG    PTG01    00000000 PTG  20200717)&lt;br&gt;[    0.000000] ACPI: SPCR: console: pl011,mmio32,0x2a400000,115200&lt;br&gt;[    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x80000000-0xffffffff]&lt;br&gt;[    0.000000] ACPI: SRAT: Node 0 PXM 0 [mem 0x900000000-0x187fffffff]&lt;br&gt;[    0.000000] NUMA: NODE_DATA [mem 0x1877fc1b00-0x1877fc6fff]&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>dummy syscall test in linux kernel</title>
