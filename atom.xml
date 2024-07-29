@@ -6,7 +6,7 @@
   <link href="https://mapicccy.github.io/atom.xml" rel="self"/>
   
   <link href="https://mapicccy.github.io/"/>
-  <updated>2024-03-05T04:56:05.230Z</updated>
+  <updated>2024-07-29T05:22:23.358Z</updated>
   <id>https://mapicccy.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>The Llama 3 Herd of Models——论文翻译</title>
+    <link href="https://mapicccy.github.io/posts/538b6f3e/"/>
+    <id>https://mapicccy.github.io/posts/538b6f3e/</id>
+    <published>2024-07-29T04:54:58.000Z</published>
+    <updated>2024-07-29T05:22:23.358Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Llama 3 模型群 —— Llama 团队，Meta 的 AI 分支&lt;/p&gt;
+&lt;p&gt;现代人工智能（AI）系统的核心驱动力是基础模型。本文介绍了一组名为 Llama 3</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>ARM64使用kernel 6.6.7启动日志</title>

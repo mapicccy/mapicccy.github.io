@@ -220,6 +220,137 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mapicccy.github.io/posts/538b6f3e/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/meizi.jpg">
+      <meta itemprop="name" content="mapicccy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mapicccy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/538b6f3e/" class="post-title-link" itemprop="url">The Llama 3 Herd of Models——论文翻译</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-07-29 04:54:58 / 修改时间：05:22:23" itemprop="dateCreated datePublished" datetime="2024-07-29T04:54:58+00:00">2024-07-29</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Llama 3 模型群 —— Llama 团队，Meta 的 AI 分支</p>
+<p>现代人工智能（AI）系统的核心驱动力是基础模型。本文介绍了一组名为 Llama 3 的全新基础模型系列。这是一群原生支持多语言能力、编程、推理以及工具使用的语言模型。我们最大的模型是一个拥有 4050 亿参数和最多可达 12.8 万令牌上下文窗口的密集型 Transformer。本文详细展示了 Llama 3 的大规模实证评估。我们发现，Llama 3 在众多任务上提供了可与顶尖语言模型如 GPT-4 相媲美的质量表现。我们公开发布了 Llama 3，包括预训练和后训练版本的 4050 亿参数语言模型，以及我们的 Llama Guard 3 模型，用于输入和输出的安全保障。</p>
+<p>此外，本文还展示了我们通过组合方法将图像、视频和语音能力融入 Llama 3 的实验结果。我们观察到，这种方法在图像、视频和语音识别任务上与最先进水平竞争表现优异。然而，这些融合了多媒体能力的模型目前尚未广泛发布，因为它们仍在开发阶段。</p>
+<h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1 引言"></a>1 引言</h3><p>基础模型是指那些通用的语言、视觉、语音或其他模态的模型，旨在支撑广泛的人工智能任务。它们构成了许多现代AI系统的基石。</p>
+<p>现代基础模型的发展历经两大核心阶段：(1) 预训练阶段，模型通过大规模数据集进行训练，采用诸如下一个词预测或图片描述等直接任务；(2) 后训练阶段，模型被微调以遵循指令、与人类偏好对齐及提升特定能力，例如编程和推理。</p>
+<p>本文介绍了一组新的语言基础模型——Llama 3系列。Llama 3模型群原生支持多语言、编程、推理及工具运用能力。其中最大的模型是一个密集型Transformer架构，拥有4050亿参数，能在长达12.8万个令牌的上下文窗口中处理信息。模型群的每个成员在表1中列出。本文所展示的所有成果均基于Llama 3.1模型，为简洁起见，我们将统一简称其为Llama 3。</p>
+<p>我们认为，高质量基础模型的开发有三个关键要素：数据、规模以及复杂度管理。在开发过程中，我们致力于针对这三个要素进行优化：</p>
+<ul>
+<li><p><strong>数据</strong>：相较于Llama的早期版本（Touvron等人，2023a,b），我们在预训练和后训练中使用的数据量和质量都有所提升。这些改进包括开发更加细致的预处理和精选管道以优化预训练数据，以及建立更严格的品质保证和过滤方法来处理后训练数据。Llama 3的预训练基于约1.5万亿个多语言令牌的数据集，相比之下，Llama 2使用的数据集为1.8万亿令牌。</p>
+</li>
+<li><p><strong>规模</strong>: 我们在远超以往Llama模型的规模上进行了训练：我们的旗舰语言模型预训练消耗了大约3.8×10^25次浮点运算（FLOPs），几乎是Llama 2最大版本的近50倍。具体而言，我们对一个拥有4050亿可训练参数的旗舰模型进行了预训练，使用了1.56万亿文本令牌的数据集。正如基础模型的规模法则所预期的那样，我们的旗舰模型在相同的训练流程下超越了规模较小的模型。尽管规模法则表明，对于我们的训练预算，旗舰模型大约处于计算最优的规模，但我们对小型模型的训练时间也远超计算最优时长。由此产生的模型在相同的推理预算下，表现优于计算最优模型。我们还利用旗舰模型在后训练阶段进一步提升了这些小型模型的质量。</p>
+</li>
+<li><p><strong>管理复杂性</strong>: 我们在设计选择上力求最大化模型开发过程的可扩展性。例如，我们选择了标准的密集型Transformer模型架构（Vaswani等人，2017年），仅做轻微调整，而不是混合专家模型（MoE，Shazeer等人，2017年），以此来最大限度地提高训练稳定性。同样地，我们采用了相对简单的后训练流程，基于监督微调（SFT）、拒绝采样（RS）和直接偏好优化（DPO，Rafailov等人，2023年），而非采用更复杂的强化学习算法（如Ouyang等人，2022年；Schulman等人，2017年），后者往往稳定性较差且难以规模化。</p>
+</li>
+</ul>
+<p>我们的工作成果是Llama 3：一组包含三个多语言模型的“羊驼群”，分别具有80亿、700亿和4050亿个参数。我们对Llama 3在涵盖广泛语言理解任务的关键基准数据集上的性能进行了评估。此外，我们还进行了深入的人类评估，将Llama 3与竞争对手的模型进行比较。旗舰Llama 3模型在关键基准上的性能概览见表2。实验评估表明，我们的旗舰模型在多种任务上与诸如GPT-4（OpenAI，2023a）等领先语言模型的表现相当，并接近达到当前技术前沿。我们的小型模型也是同类最佳，优于具有相似参数数量的替代模型（Bai等人，2023；Jiang等人，2023）。Llama 3相比其前身在有用性和无害性之间取得了更好的平衡（Touvron等人，2023b）。我们将在第5.4节详细介绍Llama 3的安全性分析。</p>
+<p>我们正根据更新版的Llama 3社区许可协议公开发布所有三个Llama 3模型；详情请见<a target="_blank" rel="noopener" href="https://llama.meta.com.这包括我们4050亿参数语言模型的预训练和后训练版本,以及输入和输出安全性的llama/">https://llama.meta.com。这包括我们4050亿参数语言模型的预训练和后训练版本，以及输入和输出安全性的Llama</a> Guard模型新版本（Inan等人，2023）。我们希望通过旗舰模型的开放发布激发研究界的创新浪潮，并加速负责任地迈向人工智能（AGI）总体发展的道路。</p>
+<p>作为Llama 3开发过程的一部分，我们还开发了模型的多模态扩展，使模型具备图像识别、视频识别和语音理解的能力。这些多模态模型仍在积极开发中，尚未准备发布。除了语言建模的结果外，本文还展示了我们使用这些多模态模型的初步实验结果。</p>
+<h3 id="2-总体概述"><a href="#2-总体概述" class="headerlink" title="2 总体概述"></a>2 总体概述</h3><p>Llama 3的模型架构如图1所示。我们Llama 3语言模型的开发包含两个主要阶段：</p>
+<h4 id="语言模型预训练"><a href="#语言模型预训练" class="headerlink" title="语言模型预训练"></a>语言模型预训练</h4><p>我们首先将大型多语言文本语料库转换为离散的令牌，并在此基础上预训练一个大型语言模型（LLM），以执行下一个令牌的预测任务。在语言模型预训练阶段，模型学习语言结构，并从其“阅读”的文本中获取大量关于世界的知识。为了有效实现这一目标，预训练是在大规模数据上进行的：我们使用8K令牌的上下文窗口，在15.6万亿个令牌的数据集上预训练一个拥有4050亿参数的模型。这一标准预训练阶段之后是持续预训练阶段，将支持的上下文窗口扩大到128K令牌。详情请参阅第3节。</p>
+<h4 id="语言模型后训练"><a href="#语言模型后训练" class="headerlink" title="语言模型后训练"></a>语言模型后训练</h4><p>预训练后的语言模型虽然对语言有了丰富的理解，但还不能遵循指令或像我们期望的助手那样行为。我们通过几轮人类反馈对其校准，每轮涉及在指令调优数据上的监督微调（SFT）和直接偏好优化（DPO，Rafailov等人，2024）。在这一后训练阶段，我们还整合了新能力，比如工具使用，并在编码、推理等领域观察到了显著的进步。详情请见第4节。最后，安全缓解措施也在后训练阶段被整合进模型中，具体细节在第5.4节描述。</p>
+<p>最终产生的模型具备一系列丰富的能力。它们能够至少用八种语言回答问题、编写高质量的代码、解决复杂的推理问题，并能开箱即用或以零样本方式使用工具。</p>
+<p>我们还进行了实验，通过一种组合方法向Llama 3添加了图像、视频和语音处理能力。我们研究的方法包括图28中所示的三个额外阶段：</p>
+<h4 id="多模态编码器预训练"><a href="#多模态编码器预训练" class="headerlink" title="多模态编码器预训练"></a>多模态编码器预训练</h4><p>我们分别为图像和语音训练独立的编码器。我们的图像编码器在大量的图像-文本对上进行训练，这教会模型视觉内容与其自然语言描述之间的关系。语音编码器则采用自监督方法进行训练，该方法会遮蔽语音输入的部分内容，并尝试通过离散令牌表示来重建被遮蔽的部分，从而使模型学习到语音信号的结构。图像编码器的详细信息请参见第7节，语音编码器的详细信息请参见第8节。</p>
+<h4 id="视觉适配器训练"><a href="#视觉适配器训练" class="headerlink" title="视觉适配器训练"></a>视觉适配器训练</h4><p>我们训练了一个适配器，将预训练的图像编码器集成到预训练的语言模型中。该适配器包含一系列交叉注意力层，用于将图像编码器的表示馈入语言模型。适配器在文本-图像对上进行训练，这使得图像表示与语言表示对齐。在适配器训练期间，我们也会更新图像编码器的参数，但有意不更新语言模型的参数。我们还在图像适配器的基础上，使用配对的视频-文本数据训练了一个视频适配器，使模型能够在帧间聚合信息。更多细节请参阅第7节。</p>
+<h4 id="语音适配器训练"><a href="#语音适配器训练" class="headerlink" title="语音适配器训练"></a>语音适配器训练</h4><p>最后，我们通过一个适配器将语音编码器集成到模型中，该适配器将语音编码转换为可以直接输入到微调过的语言模型中的令牌表示。适配器和编码器的参数在监督微调阶段联合更新，以实现高质量的语音理解能力。在语音适配器训练期间，我们不对语言模型进行更改。我们还集成了一个文本转语音系统。详细信息请参见第8节。</p>
+<p>我们的多模态实验产生了能够识别图像和视频内容，并通过语音接口支持交互的模型。这些模型仍处于开发阶段，尚未准备好发布。</p>
+<h3 id="3-预训练"><a href="#3-预训练" class="headerlink" title="3 预训练"></a>3 预训练</h3><p>语言模型预训练包括以下步骤：(1) 大规模训练语料库的策划与过滤，(2) 模型架构的开发及确定模型大小的相应规模法则，(3) 大规模高效预训练技术的开发，以及(4) 预训练方案的制定。下面我们将逐一介绍这些组成部分。</p>
+<h4 id="3-1-预训练数据"><a href="#3-1-预训练数据" class="headerlink" title="3.1 预训练数据"></a>3.1 预训练数据</h4><p>我们从包含截至2023年底知识的多种数据源创建语言模型预训练数据集。对每个数据源应用多种去重方法和数据清洗机制，以获得高质量的令牌。我们移除含有大量个人可识别信息(PII)的领域，以及已知含有成人内容的领域。</p>
+<h4 id="3-1-1-网络数据策划"><a href="#3-1-1-网络数据策划" class="headerlink" title="3.1.1 网络数据策划"></a>3.1.1 网络数据策划</h4><p>我们使用的大部分数据来源于网络，以下是我们的数据清洗流程。</p>
+<h5 id="PII和安全过滤"><a href="#PII和安全过滤" class="headerlink" title="PII和安全过滤"></a>PII和安全过滤</h5><p>除其他缓解措施外，我们实施了旨在移除可能含有不安全内容或大量PII的网站数据的过滤器，移除按照Meta安全标准被评为有害的域名，以及已知含有成人内容的域名。</p>
+<h5 id="文本提取与清洗"><a href="#文本提取与清洗" class="headerlink" title="文本提取与清洗"></a>文本提取与清洗</h5><p>我们处理非截断网页文档的原始HTML内容，以提取高质量且多样化的文本。为此，我们构建了一个自定义解析器，用于提取HTML内容，并优化去除模板内容的精确度和内容召回率。我们通过人工评估来验证解析器的质量，将其与优化文章类内容的第三方HTML解析器进行对比，结果表现良好。我们仔细处理含有数学和代码内容的HTML页面，以保留这类内容的结构。我们保留图像alt属性文本，因为在数学内容常以预渲染图像形式出现时，数学内容也会在alt属性中提供。我们实验性地评估了不同的清洗配置，发现相比于纯文本，Markdown格式对主要在网页数据上训练的模型性能不利，因此我们移除了所有Markdown标记。</p>
+<h5 id="去重"><a href="#去重" class="headerlink" title="去重"></a>去重</h5><p>我们在URL、文档和行级别上应用了几轮去重：</p>
+<ul>
+<li>URL级去重：在整个数据集中执行URL级别的去重，为每个URL对应的页面保留最新版本。</li>
+<li>文档级去重：在整个数据集上执行全局MinHash（Broder, 1997）去重，移除近似重复的文档。</li>
+<li>行级去重：执行类似于ccNet（Wenzek等人，2019）的激进行列级去重。移除在每个3000万文档桶中出现超过6次的行。尽管手动定性分析显示，行级去重不仅去除了来自各网站的剩余模板内容（如导航菜单、Cookie警告），也可能移除了频繁出现的高质量文本，但我们的实证评估显示了显著的性能提升。</li>
+</ul>
+<h5 id="启发式过滤"><a href="#启发式过滤" class="headerlink" title="启发式过滤"></a>启发式过滤</h5><p>我们开发启发式方法来删除更多低质量文档、异常值和重复内容过多的文档。一些启发式例子包括：</p>
+<ul>
+<li>我们采用重复n-gram覆盖率比例（Rae等人，2021）来删除包含重复内容如日志或错误信息的行。这些行可能非常长且独特，因此无法通过行去重过滤。</li>
+<li>我们使用“脏词”计数（Raffel等人，2020）来过滤不受域名屏蔽列表覆盖的成人网站。</li>
+<li>我们使用令牌分布的Kullback-Leibler散度来过滤与训练语料库分布相比含有过多异常令牌的文档。</li>
+</ul>
+<h5 id="基于模型的质量过滤"><a href="#基于模型的质量过滤" class="headerlink" title="基于模型的质量过滤"></a>基于模型的质量过滤</h5><p>我们进一步尝试应用多种基于模型的质量分类器来筛选高质量的文本片段。这包括使用快速分类器，如fasttext（Joulin等人，2017年），该分类器被训练以识别给定文本是否会被维基百科引用（Touvron等人，2023a），以及计算密集型的Roberta-based分类器（Liu等人，2019a），这些分类器在Llama 2的预测数据上进行训练。为了基于Llama 2训练一个质量分类器，我们创建了一个经过清理的网页文档训练集，并描述了质量要求，然后指导Llama 2的聊天模型判断文档是否满足这些要求。出于效率考虑，我们使用DistilRoberta（Sanh等人，2019年）为每个文档生成质量分数。我们通过实验评估了不同质量过滤配置的有效性。</p>
+<h5 id="代码与推理数据处理"><a href="#代码与推理数据处理" class="headerlink" title="代码与推理数据处理"></a>代码与推理数据处理</h5><p>类似于DeepSeek-AI等（2024年）的工作，我们构建了针对特定领域的管道，用于提取包含代码和数学相关内容的网页。具体而言，无论是代码还是推理分类器，都是基于DistilledRoberta模型，该模型在由Llama 2标注的网络数据上进行训练。与上述通用质量分类器不同，我们进行了提示调整，以便针对性地搜索包含数学推导、STEM领域中的推理以及自然语言中穿插的代码的网页。鉴于代码和数学的令牌分布与自然语言有显著差异，这些管道实现了领域特定的HTML抽取、定制的文本特征和过滤启发式规则。</p>
+<h5 id="多语言数据处理"><a href="#多语言数据处理" class="headerlink" title="多语言数据处理"></a>多语言数据处理</h5><p>与上述针对英语的数据处理流程相仿，我们也实施了过滤机制，以移除可能包含个人身份信息（PII）或不安全内容的网站数据。我们的多语言文本处理管道具备以下独特特性：</p>
+<p>• 利用基于fasttext的语言识别模型，将文档归类到176种语言中。<br>• 针对每种语言的数据，分别在文档级别和行级别执行去重复操作。<br>• 应用针对各语言的特定启发式规则及基于模型的过滤器，以排除低质量文档。</p>
+<p>此外，我们采用基于多语言Llama 2的分类器对多语言文档进行质量排序，确保优先考虑高质量内容。通过实验确定预训练中使用的多语言令牌数量，以平衡模型在英语和多语言基准测试上的性能表现。</p>
+<h4 id="3-1-2-数据组合的确定"><a href="#3-1-2-数据组合的确定" class="headerlink" title="3.1.2 数据组合的确定"></a>3.1.2 数据组合的确定</h4><p>为了获得高质量的语言模型，仔细决定预训练数据混合中不同数据来源的比例至关重要。我们确定此数据混合的主要工具是知识分类和规模法则实验。</p>
+<p><strong>知识分类。</strong> 我们开发了一种分类器，用于分类网络数据中所含信息的类型，以便更有效地确定数据组合。我们利用该分类器对网络上过度代表的数据类别进行下采样，例如艺术与娱乐类内容。</p>
+<p><strong>数据混合的规模法则。</strong> 为确定最佳数据组合，我们执行规模法则实验，即在不同的数据组合上训练多个小型模型，并以此预测大型模型在该组合上的性能（参见第3.2.1节）。我们为不同的数据组合多次重复这一过程，以选择新的数据组合候选。随后，在这个候选数据组合上训练一个更大的模型，并评估其在几个关键基准测试上的表现。</p>
+<p><strong>数据组合概述。</strong> 最终的数据组合大约包含50%的一般知识令牌，25%的数学与推理令牌，17%的代码令牌，以及8%的多语言令牌。</p>
+<h4 id="3-1-3-数据退火"><a href="#3-1-3-数据退火" class="headerlink" title="3.1.3 数据退火"></a>3.1.3 数据退火</h4><p>实验上，我们发现对少量高质量的代码和数学数据进行退火（参见第3.4.3节）可以提升预训练模型在关键基准上的性能。类似于Li等人（2024b），我们在特定领域内对高质量数据进行上采样的数据混合上执行退火。我们的退火数据中不包含任何来自常用基准测试的训练集。这使我们能够评估Llama 3真正的少量样本学习能力和跨领域的泛化能力。</p>
+<p>效仿OpenAI（2023a），我们在GSM8k（Cobbe等人，2021）和MATH（Hendrycks等人，2021b）训练集上进行退火，并评估退火的效果。我们发现，退火使预训练的Llama 3 8B模型在GSM8k和MATH验证集上的性能分别提高了24.0%和6.4%。然而，对于405B模型，改进微乎其微，表明我们的旗舰模型拥有强大的上下文内学习和推理能力，不需要特定领域的训练样本即可获得强劲的性能。</p>
+<p><strong>利用退火评估数据质量。</strong> 类似于Blakeney等人（2024），我们发现退火使我们能够评判小规模领域特定数据集的价值。我们通过线性地将一个已训练50%的Llama 3 8B模型的学习率退火至0，处理400亿个令牌，以此来衡量这类数据集的价值。在这些实验中，新数据集被赋予30%的权重，剩余70%的权重分配给默认数据混合。相比为每个小数据集执行规模法则实验，使用退火评估新数据源更为高效。</p>
+<h3 id="3-2-模型架构"><a href="#3-2-模型架构" class="headerlink" title="3.2 模型架构"></a>3.2 模型架构</h3><p>Llama 3采用了标准的稠密Transformer架构（Vaswani等人，2017年）。就模型架构而言，它与Llama及Llama 2（Touvron等人，2023a，b）并无显著偏离；我们的性能提升主要得益于数据质量和多样性的改进，以及训练规模的扩大。</p>
+<p>相较于Llama 3，我们做出了一些较小的修改：</p>
+<p>• 我们采用了分组查询注意力（Grouped Query Attention，简称GQA；Ainslie等人，2023年），并设置了8个键值头，以提高推理速度并减少解码期间键值缓存的大小。<br>• 我们使用了一种注意力掩码，防止序列中不同文档之间的自注意力。我们发现在标准预训练过程中，这一改动的影响有限，但在针对非常长序列的持续预训练中，我们发现它非常重要。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mapicccy.github.io/posts/db9f248e/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -958,92 +1089,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mapicccy.github.io/posts/9e0ab315/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/meizi.jpg">
-      <meta itemprop="name" content="mapicccy">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mapicccy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/9e0ab315/" class="post-title-link" itemprop="url">vim个性化主题配置</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-28 08:11:50" itemprop="dateCreated datePublished" datetime="2022-07-28T08:11:50+00:00">2022-07-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-30 02:24:39" itemprop="dateModified" datetime="2022-07-30T02:24:39+00:00">2022-07-30</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>9.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>16 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>以molokai主题为例，新建文件<code>~/.vim/colors/molokai.vim</code>，文件内容如下：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/9e0ab315/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1115,7 +1160,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1166,12 +1211,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">81k</span>
+    <span title="站点总字数">87k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:14</span>
+    <span title="站点阅读时长">2:25</span>
 </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
